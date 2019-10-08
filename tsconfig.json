@@ -3,10 +3,10 @@
 		"outDir": "./dist/",
 		"sourceMap": true,
 		"noImplicitAny": true,
-		"module": "umd",
+		// "module": "umd",
 		"target": "es5",
 		"lib": ["es2015", "es2016.array.include", "dom"],
-		"jsx": "react",
+		// "jsx": "react",
 		"allowJs": true,
 		"types": [
 			// add node as an option
@@ -17,6 +17,8 @@
 			// add path to @types
 			"node_modules/@types"
 		]
+		// ,
+		// "plugins": [{ "name": "typescript-plugin-css-modules" }]
 	},
 	"files": [
 		"src/function-for-test.ts"
