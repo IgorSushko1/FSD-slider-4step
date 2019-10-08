@@ -3,3 +3,4 @@
 //   "require": "ts-node/register",
 //   "spec": "./test/test-file-for-test.ts"
 // }
+перед mocharc должно быть точка
