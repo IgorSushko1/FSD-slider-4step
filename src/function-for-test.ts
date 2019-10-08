@@ -1,2 +1,1 @@
-declare var require: any;
-export const helloTest = () => { return true; }
+export const helloTest = (): boolean => true

@@ -3,15 +3,16 @@
 		"outDir": "./dist/",
 		"sourceMap": true,
 		"noImplicitAny": true,
-		"module": "es6",
+		"module": "umd",
 		"target": "es5",
+		"lib": ["es2015", "es2016.array.include", "dom"],
 		"jsx": "react",
 		"allowJs": true,
 		"types": [
 			// add node as an option
 			"node"
 		],
-		// typeRoots option has been previously configured
+	 	// typeRoots option has been previously configured
 		"typeRoots": [
 			// add path to @types
 			"node_modules/@types"
@@ -19,17 +20,5 @@
 	},
 	"files": [
 		"src/function-for-test.ts"
-		// "sys.ts",
-		// "types.ts",
-		// "scanner.ts",
-		// "parser.ts",
-		// "utilities.ts",
-		// "binder.ts",
-		// "checker.ts",
-		// "emitter.ts",
-		// "program.ts",
-		// "commandLineParser.ts",
-		// "tsc.ts",
-		// "diagnosticInformationMap.generated.ts"
 	]
 }
