@@ -3,5 +3,5 @@
 //   const content: {[className: string]: string};
 //   export = content;
 // }
-export const body: string;
+// export const body: string;
 // export const barBaz: string;

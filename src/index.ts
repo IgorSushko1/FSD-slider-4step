@@ -1,4 +1,4 @@
-import './style.css';
+import './style.scss';
 // import * as s from './style.css';
 // require ("./scss.js");
 function component() {
