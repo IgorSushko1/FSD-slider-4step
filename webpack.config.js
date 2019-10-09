@@ -42,6 +42,11 @@ module.exports = {
       filename: '[name].css',
       chunkFilename: '[id].css',
       ignoreOrder: false, // Enable to remove warnings about conflicting order
-    }),
+		}),
+			new webpack.ProvidePlugin({
+				$: "jquery/dist/jquery.min.js",
+				jQuery: "jquery/dist/jquery.min.js",
+				"window.jQuery": "jquery/dist/jquery.min.js"
+			})
   ]
 };
