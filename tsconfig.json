@@ -4,23 +4,26 @@
 		"sourceMap": true,
 		"noImplicitAny": true,
 		// "module": "umd",
-		"target": "es5",
-		"lib": ["es2015", "es2016.array.include", "dom"],
+		"target": "es6",
+		// "lib": ["es2015", "es2016.array.include", "dom"],
 		// "jsx": "react",
 		"allowJs": true,
 		"types": [
 			// add node as an option
-			"node"
+			// "node"
 		],
 	 	// typeRoots option has been previously configured
 		"typeRoots": [
 			// add path to @types
 			"node_modules/@types"
 		]
-		// ,
 		// "plugins": [{ "name": "typescript-plugin-css-modules" }]
 	},
+	"include": [
+		// "./src/simpleSlider/**/*",
+],
 	"files": [
-		"src/function-for-test.ts"
+		"./src/ias_slider/ias-slider.ts",
+		"./src/ias_slider/ias-slider.d.ts"
 	]
 }
