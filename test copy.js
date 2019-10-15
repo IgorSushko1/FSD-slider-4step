@@ -1,11 +1,11 @@
-let brd = document.getElementById("ias-slider_parent");
-var br = brd.getBoundingClientRect()
-alert("Top:" + (br.top + pageYOffset) + ", Left:" + (br.left + pageXOffset) + ", Right:" + br.right + ", Bottom:" + br.bottom);
+// let brd = document.getElementById("ias-slider_parent");
+// var br = brd.getBoundingClientRect()
+// alert("Top:" + (br.top + pageYOffset) + ", Left:" + (br.left + pageXOffset) + ", Right:" + br.right + ", Bottom:" + br.bottom);
 
-let slider = document.getElementById("drag2");
-var sld = slider.getBoundingClientRect();
+// let slider = document.getElementById("drag2");
+// var sld = slider.getBoundingClientRect();
 
-alert("Top:" + (sld.top + pageYOffset) + ", Left:" + (sld.left + pageXOffset) + ", Right:" + sld.right + ", Bottom:" + sld.bottom)
+// alert("Top:" + (sld.top + pageYOffset) + ", Left:" + (sld.left + pageXOffset) + ", Right:" + sld.right + ", Bottom:" + sld.bottom)
 
 
 
@@ -41,12 +41,12 @@ function elementDrag(e) {
 	let sliderElement = document.getElementById("drag2");
 
 
-	console.log("parentPositionX: " + parentPositionX);
-	console.log("parentWidth: " + parentWidth);
-	console.log("e.target: " + e.target);
-	console.log("e.target.offsetLeft: " + e.target.offsetLeft);
-	console.log("sliderElement.style.left: " + sliderElement.style.left);
-	console.log("e.clientX: " + e.clientX);
+	// console.log("parentPositionX: " + parentPositionX);
+	// console.log("parentWidth: " + parentWidth);
+	// console.log("e.target: " + e.target);
+	// console.log("e.target.offsetLeft: " + e.target.offsetLeft);
+	// console.log("sliderElement.style.left: " + sliderElement.style.left);
+	// console.log("e.clientX: " + e.clientX);
 
 	if (e.clientX > parentWidth + parentPosition.left) {
 		e.clientX = parentPosition.left + parentWidth;
