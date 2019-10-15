@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+
+	<head>
+		<style>
+		#drag, #drag1 {
+  background: orange;
+  width: 20px;
+  height: 20px;
+  position: relative;
+  left: 0px;
+}
+
+    #one {
+      background-color: #99c2ff;
+      height: 150px;
+      width: 150px;
+    }
+
+#bord, #ias-slider_parent{
+width: 500px;
+height: 50px;
+background: rgb(217, 254, 255);
+position: relative;
+margin-top: 200px;
+margin-left: 200px;
+/* z-index: 100; */
+}
+#drag2, #drag3 {
+	/* z-index: -1; */
+  /* margin-top: 50px; */
+  background: rgb(145, 238, 181);
+  width: 30px;
+  height: 30px;
+  position: absolute ;
+	top: 0px;
+  /* left: -15px; */
+	margin-right: 15px;
+	border-radius: 50%;
+	cursor: move;
+}
+#drag3 {
+	left: 40px;
+	background: rgb(255, 0, 234);
+}
+#colorBar {
+	position: relative;
+	background: cadetblue;
+	height: 20px;
+	left: 0px;
+	top: -20px;
+	width: 10px;
+	/* z-index: 200; */
+	margin-left: 200px;
+	/* border-radius: 50%; */
+	/* border: 1px solid; */
+}
+		</style>
+		<title>Getting Started</title>
+		<!-- <script src="https://unpkg.com/lodash@4.16.6"></script> -->
+	</head>
+
+	<body>
+			<!-- <div id="drag2"></div> -->
+		<div id="ias-slider_parent">
+			<div id="drag2" class="drag" data-number="one"></div>
+			<div id="drag3" class="drag" data-number="two"></div>
+		</div>
+		<div id="colorBar"></div>
+		<button id="btn" type="button">Action</button>
+		<script src="./test copy 2.js"></script>
+	</body>
+
+</html>
