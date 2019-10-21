@@ -20,9 +20,11 @@
 		// "plugins": [{ "name": "typescript-plugin-css-modules" }]
 	},
 	"include": [
-		// "./src/simpleSlider/**/*",
+		// "./src/simpleSlider/**/*", //ищет файлы с именем index.d.ts в папках по структуре напоминающие node модули
+		//  подробнее здесь http://qaru.site/questions/144788/typescript-2-custom-typings-for-untyped-npm-module
 ],
 	"files": [
+		"./src/ias_slider/view.ts",
 		"./src/ias_slider/ias-slider.ts",
 		"./src/ias_slider/ias-slider.d.ts"
 	]
