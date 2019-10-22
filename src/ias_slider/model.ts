@@ -1,14 +1,20 @@
 interface Model {
-	max_value: number;
-	min_value: number;
-	min_border_value: number;
-	max_border_value: number
+	min_limit : number;
+	max_limit : number;
+	min_slider_value: number;
+	max_slider_value: number
 }
 class Model {
 	constructor(param: Model) {
-		this.max_value = param.max_value || 1000;
-		this.min_value = param.min_value || 0;
-		this.min_border_value;
-		this.max_border_value
-	}
+		this.min_limit = param.min_limit || 0;
+		this.max_limit= param.max_limit || 5000;
+		this.min_slider_value = param.min_slider_value;
+		this.max_slider_value = param.max_slider_value
+	};
+
+	set_model(obj) {
+		Object.assign(this, obj)
+	};
 };
+
+export { Model }
