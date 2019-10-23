@@ -24,8 +24,9 @@
 		//  подробнее здесь http://qaru.site/questions/144788/typescript-2-custom-typings-for-untyped-npm-module
 ],
 	"files": [
-		"./src/ias_slider/view.ts",
-		"./src/ias_slider/ias-slider.ts",
-		"./src/ias_slider/ias-slider.d.ts"
+		// "./src/ias_slider/view.ts",
+		"./src/ias_slider/main.ts",
+		// "./src/ias_slider/ias-slider.ts",
+		// "./src/ias_slider/ias-slider.d.ts"
 	]
 }
