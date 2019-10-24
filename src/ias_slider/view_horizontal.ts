@@ -1,4 +1,4 @@
-interface View {
+interface View_horizontal {
 	_element_id?: string,
 	_elem?: any,
 	_sign?: string,
@@ -9,9 +9,9 @@ interface View {
 	_slider_type?: string,
 	controller?: any;
 };
-class View {
+class View_horizontal {
 
-	constructor(param: View) {
+	constructor(param: View_horizontal) {
 		this._element_id = param._element_id;
 		this._elem = document.getElementById(param._element_id);
 		this._sign = param._sign || "₽";
@@ -63,16 +63,16 @@ class View {
 					'<span id="value_field_2-field"></span>' +
 					'</div>' +
 					'<div id="ias-slider__duble_fly-value-1"></div>' +
-					'<div id="ias-slider__duble_1" class="drag"></div>' +
+					'<div id="ias-slider__duble_1_horizontal" class="drag"></div>' +
 					'<div id="ias-slider__duble_fly-value-2"></div>' +
-					'<div id="ias-slider__duble_2" class="drag"></div>' +
-					'<div id="colorBar"></div>';
+					'<div id="ias-slider__duble_2_horizontal" class="drag"></div>' +
+					'<div id="color-bar_horizontal"></div>';
 
 				this.create_ribon();
 
 			} else if (this._slider_type == "single") {
 				this._elem.innerHTML = '<div id="value-field"></div>' +
-					'<div id="colorBar"></div>' +
+					'<div id="color-bar_horizontal"></div>' +
 					'<div id="ias-slider__single_fly-value"></div>' +
 					'<div id="ias-slider__single" class="drag"></div>';
 
@@ -93,15 +93,15 @@ class View {
 		if (this._slider_type == "duble") {
 			let parent_element = document.querySelector("#" + this._element_id) as HTMLElement;
 	
-			let slider_1 = parent_element.querySelector("#ias-slider__duble_1") as HTMLElement;
+			let slider_1 = parent_element.querySelector("#ias-slider__duble_1_horizontal") as HTMLElement;
 			let slider_1_width = slider_1.offsetWidth;
 			let slider_1_position_left_x_axis = slider_1.offsetLeft;
 	
-			let slider_2 = parent_element.querySelector("#ias-slider__duble_2") as HTMLElement;
+			let slider_2 = parent_element.querySelector("#ias-slider__duble_2_horizontal") as HTMLElement;
 			let slider_2_width = slider_2.offsetWidth;
 			let slider_2_position_left_x_axis = slider_2.offsetLeft;
 
-			let ribon = document.getElementById("colorBar");
+			let ribon = document.getElementById("color-bar_horizontal");
 
 			ribon.style.left = (slider_1_width/2) + slider_1_position_left_x_axis + "px";
 			ribon.style.width = slider_2_position_left_x_axis - slider_1_position_left_x_axis + "px";
@@ -113,7 +113,7 @@ class View {
 			let slider_1_width = slider_1.offsetWidth;
 			let slider_1_position_left_x_axis = slider_1.offsetLeft;
 
-			let ribon = document.getElementById("colorBar");
+			let ribon = document.getElementById("color-bar_horizontal");
 
 			ribon.style.left =   "0px";
 			ribon.style.width = slider_1_position_left_x_axis + "px";
@@ -131,9 +131,9 @@ class View {
 		console.log("drag_event работает")
 		let el = document.querySelector("#" + this._element_id);
 		console.log("el работает" + el);
-		(el.querySelector("#ias-slider__duble_1") as HTMLElement).onmousedown = this._drag_mouse_down_1;
+		(el.querySelector("#ias-slider__duble_1_horizontal") as HTMLElement).onmousedown = this._drag_mouse_down_1;
 		//написать нормальную реализацию чтобы не повторять код
-		(el.querySelector("#ias-slider__duble_2") as HTMLElement).onmousedown = this._drag_mouse_down_2;
+		(el.querySelector("#ias-slider__duble_2_horizontal") as HTMLElement).onmousedown = this._drag_mouse_down_2;
 	};
 
 	_drag_mouse_down_1 = (e: Event) => {
@@ -158,12 +158,12 @@ class View {
 		let parent_position_x = parent_position.left;//размещение контейнера относительно левого края экрана
 
 
-		let slider_1 = parent_element.querySelector("#ias-slider__duble_1") as HTMLElement;
+		let slider_1 = parent_element.querySelector("#ias-slider__duble_1_horizontal") as HTMLElement;
 		let slider_1_width = slider_1.offsetWidth;
 		let slider_1_position_left_x_axis = slider_1.offsetLeft; // вычисляет верхний левый угол элемента от угла родителя
 		// console.log("slider_1_position_left_x_axis : " + slider_1_position_left_x_axis + " pageXOffset : " + pageXOffset);
 
-		let slider_2 = parent_element.querySelector("#ias-slider__duble_2") as HTMLElement;
+		let slider_2 = parent_element.querySelector("#ias-slider__duble_2_horizontal") as HTMLElement;
 		let slider_2_width = slider_1.offsetWidth;
 		let slider_2_position_left_x_axis = slider_2.offsetLeft; // вычисляет верхний левый угол элемента от угла родителя
 		// console.log("slider_2_position_left_x_axis : " + slider_2_position_left_x_axis + " pageXOffset : " + pageXOffset);
@@ -198,13 +198,13 @@ class View {
 		let parent_position_x = parent_position.left;//размещение контейнера относительно левого края экрана
 		console.log("parent_element.offsetWidth работает " + parent_element.offsetWidth + "   parent_position_x работает " + parent_position_x + "  ")
 
-		let slider_1 = parent_element.querySelector("#ias-slider__duble_1") as HTMLElement;
+		let slider_1 = parent_element.querySelector("#ias-slider__duble_1_horizontal") as HTMLElement;
 		console.log("slider_1.offsetWidth работает: " + slider_1.offsetWidth)
 		let slider_1_width = slider_1.offsetWidth;
 		let slider_1_position_left_x_axis = slider_1.offsetLeft; // вычисляет верхний левый угол элемента от угла родителя
 		// console.log("slider_1_position_left_x_axis : " + slider_1_position_left_x_axis + " pageXOffset : " + pageXOffset);
 
-		let slider_2 = parent_element.querySelector("#ias-slider__duble_2") as HTMLElement;
+		let slider_2 = parent_element.querySelector("#ias-slider__duble_2_horizontal") as HTMLElement;
 		let slider_2_width = slider_2.offsetWidth;
 		let slider_2_position_left_x_axis = slider_2.offsetLeft; // вычисляет верхний левый угол элемента от угла родителя
 		// console.log("slider_2_position_left_x_axis : " + slider_2_position_left_x_axis + " pageXOffset : " + pageXOffset);
@@ -232,7 +232,7 @@ class View {
 
 	_drag_ribon_auto(slider_1_position_left_x_axis: number, slider_2_position_left_x_axis: number) {
 
-		let ribon = document.getElementById("colorBar");
+		let ribon = document.getElementById("color-bar_horizontal");
 		ribon.style.left = 15 + slider_1_position_left_x_axis + "px";
 		ribon.style.width = slider_2_position_left_x_axis - slider_1_position_left_x_axis + "px";
 
@@ -275,7 +275,7 @@ class View {
 		document.onmousemove = null;
 	};
 };
-export { View };
+export { View_horizontal };
 // let param = {};
 // let view = new View(param);
 // view.view_code_start({ _element_id: "ias-slider_parent", _slider_type: "duble" })

@@ -1,10 +1,11 @@
-import { View } from "./view";
+import { View_horizontal } from "./view_horizontal";
+import { View_vertical } from "./view_vertical";
 import { Model } from "./model";
 import { Controller } from "./controller";
 console.log("Запись 1. Импорты прошли");
 // import { Control_panel } from "./control_panel";
 
-let settings = {
+let settings:any = {
 	_element_id: "ias-slider",
 	_sign: "₽",
 	_min_start_slider: 0,
@@ -12,6 +13,7 @@ let settings = {
 	_min_slider_value: 200,
 	_max_slider_value: 800,
 	_slider_type: "duble",
+	_type_view: "horizontal"
 };
 // {
 // пример передачи параметров, ошибки ушли при передачи всех параметров
@@ -55,9 +57,16 @@ let settings = {
 // let main = new Main({ view: new View(), controller: new Controller(), model: new Model(parameters["model"]), control_panel: new Control_panel() });
 // main.create_view();
 // };
+let view;
 
+if (settings._type_view == "vertical") {
+	view = new View_vertical(settings);
+
+} else if (settings._type_view == "horizontal") {
+	view = new View_horizontal(settings);
+
+}
 let model = new Model(settings);
-let view = new View(settings);
 let controller = new Controller(view, model, settings);
 console.log("Запись 2. Копии классов созданы")
 
