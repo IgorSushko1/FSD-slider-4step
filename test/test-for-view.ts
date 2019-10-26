@@ -1,6 +1,5 @@
-import { View, ViewFasade } from '../src/view';
-import { IasSlider } from '../src/ias-slider';
-// import  '../src/ias-slider';
+import { View } from '';
+import { IasSlider } from '';
 import { expect, assert } from 'chai';
 import 'mocha';
 

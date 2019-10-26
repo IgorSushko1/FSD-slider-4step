@@ -24,8 +24,8 @@ function mathSlider(give_parentWidth, sliderElement1Position, sliderElement2Posi
 	let value1 = document.getElementById("drag2_value");
 	let value2 = document.getElementById("drag3_value");
 
-	value1.style.left = sliderElement1Position+7.5 + "px";
-	value2.style.left = sliderElement2Position+7.5 + "px";
+	value1.style.left = sliderElement1Position + 7.5 + "px";
+	value2.style.left = sliderElement2Position + 7.5 + "px";
 
 	value1.innerText = Math.floor((sliderElement1Position + 15) * calculate);
 	value2.innerText = Math.ceil((sliderElement2Position + 15) * calculate);
@@ -129,11 +129,11 @@ function elementDrag1(e) {
 	mathSlider(parentWidth, sliderElement1Position, sliderElement2Position);
 
 	if (e.clientX > parentWidth + parentPosition.left) {
-		e.clientX = parentPosition.left + parentWidth;
+		// e.clientX = parentPosition.left + parentWidth;
 		sliderElement1.style.left = (parentWidth - 15) + "px"
 
 	} else if (e.clientX < parentPosition.left) {
-		e.clientX = parentPosition.leftt;
+		// e.clientX = parentPosition.leftt;
 		sliderElement1.style.left = "-15px"
 
 	} else {
@@ -141,7 +141,7 @@ function elementDrag1(e) {
 	};
 
 	if (sliderElement2Position + parentPositionX < e.clientX + 15) {
-		e.clientX = sliderElement2Position + "px";
+		// e.clientX = sliderElement2Position + "px";
 		sliderElement1.style.left = (sliderElement2Position - 30) + "px"
 	}
 }
@@ -164,11 +164,11 @@ function elementDrag2(e) {
 	mathSlider(parentWidth, sliderElement1Position, sliderElement2Position);
 
 	if (e.clientX > parentWidth + parentPosition.left) {
-		e.clientX = parentPosition.left + parentWidth;
+		// e.clientX = parentPosition.left + parentWidth;
 		sliderElement2.style.left = (parentWidth - 15) + "px"
 
 	} else if (e.clientX < parentPosition.left) {
-		e.clientX = parentPosition.left;
+		// e.clientX = parentPosition.left;
 		sliderElement2.style.left = "-15px"
 
 	} else {
@@ -176,7 +176,7 @@ function elementDrag2(e) {
 	};
 
 	if (sliderElement1Position + parentPositionX > e.clientX - 45) {
-		e.clientX = sliderElement1Position + "px";
+		// e.clientX = sliderElement1Position + "px";
 		sliderElement2.style.left = (sliderElement1Position + 30) + "px"
 	}
 }

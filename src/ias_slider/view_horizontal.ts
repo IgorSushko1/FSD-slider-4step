@@ -215,26 +215,27 @@ class View_horizontal {
 		// console.log("slider_2_position_left_x_axis : " + slider_2_position_left_x_axis + " pageXOffset : " + pageXOffset);
 
 		this._drag_ribon_auto(slider_1_position_left_x_axis, slider_2_position_left_x_axis);
-		// this._math__sliders_value(parent_width, slider_1_position_left_x_axis, slider_2_position_left_x_axis);
+		// this._math__sliders_value(parent_width, slider_1_position_left_x_axis, slider_2_position_left_x_axis); // РАБОЧАЯ ФУНКЦИЯ
 
 
-		if (e.clientX > parent_width + parent_position_x) {
+		// if (e.clientX > parent_width + parent_position_x) { // РАБОЧАЯ ФУНКЦИЯ
 
-			slider_1.style.left = (parent_width - (slider_1_width / 2)) + "px"
+		// 	slider_1.style.left = (parent_width - (slider_1_width / 2)) + "px"
 
-		} else if (e.clientX < parent_position_x) {
+		// } else if (e.clientX < parent_position_x) {
 
-			slider_1.style.left = (slider_1_width / (2)) + 'px'
+		// 	slider_1.style.left = (slider_1_width / (2)) + 'px'
 
-		} else {
-			slider_1.style.left = (e.clientX - parent_position_x - (slider_1_width / 2)) + "px";
-		};
+		// } else {
+		// 	slider_1.style.left = (e.clientX - parent_position_x - (slider_1_width / 2)) + "px";
+		// };
 
-		if (slider_2_position_left_x_axis + parent_position_x < e.clientX + (slider_1_width / 2)) {
-			slider_1.style.left = (slider_2_position_left_x_axis - 30) + "px"
-		}
+		// if (slider_2_position_left_x_axis + parent_position_x < e.clientX + (slider_1_width / 2)) {
+		// 	slider_1.style.left = (slider_2_position_left_x_axis - 30) + "px"
+		// }
 		// this.facade_view_set_param_controller();
-		this.NEW_math__sliders_value(parent_width, slider_1, slider_2);
+		// this.NEW_math__sliders_value(parent_width, slider_1, slider_2); // ЭКСПЕРИМЕТНАТЛЬНАЯ ФУНКЦИЯ
+		this._step_implementation(e, parent_element, slider_1, slider_2); // ЭКСПЕРИМЕТНАТЛЬНАЯ ФУНКЦИЯ
 	};
 
 	_drag_element_2 = (e: MouseEvent) => {
@@ -258,26 +259,28 @@ class View_horizontal {
 		// console.log("slider_2_position_left_x_axis : " + slider_2_position_left_x_axis + " pageXOffset : " + pageXOffset);
 
 		this._drag_ribon_auto(slider_1_position_left_x_axis, slider_2_position_left_x_axis);
-		// this._math__sliders_value(parent_width, slider_1_position_left_x_axis, slider_2_position_left_x_axis);
+		// this._math__sliders_value(parent_width, slider_1_position_left_x_axis, slider_2_position_left_x_axis); // РАБОЧАЯ ФУНКЦИЯ
 
 
-		if (e.clientX > parent_width + parent_position_x) { //если курсор выходит за пределы элемента справа
+		// if (e.clientX > parent_width + parent_position_x) { //если курсор выходит за пределы элемента справа РАБОЧАЯ ФУНКЦИЯ
 
-			slider_2.style.left = (parent_width - (slider_2_width / 2)) + "px"
+		// 	slider_2.style.left = (parent_width - (slider_2_width / 2)) + "px"
 
-		} else if (e.clientX < parent_position_x) { //если курсор выходит за пределы элемента слева
+		// } else if (e.clientX < parent_position_x) { //если курсор выходит за пределы элемента слева
 
-			slider_2.style.left = (slider_2_width / (2)) + 'px'
+		// 	slider_2.style.left = (slider_2_width / (2)) + 'px'
 
-		} else { //если курсор внутри элемента
-			slider_2.style.left = (e.clientX - parent_position_x - (slider_2_width / 2)) + "px";
-		};
+		// } else { //если курсор внутри элемента
+		// 	slider_2.style.left = (e.clientX - parent_position_x - (slider_2_width / 2)) + "px";
+		// };
 
-		if (slider_1_position_left_x_axis + parent_position_x >= e.clientX - (slider_2_width * 1.5)) {
-			slider_2.style.left = (slider_1_position_left_x_axis + slider_2_width) + "px"
-		}
+		// if (slider_1_position_left_x_axis + parent_position_x >= e.clientX - (slider_2_width * 1.5)) {
+		// 	slider_2.style.left = (slider_1_position_left_x_axis + slider_2_width) + "px"
+		// }
 		// this.facade_view_set_param_controller();
-		this.NEW_math__sliders_value(parent_width, slider_1, slider_2);
+
+		// this.NEW_math__sliders_value(parent_width, slider_1, slider_2); // ЭКСПЕРИМЕТНАТЛЬНАЯ ФУНКЦИЯ
+		this._step_implementation(e, parent_element, slider_2, slider_1); // ЭКСПЕРИМЕТНАТЛЬНАЯ ФУНКЦИЯ
 	};
 
 	_drag_ribon_auto_single(slider_1_position_left_x_axis: number) {
@@ -406,6 +409,55 @@ class View_horizontal {
 		value_field_1_static.innerText = Math.floor((slider_1_position_left_x_axis + 15) * calculate) + " " + this._sign;
 		value_field_2_static.innerText = Math.ceil((slider_2_position_left_x_axis + 15) * calculate) + " " + this._sign;
 	};
+
+	_step_implementation(e: MouseEvent, parent: HTMLElement, modified_object: HTMLElement, static_object?: HTMLElement) {
+		if (static_object) {
+			let parent_global = parent.getBoundingClientRect(); // указание на контейнер родителя
+			let parent_position_x = parent_global.left; // смещение слева от экрана
+			let parent_width = parent.offsetWidth; // ширина контейнера
+
+			let different = (this._max_start_slider - this._min_start_slider)/parent_width; // кратная разница между размером поля и денежными рамками
+
+			let pixel_step = parent_width / (this._step/different); // количество шагов
+
+			let modified_object_position = modified_object.offsetLeft; //смещение относительно левого верхнего угла родителя по Х
+			let modified_object_width = modified_object.offsetWidth; // ширина ползунка
+
+			let static_object_position = static_object.offsetLeft; //смещение относительно левого верхнего угла родителя по Х
+
+			if (modified_object_position < static_object_position) {
+				// console.log("MODULO :" + modulo)
+				// console.log("modified_object_position ДО :" + modified_object_position)
+				if (e.clientX > static_object_position + parent_position_x - modified_object_width || static_object_position - modified_object_position < pixel_step) { //если курсор наводится на элемент справа
+					modified_object.style.left = static_object_position - pixel_step + "px";
+					// console.log("modified_object_position ПОСЛЕ :" + modified_object_position)
+				} else if (e.clientX < parent_position_x) {
+					modified_object.style.left = "0px";
+					// console.log("modified_object_position ПОСЛЕ :" + modified_object_position)
+				} else if (e.clientX > parent_position_x && e.clientX < static_object_position + parent_position_x - pixel_step) {
+					let new_position = Math.floor((e.clientX - parent_position_x)/pixel_step);
+					modified_object.style.left = (pixel_step * new_position) + "px";
+					// console.log("modified_object_position ПОСЛЕ :" + modified_object_position)
+					// console.log("new_position : " + new_position)
+					// console.log("pixel_step : " + pixel_step)
+				}
+			};
+
+			if (modified_object_position > static_object_position) {
+				if (e.clientX - pixel_step < static_object_position + parent_position_x) {
+					modified_object.style.left = static_object_position + pixel_step + "px";
+				} else if (e.clientX - pixel_step > parent_position_x + parent_width - pixel_step) {
+					modified_object.style.left = parent_width + "px";
+				} else if (parent_position_x + static_object_position < e.clientX && e.clientX < parent_position_x + parent_width) {
+					let new_position = Math.floor((e.clientX - parent_position_x)/pixel_step);
+					modified_object.style.left = (pixel_step * new_position) + "px";
+				}
+			};
+
+		} else {
+			console.error("Что-то пошло не так...")
+		}
+	}
 
 	_close_drag_element = () => {
 		/* stop moving when mouse button is released:*/
