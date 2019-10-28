@@ -14,7 +14,7 @@ let settings:any = {
 	_max_slider_value: 800,
 	_slider_type: "duble",
 	_type_view: "horizontal",
-	_step : 1
+	_step : 50
 };
 // {
 // пример передачи параметров, ошибки ушли при передачи всех параметров

@@ -147,6 +147,7 @@ class View_horizontal {
 		//написать нормальную реализацию чтобы не повторять код
 		(el.querySelector("#ias-slider__duble_2_horizontal") as HTMLElement).onmousedown = this._drag_mouse_down_2;
 	};
+
 	_drag_mouse_down_single = (e: Event) => {
 		e.preventDefault();
 		document.onmouseup = this._close_drag_element; // обработчик на событие поднятие клавиши мыши - запустит код, который обнулит события
@@ -164,7 +165,28 @@ class View_horizontal {
 		let slider_1_width = slider_single.offsetWidth;
 		let slider_1_position_left_x_axis = slider_single.offsetLeft; // вычисляет верхний левый угол элемента от угла родителя
 
+		let steps_in_money = (this._max_start_slider - this._min_start_slider) / this._step; // размер шага в деньгах
+		let pixel_step = parent_width / steps_in_money; // размер шага в пикселях
+
 		this._drag_ribon_auto_single(slider_1_position_left_x_axis);
+
+		if (this._step >= slider_1_width) {
+			this._step_implementation(e, parent_element, slider_single);; // Рабочая функция
+		} else {
+			if (e.clientX > parent_width + parent_position_x) {
+
+				slider_single.style.left = (parent_width - (slider_1_width / 2)) + "px"
+
+			} else if (e.clientX < parent_position_x + (slider_1_width / 2)) {
+
+				slider_single.style.left =  '0px';
+
+			} else {
+				slider_single.style.left = (e.clientX - parent_position_x - (slider_1_width / 2)) + "px";
+			};
+			this._math__sliders_value_single(pixel_step, e);
+		};
+
 		// this._math__sliders_value_single(parent_width, slider_1_position_left_x_axis);
 
 		// if (e.clientX > parent_width + parent_position_x) {
@@ -179,7 +201,6 @@ class View_horizontal {
 		// 	slider_single.style.left = (e.clientX - parent_position_x - (slider_1_width / 2)) + "px";
 		// };
 
-		this._step_implementation(e, parent_element, slider_single);
 	}
 
 	_drag_mouse_down_1 = (e: Event) => {
@@ -207,12 +228,10 @@ class View_horizontal {
 		let slider_1 = parent_element.querySelector("#ias-slider__duble_1_horizontal") as HTMLElement;
 		let slider_1_width = slider_1.offsetWidth;
 		let slider_1_position_left_x_axis = slider_1.offsetLeft; // вычисляет верхний левый угол элемента от угла родителя
-		// console.log("slider_1_position_left_x_axis : " + slider_1_position_left_x_axis + " pageXOffset : " + pageXOffset);
 
 		let slider_2 = parent_element.querySelector("#ias-slider__duble_2_horizontal") as HTMLElement;
 		let slider_2_width = slider_1.offsetWidth;
 		let slider_2_position_left_x_axis = slider_2.offsetLeft; // вычисляет верхний левый угол элемента от угла родителя
-		// console.log("slider_2_position_left_x_axis : " + slider_2_position_left_x_axis + " pageXOffset : " + pageXOffset);
 
 		let steps_in_money = (this._max_start_slider - this._min_start_slider) / this._step; // размер шага в деньгах
 		let pixel_step = parent_width / steps_in_money; // размер шага в пикселях
@@ -228,7 +247,7 @@ class View_horizontal {
 
 			} else if (e.clientX < parent_position_x) {
 
-				slider_1.style.left =  '0px'
+				slider_1.style.left = '0px'
 
 			} else {
 				slider_1.style.left = (e.clientX - parent_position_x - (slider_1_width / 2)) + "px";
@@ -239,27 +258,6 @@ class View_horizontal {
 			};
 			this._math__sliders_value_left(pixel_step, e);
 		}
-		// this._math__sliders_value(parent_width, slider_1_position_left_x_axis, slider_2_position_left_x_axis); // РАБОЧАЯ ФУНКЦИЯ
-
-
-		// if (e.clientX > parent_width + parent_position_x) { // РАБОЧАЯ ФУНКЦИЯ
-
-		// 	slider_1.style.left = (parent_width - (slider_1_width / 2)) + "px"
-
-		// } else if (e.clientX < parent_position_x) {
-
-		// 	slider_1.style.left = (slider_1_width / (2)) + 'px'
-
-		// } else {
-		// 	slider_1.style.left = (e.clientX - parent_position_x - (slider_1_width / 2)) + "px";
-		// };
-
-		// if (slider_2_position_left_x_axis + parent_position_x < e.clientX + (slider_1_width / 2)) {
-		// 	slider_1.style.left = (slider_2_position_left_x_axis - 30) + "px"
-		// }
-		// this.facade_view_set_param_controller();
-		// this.NEW_math__sliders_value(parent_width, slider_1, slider_2); // ЭКСПЕРИМЕТНАТЛЬНАЯ ФУНКЦИЯ
-
 	};
 
 	_drag_element_2 = (e: MouseEvent) => {
@@ -308,28 +306,6 @@ class View_horizontal {
 			};
 			this._math__sliders_value_right(pixel_step, e);
 		}
-		// this._math__sliders_value(parent_width, slider_1_position_left_x_axis, slider_2_position_left_x_axis); // РАБОЧАЯ ФУНКЦИЯ
-
-
-		// if (e.clientX > parent_width + parent_position_x) { //если курсор выходит за пределы элемента справа РАБОЧАЯ ФУНКЦИЯ
-
-		// 	slider_2.style.left = (parent_width - (slider_2_width / 2)) + "px"
-
-		// } else if (e.clientX < parent_position_x) { //если курсор выходит за пределы элемента слева
-
-		// 	slider_2.style.left = (slider_2_width / (2)) + 'px'
-
-		// } else { //если курсор внутри элемента
-		// 	slider_2.style.left = (e.clientX - parent_position_x - (slider_2_width / 2)) + "px";
-		// };
-
-		// if (slider_1_position_left_x_axis + parent_position_x >= e.clientX - (slider_2_width * 1.5)) {
-		// 	slider_2.style.left = (slider_1_position_left_x_axis + slider_2_width) + "px"
-		// }
-		// this.facade_view_set_param_controller();
-
-		// this.NEW_math__sliders_value(parent_width, slider_1, slider_2); // ЭКСПЕРИМЕТНАТЛЬНАЯ ФУНКЦИЯ
-		// this._step_implementation(e, parent_element, slider_2, slider_1); // рабочая функция
 	};
 
 	_drag_ribon_auto_single(slider_1_position_left_x_axis: number) {
@@ -378,46 +354,6 @@ class View_horizontal {
 
 	};
 
-	// _math__sliders_value_duble(pixel_step: number, e: MouseEvent) {
-
-	// 	let parent_element = document.querySelector("#" + this._element_id) as HTMLElement;
-	// 	let parent_width = parent_element.offsetWidth;
-	// 	let parent_global = parent_element.getBoundingClientRect(); // указание на контейнер родителя
-	// 	let parent_position_x = parent_global.left; // смещение слева от экрана
-
-	// 	let slider_1 = parent_element.querySelector("#ias-slider__duble_1_horizontal") as HTMLElement;
-	// 	let slider_1_position_left_x_axis = slider_1.offsetLeft;
-
-	// 	let slider_2 = parent_element.querySelector("#ias-slider__duble_2_horizontal") as HTMLElement;
-	// 	let slider_2_position_left_x_axis = slider_2.offsetLeft;
-
-	// 	let value_field_1 = parent_element.querySelector("#ias-slider__duble_fly-value-1") as HTMLElement;
-	// 	let value_field_2 = parent_element.querySelector("#ias-slider__duble_fly-value-2") as HTMLElement;
-
-	// 	let value_field_1_static = parent_element.querySelector("#value_field_1-field") as HTMLElement;
-	// 	let value_field_2_static = parent_element.querySelector("#value_field_2-field") as HTMLElement;
-
-	// 	let calculate = (this._max_start_slider - this._min_start_slider) / parent_width;
-
-	// 	let answer1 = Math.floor(slider_1_position_left_x_axis * calculate);
-	// 	let answer2 = Math.floor(slider_2_position_left_x_axis * calculate);
-
-	// 	value_field_1.innerText = answer1 + " " + this._sign;
-	// 	value_field_1_static.innerText = answer1 + " " + this._sign;
-
-
-	// 	if (e.clientX > parent_width + parent_position_x - pixel_step) {
-	// 		value_field_2.innerText = this._max_start_slider + " " + this._sign;
-	// 		value_field_2_static.innerText = this._max_start_slider + " " + this._sign;
-	// 	} else {
-	// 		value_field_2.innerText = answer2 + " " + this._sign;
-	// 		value_field_2_static.innerText = answer2 + " " + this._sign;
-	// 	}
-
-	// 	value_field_1.style.left = slider_1_position_left_x_axis - slider_1.offsetWidth / 2 + "px";
-	// 	value_field_2.style.left = slider_2_position_left_x_axis + slider_2.offsetWidth / 2 + "px";
-
-	// };
 	_math__sliders_value_left(pixel_step: number, e: MouseEvent) {
 
 		let parent_element = document.querySelector("#" + this._element_id) as HTMLElement;
