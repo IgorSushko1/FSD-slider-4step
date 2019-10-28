@@ -214,7 +214,31 @@ class View_horizontal {
 		let slider_2_position_left_x_axis = slider_2.offsetLeft; // вычисляет верхний левый угол элемента от угла родителя
 		// console.log("slider_2_position_left_x_axis : " + slider_2_position_left_x_axis + " pageXOffset : " + pageXOffset);
 
+		let steps_in_money = (this._max_start_slider - this._min_start_slider) / this._step; // размер шага в деньгах
+		let pixel_step = parent_width / steps_in_money; // размер шага в пикселях
+
 		this._drag_ribon_auto(slider_1_position_left_x_axis, slider_2_position_left_x_axis);
+
+		if (this._step >= slider_1_width) {
+			this._step_implementation(e, parent_element, slider_1, slider_2); // Рабочая функция
+		} else {
+			if (e.clientX > parent_width + parent_position_x) { // РАБОЧАЯ ФУНКЦИЯ
+
+				slider_1.style.left = (parent_width - (slider_1_width / 2)) + "px"
+
+			} else if (e.clientX < parent_position_x) {
+
+				slider_1.style.left =  '0px'
+
+			} else {
+				slider_1.style.left = (e.clientX - parent_position_x - (slider_1_width / 2)) + "px";
+			};
+
+			if (slider_2_position_left_x_axis + parent_position_x < e.clientX + (slider_1_width / 2)) {
+				slider_1.style.left = (slider_2_position_left_x_axis - 30) + "px"
+			};
+			this._math__sliders_value_left(pixel_step, e);
+		}
 		// this._math__sliders_value(parent_width, slider_1_position_left_x_axis, slider_2_position_left_x_axis); // РАБОЧАЯ ФУНКЦИЯ
 
 
@@ -235,7 +259,7 @@ class View_horizontal {
 		// }
 		// this.facade_view_set_param_controller();
 		// this.NEW_math__sliders_value(parent_width, slider_1, slider_2); // ЭКСПЕРИМЕТНАТЛЬНАЯ ФУНКЦИЯ
-		this._step_implementation(e, parent_element, slider_1, slider_2); // Рабочая функция
+
 	};
 
 	_drag_element_2 = (e: MouseEvent) => {
@@ -258,7 +282,32 @@ class View_horizontal {
 		let slider_2_position_left_x_axis = slider_2.offsetLeft; // вычисляет верхний левый угол элемента от угла родителя
 		// console.log("slider_2_position_left_x_axis : " + slider_2_position_left_x_axis + " pageXOffset : " + pageXOffset);
 
+
+		let steps_in_money = (this._max_start_slider - this._min_start_slider) / this._step; // размер шага в деньгах
+		let pixel_step = parent_width / steps_in_money; // размер шага в пикселях
+
 		this._drag_ribon_auto(slider_1_position_left_x_axis, slider_2_position_left_x_axis);
+
+		if (this._step >= slider_2_width) {
+			this._step_implementation(e, parent_element, slider_2, slider_1); // Рабочая функция
+		} else {
+			if (e.clientX > parent_width + parent_position_x) { //если курсор выходит за пределы элемента справа РАБОЧАЯ ФУНКЦИЯ
+
+				slider_2.style.left = (parent_width - (slider_2_width / 2)) + "px"
+
+			} else if (e.clientX < parent_position_x) { //если курсор выходит за пределы элемента слева
+
+				slider_2.style.left = (slider_2_width / (2)) + 'px'
+
+			} else { //если курсор внутри элемента
+				slider_2.style.left = (e.clientX - parent_position_x - (slider_2_width / 2)) + "px";
+			};
+
+			if (slider_1_position_left_x_axis + parent_position_x >= e.clientX - (slider_2_width * 1.5)) {
+				slider_2.style.left = (slider_1_position_left_x_axis + slider_2_width) + "px"
+			};
+			this._math__sliders_value_right(pixel_step, e);
+		}
 		// this._math__sliders_value(parent_width, slider_1_position_left_x_axis, slider_2_position_left_x_axis); // РАБОЧАЯ ФУНКЦИЯ
 
 
@@ -280,7 +329,7 @@ class View_horizontal {
 		// this.facade_view_set_param_controller();
 
 		// this.NEW_math__sliders_value(parent_width, slider_1, slider_2); // ЭКСПЕРИМЕТНАТЛЬНАЯ ФУНКЦИЯ
-		this._step_implementation(e, parent_element, slider_2, slider_1); // рабочая функция
+		// this._step_implementation(e, parent_element, slider_2, slider_1); // рабочая функция
 	};
 
 	_drag_ribon_auto_single(slider_1_position_left_x_axis: number) {
