@@ -9,7 +9,10 @@ interface View_horizontal {
 	_slider_type?: string,
 	_step?: number,
 	controller?: any;
+	tooltip?: string;
+	value_field?: string
 };
+
 class View_horizontal {
 
 	constructor(param: View_horizontal) {
@@ -21,7 +24,9 @@ class View_horizontal {
 		this._min_slider_value = param._min_slider_value || 200;
 		this._max_slider_value = param._max_slider_value || 800;
 		this._slider_type = param._slider_type || "single";
-		this._step = param._step || 2
+		this._step = param._step || 2;
+		this.tooltip = param.tooltip || "on";
+		this.value_field = param.value_field || "on"
 
 		// this.controller = controller;
 	};
@@ -64,11 +69,13 @@ class View_horizontal {
 					'<span id="value_field_1-field"></span>' + '-' +
 					'<span id="value_field_2-field"></span>' +
 					'</div>' +
-					'<div id="ias-slider__duble_fly-value-1"></div>' +
+					'<div id= "ias-container">' +
+					'<div id="ias-slider__duble_fly-value-1"  class="tooltip"></div>' +
 					'<div id="ias-slider__duble_1_horizontal" class="drag"></div>' +
-					'<div id="ias-slider__duble_fly-value-2"></div>' +
+					'<div id="ias-slider__duble_fly-value-2" class="tooltip"></div>' +
 					'<div id="ias-slider__duble_2_horizontal" class="drag"></div>' +
-					'<div id="color-bar_horizontal"></div>';
+					'<div id="color-bar_horizontal"></div>'+
+					'</div>';
 
 				this.create_ribon();
 
@@ -76,20 +83,37 @@ class View_horizontal {
 				this._elem.innerHTML = '<div id="value-field">' +
 					'<span id="value_field_single"></span>' +
 					'</div>' +
+					'<div id= "ias-container">' +
 					'<div id="color-bar_horizontal"></div>' +
-					'<div id="ias-slider__single_fly-value"></div>' +
-					'<div id="ias-slider__single" class="drag"></div>';
+					'<div id="ias-slider__single_fly-value" class="tooltip"></div>' +
+					'<div id="ias-slider__single" class="drag"></div>'+
+					'</div>';
 
 				this.create_ribon();
 			} else {
 				throw console.error("Неправильно задан параметр для _slider_type");
 			}
-		}
-		else {
+		} else {
 			throw console.error("На странице не существует указанного _element_id для создания слайдера или он просто не указан");
-		}
-
+		};
+		this.set_visible_text_field();
 		this._create_listeners();
+	};
+
+	set_visible_text_field = () => {
+		let parent_element = document.querySelector("#" + this._element_id) as HTMLElement;
+		if (this.tooltip == "off") {
+			let tooltip = parent_element.getElementsByClassName("tooltip");
+			for (let a of tooltip) {
+				a.style.display = "none";
+			}
+		};
+
+		if (this.value_field == "off") {
+			let value_field = parent_element.querySelector("#value-field") as HTMLElement;
+			value_field.style.display = "none";
+		};
+
 	};
 
 	create_ribon() {
@@ -122,7 +146,7 @@ class View_horizontal {
 			ribon.style.left = "0px";
 			ribon.style.width = slider_1_position_left_x_axis + "px";
 		}
-	}
+	};
 
 	_create_listeners() {
 		if (this._slider_type == "duble") {
@@ -132,7 +156,7 @@ class View_horizontal {
 			console.log("создан одиночный слайдер")
 			this._drag_event_single();
 		}
-	}
+	};
 
 	_drag_event_single() {
 		let el = document.querySelector("#" + this._element_id);
@@ -152,7 +176,7 @@ class View_horizontal {
 		e.preventDefault();
 		document.onmouseup = this._close_drag_element; // обработчик на событие поднятие клавиши мыши - запустит код, который обнулит события
 		document.onmousemove = this._drag_element_single;
-	}
+	};
 
 	_drag_element_single = (e: MouseEvent) => {
 		console.log("drag_element_single работает")
@@ -179,7 +203,7 @@ class View_horizontal {
 
 			} else if (e.clientX < parent_position_x + (slider_1_width / 2)) {
 
-				slider_single.style.left =  '0px';
+				slider_single.style.left = '0px';
 
 			} else {
 				slider_single.style.left = (e.clientX - parent_position_x - (slider_1_width / 2)) + "px";
@@ -187,21 +211,7 @@ class View_horizontal {
 			this._math__sliders_value_single(pixel_step, e);
 		};
 
-		// this._math__sliders_value_single(parent_width, slider_1_position_left_x_axis);
-
-		// if (e.clientX > parent_width + parent_position_x) {
-
-		// 	slider_single.style.left = (parent_width - (slider_1_width / 2)) + "px"
-
-		// } else if (e.clientX < parent_position_x) {
-
-		// 	slider_single.style.left = (slider_1_width / (-2)) + 'px'
-
-		// } else {
-		// 	slider_single.style.left = (e.clientX - parent_position_x - (slider_1_width / 2)) + "px";
-		// };
-
-	}
+	};
 
 	_drag_mouse_down_1 = (e: Event) => {
 		console.log("drag_mouse_down_1 работает")
@@ -469,10 +479,7 @@ class View_horizontal {
 			}
 			this._math__sliders_value_single(pixel_step, e);
 		}
-
-
-
-	}
+	};
 
 	_close_drag_element = () => {
 		/* stop moving when mouse button is released:*/
