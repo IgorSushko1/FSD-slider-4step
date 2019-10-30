@@ -142,45 +142,37 @@ for (let key_one in obj_fixed_values) {
 
 
 for (let key_one in obj_changeable_values) {
-	let select = document.createElement("select");
-	// let key = obj_changeable_values[key_one];
-	let title: string = obj_changeable_values[key_one].description;
-	let text_node_title = document.createTextNode(title);
+	let description = obj_changeable_values[key_one].description;
+	let text_node_title = document.createTextNode(description);
+
 	let div = document.createElement("div");
 	let span = document.createElement("span");
+	let input = document.createElement("input");
+	input.type = "number";
+
 	span.appendChild(text_node_title);
 	div.appendChild(span);
-	// console.log(a);
+	div.appendChild(input);
 
-	select.id = obj_changeable_values[key_one].key_word;
+	div.id = "ias-slider__" + obj_changeable_values[key_one].key_word;
 
-	for (let b in obj_changeable_values[key_one].value) {
-
-		let stuff = document.createElement("option");
-
-		let value = obj_changeable_values[key_one].value[b];
-		stuff.value = value;
-
-		let text_node = document.createTextNode(value);
-		stuff.appendChild(text_node);
-		select.appendChild(stuff);
-
-	}
-
-	document.getElementById("doc_panel").appendChild(div).appendChild(select);
+	document.getElementById("doc_panel").appendChild(div);
 
 	let vb = document.getElementById("doc_panel");
-	let vv = vb.querySelector("#" + obj_changeable_values[key_one].key_word) as HTMLElement;
 
-	vv.onchange = function () {
+	let vv = vb.querySelector("#ias-slider__" + obj_changeable_values[key_one].key_word) as HTMLElement;
+	let f_name = obj_changeable_values[key_one].function_name;
 
-		console.log("до изменения : " + settings[obj_changeable_values[key_one].function_name]);
+	vv.oninput = function () {
 
-		settings[obj_changeable_values[key_one].function_name] = this.value;
-		console.log("после изменения : " + settings[obj_changeable_values[key_one].function_name]);
+		console.log("до изменения в динамичном слайдере : " + f_name);
+		console.log("this.value : " + input.value);
 
+		settings[f_name] = input.value;
 
-		change_string(key_one, settings[obj_changeable_values[key_one].function_name]);
+		console.log("после изменения в динамичном слайдере : " + settings[f_name]);
+
+		slider_refresh();
 	};
 };
 
