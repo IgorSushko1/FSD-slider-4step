@@ -67,11 +67,13 @@ class View_vertical {
 					'<span id="value_field_1-field"></span>' + '-' +
 					'<span id="value_field_2-field"></span>' +
 					'</div>' +
-					'<div id="ias-slider__duble_fly-value-1" class="tooltip"></div>' +
+					'<div id= "ias-container_vertical">' +
+					'<div id="ias-slider__duble_fly-value-1_vertical" class="tooltip"></div>' +
 					'<div id="ias-slider__duble_1_vertical" class="drag"></div>' +
-					'<div id="ias-slider__duble_fly-value-2" class="tooltip"></div>' +
+					'<div id="ias-slider__duble_fly-value-2_vertical" class="tooltip"></div>' +
 					'<div id="ias-slider__duble_2_vertical" class="drag"></div>' +
-					'<div id="color-bar_vertical"></div>';
+					'<div id="color-bar_vertical"></div>'+
+					'</div>';
 
 				this.create_ribon();
 
@@ -80,9 +82,11 @@ class View_vertical {
 					'<div id="value-field">' +
 					'<span id="value_field_single"></span>' +
 					'</div>' +
+					'<div id= "ias-container_vertical">' +
 					'<div id="color-bar_vertical"></div>' +
-					'<div id="ias-slider__single_fly-value" class="tooltip"></div>' +
-					'<div id="ias-slider__single" class="drag"></div>';
+					'<div id="ias-slider__single_fly-value_vertical" class="tooltip"></div>' +
+					'<div id="ias-slider__single" class="drag"></div>' +
+					'</div>';
 
 				this.create_ribon();
 			} else {
@@ -98,6 +102,35 @@ class View_vertical {
 
 	set_visible_text_field = () => {
 		let parent_element = document.querySelector("#" + this._element_id) as HTMLElement;
+
+		let a = this._min_start_slider;
+		let b = this._max_start_slider;
+		let c = this._min_slider_value;
+		let d = this._max_slider_value;
+		console.log("до  этого момента ок")
+		if (this._slider_type == "duble" && a < b && c < b && c < d && d <= b && c - a >= 0) {
+
+			let value_field_1 = parent_element.querySelector("#value_field_1-field") as HTMLElement;
+			let value_field_2 = parent_element.querySelector("#value_field_2-field") as HTMLElement;
+			let value_field_1_fly = parent_element.querySelector("#ias-slider__duble_fly-value-1_vertical") as HTMLElement;
+			let value_field_2_fly = parent_element.querySelector("#ias-slider__duble_fly-value-2_vertical") as HTMLElement;
+
+			value_field_1.innerText = c + " " + this._sign;
+			value_field_2.innerText = d + " " + this._sign;
+
+			value_field_1_fly.innerText = c + " " + this._sign;
+			value_field_2_fly.innerText = d + " " + this._sign;
+
+			this.move_sliders_on_inizialization();
+
+		}
+		if (this._slider_type == "single" && a < b && c - a >= 0) {
+			let value_field_single = parent_element.querySelector("#value_field_single") as HTMLElement;
+			let value_field_single_fly = parent_element.querySelector("#ias-slider__single_fly-value_vertical") as HTMLElement;
+			value_field_single.innerText = c + " " + this._sign;
+			value_field_single_fly.innerText = c + " " + this._sign;
+			this.move_single_slider_on_inizialization()
+		}
 		if (this.tooltip == "off") {
 			let tooltip = parent_element.getElementsByClassName("tooltip");
 			for (let a of tooltip) {
@@ -112,6 +145,54 @@ class View_vertical {
 
 	};
 
+	move_sliders_on_inizialization() {
+		let parent_element = document.querySelector("#" + this._element_id) as HTMLElement;
+		let parent_height = parent_element.offsetHeight;// ширина родительского элемента
+
+		let slider_1 = parent_element.querySelector("#ias-slider__duble_1_vertical") as HTMLElement;
+
+		let slider_2 = parent_element.querySelector("#ias-slider__duble_2_vertical") as HTMLElement;
+
+		let value_field_1 = parent_element.querySelector("#ias-slider__duble_fly-value-1_vertical") as HTMLElement;
+
+		let value_field_2 = parent_element.querySelector("#ias-slider__duble_fly-value-2_vertical") as HTMLElement;
+
+
+		let steps = (this._max_start_slider - this._min_start_slider) / this._step; // количество шагов
+		let pixel_step = parent_height / steps; // размер шага в пикселях
+		let first_slider_position = pixel_step * ((this._min_slider_value - this._min_start_slider) / this._step);
+		console.log("view -first_slider_position  " + first_slider_position)
+		let second_slider_position = pixel_step * ((this._max_slider_value - this._min_start_slider) / this._step);
+
+		slider_1.style.top = first_slider_position + "px";
+		slider_2.style.top = second_slider_position + "px";
+
+		value_field_1.style.top = first_slider_position + "px";
+		value_field_2.style.top = second_slider_position + "px";
+
+		this.create_ribon();
+	};
+
+	move_single_slider_on_inizialization = () => {
+		let parent_element = document.querySelector("#" + this._element_id) as HTMLElement;
+		let parent_height = parent_element.offsetHeight;// ширина родительского элемента
+
+		let slider_single = parent_element.querySelector("#ias-slider__single") as HTMLElement;
+
+		let value_field_single = parent_element.querySelector("#ias-slider__single_fly-value_vertical") as HTMLElement;
+
+		let steps = (this._max_start_slider - this._min_start_slider) / this._step; // количество шагов
+
+		let pixel_step = parent_height / steps; // размер шага в пикселях
+
+		let first_slider_position = pixel_step * ((this._min_slider_value - this._min_start_slider) / this._step);
+
+		slider_single.style.top = first_slider_position + "px";
+		value_field_single.style.top = first_slider_position + "px";
+
+		this.create_ribon();
+	}
+
 	create_ribon() {
 
 		if (this._slider_type == "duble") {
@@ -122,7 +203,7 @@ class View_vertical {
 			let slider_1_position_top_y_axis = slider_1.offsetTop;
 
 			let slider_2 = parent_element.querySelector("#ias-slider__duble_2_vertical") as HTMLElement;
-			let slider_2_height = slider_2.offsetHeight;
+			// let slider_2_height = slider_2.offsetHeight;
 			let slider_2_position_top_y_axis = slider_2.offsetTop;
 
 			let ribon = document.getElementById("color-bar_vertical");
@@ -134,12 +215,12 @@ class View_vertical {
 			let parent_element = document.querySelector("#" + this._element_id) as HTMLElement;
 
 			let slider_1 = parent_element.querySelector("#ias-slider__single") as HTMLElement;
-			let slider_1_height = slider_1.offsetHeight;
+			// let slider_1_height = slider_1.offsetHeight;
 			let slider_1_position_top_y_axis = slider_1.offsetTop;
 
 			let ribon = document.getElementById("color-bar_vertical");
 
-			ribon.style.top = slider_1_position_top_y_axis + "px";
+			ribon.style.top = "0px";
 			ribon.style.height = slider_1_position_top_y_axis + "px";
 		}
 	}
@@ -345,7 +426,7 @@ class View_vertical {
 		let slider_single = parent_element.querySelector("#ias-slider__single") as HTMLElement;
 		let slider_single_position_top_y_axis = slider_single.offsetTop;
 
-		let value_field_single = parent_element.querySelector("#ias-slider__single_fly-value") as HTMLElement;
+		let value_field_single = parent_element.querySelector("#ias-slider__single_fly-value_vertical") as HTMLElement;
 		let value_field_single_static = parent_element.querySelector("#value_field_single") as HTMLElement;
 		let parent_height = parent_element.offsetHeight;
 
@@ -375,7 +456,7 @@ class View_vertical {
 		let slider_1 = parent_element.querySelector("#ias-slider__duble_1_vertical") as HTMLElement;
 		let slider_1_position_top_y_axis = slider_1.offsetTop;
 
-		let value_field_1 = parent_element.querySelector("#ias-slider__duble_fly-value-1") as HTMLElement;
+		let value_field_1 = parent_element.querySelector("#ias-slider__duble_fly-value-1_vertical") as HTMLElement;
 
 		let value_field_1_static = parent_element.querySelector("#value_field_1-field") as HTMLElement;
 
@@ -401,7 +482,7 @@ class View_vertical {
 		let slider_2 = parent_element.querySelector("#ias-slider__duble_2_vertical") as HTMLElement;
 		let slider_2_position_top_y_axis = slider_2.offsetTop;
 
-		let value_field_2 = parent_element.querySelector("#ias-slider__duble_fly-value-2") as HTMLElement;
+		let value_field_2 = parent_element.querySelector("#ias-slider__duble_fly-value-2_vertical") as HTMLElement;
 
 		let value_field_2_static = parent_element.querySelector("#value_field_2-field") as HTMLElement;
 
@@ -431,7 +512,7 @@ class View_vertical {
 		let slider_single = parent_element.querySelector("#ias-slider__single") as HTMLElement;
 		let slider_single_position_top_y_axis = slider_single.offsetTop;
 	
-		let value_field_single = parent_element.querySelector("#ias-slider__single_fly-value") as HTMLElement;
+		let value_field_single = parent_element.querySelector("#ias-slider__single_fly-value_vertical") as HTMLElement;
 		let value_field_single_static = parent_element.querySelector("#value_field_single") as HTMLElement;
 		let parent_height = parent_element.offsetHeight;
 
@@ -470,7 +551,7 @@ class View_vertical {
 		let slider_1 = parent_element.querySelector("#ias-slider__duble_1_vertical") as HTMLElement;
 		let slider_1_position_top_y_axis = slider_1.offsetTop;
 
-		let value_field_1 = parent_element.querySelector("#ias-slider__duble_fly-value-1") as HTMLElement;
+		let value_field_1 = parent_element.querySelector("#ias-slider__duble_fly-value-1_vertical") as HTMLElement;
 
 		let value_field_1_static = parent_element.querySelector("#value_field_1-field") as HTMLElement;
 
@@ -503,7 +584,7 @@ class View_vertical {
 		let slider_2 = parent_element.querySelector("#ias-slider__duble_2_vertical") as HTMLElement;
 		let slider_2_position_top_y_axis = slider_2.offsetTop;
 
-		let value_field_2 = parent_element.querySelector("#ias-slider__duble_fly-value-2") as HTMLElement;
+		let value_field_2 = parent_element.querySelector("#ias-slider__duble_fly-value-2_vertical") as HTMLElement;
 
 		let value_field_2_static = parent_element.querySelector("#value_field_2-field") as HTMLElement;
 
@@ -523,7 +604,7 @@ class View_vertical {
 
 			value_field_2.style.top = pixel_step * steps + "px";
 
-		} else if (e.clientY > parent_height + parent_position_y - slider_1.offsetWidth) {
+		} else if (e.clientY > parent_height + parent_position_y - slider_1.offsetHeight) {
 
 			// let answer = Number(this._min_start_slider) + Number(this._max_start_slider);
 			value_field_2.innerText = answer2 + " " + this._sign;
@@ -538,16 +619,16 @@ class View_vertical {
 	_step_implementation(e: MouseEvent, parent: HTMLElement, modified_object: HTMLElement, static_object?: HTMLElement) {
 		let parent_global = parent.getBoundingClientRect(); // указание на контейнер родителя
 		let parent_position_x = parent_global.top; // смещение слева от экрана
-		let parent_width = parent.offsetHeight; // ширина контейнера
+		let parent_height = parent.offsetHeight; // ширина контейнера
 
 		let steps_in_money = (this._max_start_slider - this._min_start_slider) / this._step; // размер шага в деньгах
-		let different = (this._max_start_slider - this._min_start_slider) / parent_width;
+		let different = (this._max_start_slider - this._min_start_slider) / parent_height;
 
 
 
 		let modified_object_position = modified_object.offsetTop; //смещение относительно левого верхнего угла родителя по Х
 		let modified_object_width = modified_object.offsetHeight; // ширина ползунка
-		let pixel_step = (parent_width - modified_object_width) / steps_in_money; // размер шага в пикселях
+		let pixel_step = (parent_height - modified_object_width) / steps_in_money; // размер шага в пикселях
 
 		if (static_object) {
 
@@ -571,10 +652,10 @@ class View_vertical {
 
 			if (modified_object_position > static_object_position) {
 
-				if (e.clientY > static_object_position + parent_position_x + pixel_step && e.clientY < parent_width + parent_position_x - modified_object_width) {
+				if (e.clientY > static_object_position + parent_position_x + pixel_step && e.clientY < parent_height + parent_position_x - modified_object_width) {
 					modified_object.style.top = pixel_step * step + "px";
-				} else if (e.clientY > parent_width + parent_position_x - modified_object_width) {
-					modified_object.style.top = parent_width - modified_object_width + "px";
+				} else if (e.clientY > parent_height + parent_position_x - modified_object_width) {
+					modified_object.style.top = parent_height - modified_object_width + "px";
 				} else if (e.clientY < parent_position_x + static_object_position + modified_object_width) {
 					modified_object.style.top = static_object_position + modified_object_width + "px";
 				}
@@ -583,9 +664,9 @@ class View_vertical {
 
 				// if (e.clientY - pixel_step < static_object_position + parent_position_x) {
 				// 	modified_object.style.top = static_object_position + pixel_step + "px";
-				// } else if (e.clientY > parent_position_x + parent_width - modified_object_width) {
-				// 	modified_object.style.top = parent_width - modified_object_width / 2 + "px";
-				// } else if (parent_position_x + static_object_position < e.clientY && e.clientY < parent_position_x + parent_width) {
+				// } else if (e.clientY > parent_position_x + parent_height - modified_object_width) {
+				// 	modified_object.style.top = parent_height - modified_object_width / 2 + "px";
+				// } else if (parent_position_x + static_object_position < e.clientY && e.clientY < parent_position_x + parent_height) {
 				// 	let new_position = Math.floor((e.clientY - parent_position_x) / pixel_step);
 				// 	modified_object.style.top = (pixel_step * new_position) + "px";
 				// }
@@ -597,9 +678,9 @@ class View_vertical {
 
 			if (e.clientY < parent_position_x) {
 				modified_object.style.top = 0 + "px";
-			} else if (e.clientY > parent_position_x + parent_width - modified_object_width) {
-				modified_object.style.top = parent_width - modified_object_width + "px";
-			} else if (e.clientY > parent_position_x && e.clientY < parent_position_x + parent_width) {
+			} else if (e.clientY > parent_position_x + parent_height - modified_object_width) {
+				modified_object.style.top = parent_height - modified_object_width + "px";
+			} else if (e.clientY > parent_position_x && e.clientY < parent_position_x + parent_height) {
 				modified_object.style.top = (pixel_step * step) + "px";
 			}
 			this._math__sliders_value_single_new(step, pixel_step, e);

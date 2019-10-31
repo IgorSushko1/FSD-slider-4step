@@ -19,10 +19,10 @@ class View_horizontal {
 		this._element_id = param._element_id;
 		this._elem = document.getElementById(param._element_id);
 		this._sign = param._sign || "₽";
-		this._min_start_slider = param._min_start_slider || 0;
-		this._max_start_slider = param._max_start_slider || 1000;
-		this._min_slider_value = param._min_slider_value || 200;
-		this._max_slider_value = param._max_slider_value || 800;
+		this._min_start_slider = Number(param._min_start_slider) || 0;
+		this._max_start_slider = Number(param._max_start_slider) || 1000;
+		this._min_slider_value = Number(param._min_slider_value) || 200;
+		this._max_slider_value = Number(param._max_slider_value) || 800;
 		this._slider_type = param._slider_type || "single";
 		this._step = param._step || 2;
 		this.tooltip = param.tooltip || "on";
@@ -102,6 +102,36 @@ class View_horizontal {
 
 	set_visible_text_field = () => {
 		let parent_element = document.querySelector("#" + this._element_id) as HTMLElement;
+
+		let a = this._min_start_slider;
+		let b = this._max_start_slider;
+		let c = this._min_slider_value;
+		let d = this._max_slider_value;
+		console.log("до  этого момента ок")
+		if (this._slider_type == "duble" && a < b && c < b && c < d && d <= b && c - a >= 0) {
+
+			let value_field_1 = parent_element.querySelector("#value_field_1-field") as HTMLElement;
+			let value_field_2 = parent_element.querySelector("#value_field_2-field") as HTMLElement;
+			let value_field_1_fly = parent_element.querySelector("#ias-slider__duble_fly-value-1") as HTMLElement;
+			let value_field_2_fly = parent_element.querySelector("#ias-slider__duble_fly-value-2") as HTMLElement;
+
+			value_field_1.innerText = c + " " + this._sign;
+			value_field_2.innerText = d + " " + this._sign;
+
+			value_field_1_fly.innerText = c + " " + this._sign;
+			value_field_2_fly.innerText = d + " " + this._sign;
+
+			this.move_sliders_on_inizialization();
+
+		}
+		if (this._slider_type == "single" && a < b && c - a >= 0) {
+			let value_field_single = parent_element.querySelector("#value_field_single") as HTMLElement;
+			value_field_single.innerText = c + " " + this._sign;
+			this.move_single_slider_on_inizialization()
+		}
+
+
+
 		if (this.tooltip == "off") {
 			let tooltip = parent_element.getElementsByClassName("tooltip");
 			for (let a of tooltip) {
@@ -115,6 +145,54 @@ class View_horizontal {
 		};
 
 	};
+
+	move_sliders_on_inizialization() {
+		let parent_element = document.querySelector("#" + this._element_id) as HTMLElement;
+		let parent_width = parent_element.offsetWidth;// ширина родительского элемента
+
+		let slider_1 = parent_element.querySelector("#ias-slider__duble_1_horizontal") as HTMLElement;
+
+		let slider_2 = parent_element.querySelector("#ias-slider__duble_2_horizontal") as HTMLElement;
+
+		let value_field_1 = parent_element.querySelector("#ias-slider__duble_fly-value-1") as HTMLElement;
+
+		let value_field_2 = parent_element.querySelector("#ias-slider__duble_fly-value-2") as HTMLElement;
+
+
+		let steps = (this._max_start_slider - this._min_start_slider) / this._step; // количество шагов
+		let pixel_step = parent_width / steps; // размер шага в пикселях
+		let first_slider_position = pixel_step * ((this._min_slider_value - this._min_start_slider) / this._step);
+		console.log("view -first_slider_position  " + first_slider_position)
+		let second_slider_position = pixel_step * ((this._max_slider_value - this._min_start_slider) / this._step);
+
+		slider_1.style.left = first_slider_position + "px";
+		slider_2.style.left = second_slider_position + "px";
+
+		value_field_1.style.left = first_slider_position + "px";
+		value_field_2.style.left = second_slider_position + "px";
+
+		this.create_ribon();
+	};
+
+	move_single_slider_on_inizialization = () => {
+		let parent_element = document.querySelector("#" + this._element_id) as HTMLElement;
+		let parent_width = parent_element.offsetWidth;// ширина родительского элемента
+
+		let slider_single = parent_element.querySelector("#ias-slider__single") as HTMLElement;
+
+		let value_field_single = parent_element.querySelector("#ias-slider__single_fly-value") as HTMLElement;
+
+		let steps = (this._max_start_slider - this._min_start_slider) / this._step; // количество шагов
+
+		let pixel_step = parent_width / steps; // размер шага в пикселях
+
+		let first_slider_position = pixel_step * ((this._min_slider_value - this._min_start_slider) / this._step);
+
+		slider_single.style.left = first_slider_position + "px";
+		value_field_single.style.left = first_slider_position + "px";
+
+		this.create_ribon();
+	}
 
 	create_ribon() {
 
@@ -150,10 +228,10 @@ class View_horizontal {
 
 	_create_listeners() {
 		if (this._slider_type == "duble") {
-			console.log("create_listeners рабоатет")
+			// console.log("create_listeners рабоатет")
 			this._drag_events();
 		} else if (this._slider_type == "single") {
-			console.log("создан одиночный слайдер")
+			// console.log("создан одиночный слайдер")
 			this._drag_event_single();
 		}
 	};
@@ -164,9 +242,9 @@ class View_horizontal {
 	};
 
 	_drag_events() {
-		console.log("drag_event работает")
+		// console.log("drag_event работает")
 		let el = document.querySelector("#" + this._element_id);
-		console.log("el работает" + el);
+		// console.log("el работает" + el);
 		(el.querySelector("#ias-slider__duble_1_horizontal") as HTMLElement).onmousedown = this._drag_mouse_down_1;
 		//написать нормальную реализацию чтобы не повторять код
 		(el.querySelector("#ias-slider__duble_2_horizontal") as HTMLElement).onmousedown = this._drag_mouse_down_2;
@@ -179,7 +257,7 @@ class View_horizontal {
 	};
 
 	_drag_element_single = (e: MouseEvent) => {
-		console.log("drag_element_single работает")
+		// console.log("drag_element_single работает")
 		let parent_element = document.querySelector("#" + this._element_id) as HTMLElement;
 		let parent_width = parent_element.offsetWidth;// ширина родительского элемента
 		let parent_position = parent_element.getBoundingClientRect();
@@ -189,7 +267,7 @@ class View_horizontal {
 		let slider_1_width = slider_single.offsetWidth;
 		let slider_1_position_left_x_axis = slider_single.offsetLeft; // вычисляет верхний левый угол элемента от угла родителя
 
-		let steps_in_money = (this._max_start_slider - this._min_start_slider) / this._step; // размер шага в деньгах
+		let steps_in_money = (this._max_start_slider - this._min_start_slider) / this._step; // количество шагов
 		let pixel_step = parent_width / steps_in_money; // размер шага в пикселях
 
 		this._drag_ribon_auto_single(slider_1_position_left_x_axis);
@@ -214,21 +292,21 @@ class View_horizontal {
 	};
 
 	_drag_mouse_down_1 = (e: Event) => {
-		console.log("drag_mouse_down_1 работает")
+		// console.log("drag_mouse_down_1 работает")
 		e.preventDefault(); // отменили все действия которые происходили раньше
 		document.onmouseup = this._close_drag_element; // обработчик на событие поднятие клавиши мыши - запустит код, который обнулит события
 		document.onmousemove = this._drag_element_1; // событие, произойдет если сдвинуть мышу
 	};
 
 	_drag_mouse_down_2 = (e: Event) => {
-		console.log("drag_mouse_down_2 работает")
+		// console.log("drag_mouse_down_2 работает")
 		e.preventDefault(); // отменили все действия которые происходили раньше
 		document.onmouseup = this._close_drag_element; // обработчик на событие поднятие клавиши мыши - запустит код, который обнулит события
 		document.onmousemove = this._drag_element_2; // событие, произойдет если сдвинуть мышу
 	};
 
 	_drag_element_1 = (e: MouseEvent) => {
-		console.log("drag_element_1 работает")
+		// console.log("drag_element_1 работает")
 		let parent_element = document.querySelector("#" + this._element_id) as HTMLElement;
 		let parent_width = parent_element.offsetWidth;// ширина родительского элемента
 		let parent_position = parent_element.getBoundingClientRect();
@@ -243,7 +321,7 @@ class View_horizontal {
 		let slider_2_width = slider_1.offsetWidth;
 		let slider_2_position_left_x_axis = slider_2.offsetLeft; // вычисляет верхний левый угол элемента от угла родителя
 
-		let steps_in_money = (this._max_start_slider - this._min_start_slider) / this._step; // размер шага в деньгах
+		let steps_in_money = (this._max_start_slider - this._min_start_slider) / this._step; // количество шагов
 		let pixel_step = parent_width / steps_in_money; // размер шага в пикселях
 
 		this._drag_ribon_auto(slider_1_position_left_x_axis, slider_2_position_left_x_axis);
@@ -271,16 +349,16 @@ class View_horizontal {
 	};
 
 	_drag_element_2 = (e: MouseEvent) => {
-		console.log("drag_element_2 работает")
-		console.log("this._elem_2 работает: " + this._elem)
+		// console.log("drag_element_2 работает")
+		// console.log("this._elem_2 работает: " + this._elem)
 		let parent_element = document.querySelector("#" + this._element_id) as HTMLElement;
 		let parent_width = parent_element.offsetWidth;// ширина родительского элемента
 		let parent_position = parent_element.getBoundingClientRect();
 		let parent_position_x = parent_position.left;//размещение контейнера относительно левого края экрана
-		console.log("parent_element.offsetWidth работает " + parent_element.offsetWidth + "   parent_position_x работает " + parent_position_x + "  ")
+		// console.log("parent_element.offsetWidth работает " + parent_element.offsetWidth + "   parent_position_x работает " + parent_position_x + "  ")
 
 		let slider_1 = parent_element.querySelector("#ias-slider__duble_1_horizontal") as HTMLElement;
-		console.log("slider_1.offsetWidth работает: " + slider_1.offsetWidth)
+		// console.log("slider_1.offsetWidth работает: " + slider_1.offsetWidth)
 		let slider_1_width = slider_1.offsetWidth;
 		let slider_1_position_left_x_axis = slider_1.offsetLeft; // вычисляет верхний левый угол элемента от угла родителя
 		// console.log("slider_1_position_left_x_axis : " + slider_1_position_left_x_axis + " pageXOffset : " + pageXOffset);
@@ -291,7 +369,7 @@ class View_horizontal {
 		// console.log("slider_2_position_left_x_axis : " + slider_2_position_left_x_axis + " pageXOffset : " + pageXOffset);
 
 
-		let steps_in_money = (this._max_start_slider - this._min_start_slider) / this._step; // размер шага в деньгах
+		let steps_in_money = (this._max_start_slider - this._min_start_slider) / this._step; // количество шагов
 		let pixel_step = parent_width / steps_in_money; // размер шага в пикселях
 
 		this._drag_ribon_auto(slider_1_position_left_x_axis, slider_2_position_left_x_axis);
@@ -489,7 +567,7 @@ class View_horizontal {
 			value_field_1.style.left = pixel_step * steps + "px";
 		};
 		if (value_field_1.offsetLeft >= value_field_2.offsetLeft - slider_1.offsetWidth) {
-			value_field_1.style.left = value_field_2.offsetLeft - slider_1.offsetWidth *2 + "px"
+			value_field_1.style.left = value_field_2.offsetLeft - slider_1.offsetWidth * 2 + "px"
 		}
 
 	};
@@ -541,7 +619,7 @@ class View_horizontal {
 		let parent_position_x = parent_global.left; // смещение слева от экрана
 		let parent_width = parent.offsetWidth; // ширина контейнера
 
-		let steps_in_money = (this._max_start_slider - this._min_start_slider) / this._step; // размер шага в деньгах
+		let steps_in_money = (this._max_start_slider - this._min_start_slider) / this._step; // количество шагов
 		let different = (this._max_start_slider - this._min_start_slider) / parent_width;
 
 
@@ -610,7 +688,7 @@ class View_horizontal {
 
 	_close_drag_element = () => {
 		/* stop moving when mouse button is released:*/
-		console.log("close_drag_element работает")
+		// console.log("close_drag_element работает")
 		document.onmouseup = null;
 		document.onmousemove = null;
 	};

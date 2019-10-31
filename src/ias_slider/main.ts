@@ -2,7 +2,7 @@ import { View_horizontal } from "./view_horizontal";
 import { View_vertical } from "./view_vertical";
 import { Model } from "./model";
 import { Controller } from "./controller";
-console.log("Запись 1. Импорты прошли");
+// console.log("Запись 1. Импорты прошли");
 // import { Control_panel } from "./control_panel";
 type obj_fixed_values = {
 	sign: object,
@@ -17,14 +17,14 @@ let obj_fixed_values = {
 		title: "Sign",
 		description: "Валюта",
 		key_word: "sign",
-		value: ["$", "₽"],
+		value: ["₽", "$"],
 		function_name: "_sign"
 	},
 	type_view: {
 		title: "Type",
 		description: "Тип слайдера - одинарный или двойной",
 		key_word: "slider_view",
-		value: ["single", "duble"],
+		value: ["duble", "single"],
 		function_name: "_slider_type"
 	},
 	slider_type: {
@@ -74,10 +74,17 @@ let obj_changeable_values = {
 	},
 	min_slider_value: {
 		title: "Min_slider",
-		description: "Начальное значение шкалы слайдера",
+		description: "Начальное значение шкалы слайдера - для первого или одиночного ползунка",
 		key_word: "min_slider_value",
 		type: "number",
 		function_name: "_min_slider_value"
+	},
+	max_slider_value: {
+		title: "Max_slider",
+		description: "Начальное значение шкалы слайдера - для второго ползунка",
+		key_word: "max_slider_value",
+		type: "number",
+		function_name: "_max_slider_value"
 	},
 }
 
@@ -165,8 +172,8 @@ for (let key_one in obj_changeable_values) {
 
 	vv.oninput = function () {
 
-		console.log("до изменения в динамичном слайдере : " + f_name);
-		console.log("this.value : " + input.value);
+		// console.log("до изменения в динамичном слайдере : " + f_name);
+		// console.log("this.value : " + input.value);
 
 		settings[f_name] = input.value;
 
