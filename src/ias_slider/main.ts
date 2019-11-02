@@ -4,6 +4,7 @@ import { Model } from "./model";
 import { Controller } from "./controller";
 // console.log("Запись 1. Импорты прошли");
 // import { Control_panel } from "./control_panel";
+function start_ias_slider(id:string, settings_id: string) {
 type obj_fixed_values = {
 	sign: object,
 	type_view: object,
@@ -90,7 +91,8 @@ let obj_changeable_values = {
 
 
 let settings: any = {
-	_element_id: "ias-slider",
+	// _element_id: "ias-slider",
+	_element_id: id,
 	_sign: "₽",
 	_min_start_slider: 0,
 	_max_start_slider: 1000,
@@ -100,7 +102,8 @@ let settings: any = {
 	_type_view: "horizontal",
 	_step: 50,
 	tooltip: "on",
-	value_field: "on"
+	value_field: "on",
+	settings_id: settings_id
 };
 
 
@@ -130,9 +133,9 @@ for (let key_one in obj_fixed_values) {
 
 	}
 
-	document.getElementById("doc_panel").appendChild(div).appendChild(select);
+	document.getElementById(settings.settings_id).appendChild(div).appendChild(select);
 
-	let vb = document.getElementById("doc_panel");
+	let vb = document.getElementById(settings.settings_id);
 	let vv = vb.querySelector("#" + obj_fixed_values[key_one].key_word) as HTMLElement;
 
 	vv.onchange = function () {
@@ -163,9 +166,9 @@ for (let key_one in obj_changeable_values) {
 
 	div.id = "ias-slider__" + obj_changeable_values[key_one].key_word;
 
-	document.getElementById("doc_panel").appendChild(div);
+	document.getElementById(settings.settings_id).appendChild(div);
 
-	let vb = document.getElementById("doc_panel");
+	let vb = document.getElementById(settings.settings_id);
 
 	let vv = vb.querySelector("#ias-slider__" + obj_changeable_values[key_one].key_word) as HTMLElement;
 	let f_name = obj_changeable_values[key_one].function_name;
@@ -226,3 +229,7 @@ function slider_refresh() {
 	controller.create_slider();
 }
 // передаю контролеру созданные view и model;
+};
+
+
+export {start_ias_slider};

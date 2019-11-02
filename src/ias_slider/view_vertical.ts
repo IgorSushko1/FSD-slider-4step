@@ -206,7 +206,7 @@ class View_vertical {
 			// let slider_2_height = slider_2.offsetHeight;
 			let slider_2_position_top_y_axis = slider_2.offsetTop;
 
-			let ribon = document.getElementById("color-bar_vertical");
+			let ribon = parent_element.querySelector("#color-bar_vertical") as HTMLElement;
 
 			ribon.style.top = (slider_1_height / 2) + slider_1_position_top_y_axis + "px";
 			ribon.style.height = slider_2_position_top_y_axis - slider_1_position_top_y_axis + "px";
@@ -218,7 +218,7 @@ class View_vertical {
 			// let slider_1_height = slider_1.offsetHeight;
 			let slider_1_position_top_y_axis = slider_1.offsetTop;
 
-			let ribon = document.getElementById("color-bar_vertical");
+			let ribon = parent_element.querySelector("#color-bar_vertical") as HTMLElement;
 
 			ribon.style.top = "0px";
 			ribon.style.height = slider_1_position_top_y_axis + "px";
@@ -401,16 +401,16 @@ class View_vertical {
 	};
 
 	_drag_ribon_auto_single(slider_single_position_top_y_axis: number) {
-
-		let ribon = document.getElementById("color-bar_vertical");
+		let parent_element = document.querySelector("#" + this._element_id) as HTMLElement;
+		let ribon = parent_element.querySelector("#color-bar_vertical") as HTMLElement;
 		ribon.style.top = 0 + "px";
 		ribon.style.height = slider_single_position_top_y_axis + "px";
 
 	};
 
 	_drag_ribon_auto(slider_1_position_top_y_axis: number, slider_2_position_top_y_axis: number) {
-
-		let ribon = document.getElementById("color-bar_vertical");
+		let parent_element = document.querySelector("#" + this._element_id) as HTMLElement;
+		let ribon = parent_element.querySelector("#color-bar_vertical") as HTMLElement;
 		ribon.style.top = 15 + slider_1_position_top_y_axis + "px";
 		ribon.style.height = slider_2_position_top_y_axis - slider_1_position_top_y_axis + "px";
 

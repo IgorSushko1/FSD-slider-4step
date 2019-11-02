@@ -207,7 +207,7 @@ class View_horizontal {
 			let slider_2_width = slider_2.offsetWidth;
 			let slider_2_position_left_x_axis = slider_2.offsetLeft;
 
-			let ribon = document.getElementById("color-bar_horizontal");
+			let ribon = parent_element.querySelector("#color-bar_horizontal") as HTMLElement;
 
 			ribon.style.left = (slider_1_width / 2) + slider_1_position_left_x_axis + "px";
 			ribon.style.width = slider_2_position_left_x_axis - slider_1_position_left_x_axis + "px";
@@ -219,7 +219,7 @@ class View_horizontal {
 			let slider_1_width = slider_1.offsetWidth;
 			let slider_1_position_left_x_axis = slider_1.offsetLeft;
 
-			let ribon = document.getElementById("color-bar_horizontal");
+			let ribon = parent_element.querySelector("#color-bar_horizontal") as HTMLElement;
 
 			ribon.style.left = "0px";
 			ribon.style.width = slider_1_position_left_x_axis + "px";
@@ -397,19 +397,17 @@ class View_horizontal {
 	};
 
 	_drag_ribon_auto_single(slider_1_position_left_x_axis: number) {
-
-		let ribon = document.getElementById("color-bar_horizontal");
+		let parent_element = document.querySelector("#" + this._element_id) as HTMLElement;
+		let ribon = parent_element.querySelector("#color-bar_horizontal") as HTMLElement;
 		ribon.style.left = 0 + "px";
 		ribon.style.width = slider_1_position_left_x_axis + "px";
-
 	};
 
 	_drag_ribon_auto(slider_1_position_left_x_axis: number, slider_2_position_left_x_axis: number) {
-
-		let ribon = document.getElementById("color-bar_horizontal");
+		let parent_element = document.querySelector("#" + this._element_id) as HTMLElement;
+		let ribon = parent_element.querySelector("#color-bar_horizontal") as HTMLElement;
 		ribon.style.left = 15 + slider_1_position_left_x_axis + "px";
 		ribon.style.width = slider_2_position_left_x_axis - slider_1_position_left_x_axis + "px";
-
 	};
 
 	_math__sliders_value_single(pixel_step: number, e: MouseEvent) {

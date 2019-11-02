@@ -36,7 +36,8 @@
     "ts-test": "mocha -r ts-node/register test/test-file-for-test.ts",
     "ttv": "mocha -r ts-node/register test/test-for-view.ts",
     "build": "webpack --config webpack.config.js",
-    "ts": "tsc"
+		"ts": "tsc",
+		"bundle":  "tsc & npm run build"
   },
   "keywords": [
     "Слайдер"
