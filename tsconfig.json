@@ -10,7 +10,7 @@
 		"allowJs": true,
 		"types": [
 			// add node as an option
-			// "node"
+			"node"
 		],
 	 	// typeRoots option has been previously configured
 		"typeRoots": [
@@ -23,6 +23,7 @@
 		// "./src/simpleSlider/**/*", //ищет файлы с именем index.d.ts в папках по структуре напоминающие node модули
 		//  подробнее здесь http://qaru.site/questions/144788/typescript-2-custom-typings-for-untyped-npm-module
 ],
+
 	"files": [
 		// "./src/ias_slider/view.ts",
 		// "./src/ias_slider/main.ts",

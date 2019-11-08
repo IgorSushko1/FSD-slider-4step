@@ -1,4 +1,4 @@
-interface View_horizontal {
+ interface View_horizontal {
 	_element_id?: string,
 	_elem?: any,
 	_sign?: string,
@@ -17,7 +17,7 @@ class View_horizontal {
 
 	constructor(param: View_horizontal) {
 		this._element_id = param._element_id;
-		// this._elem = document.getElementById(param._element_id);
+		this._elem = document.getElementById(param._element_id);
 		this._sign = param._sign || "₽";
 		this._min_start_slider = Number(param._min_start_slider) || 0;
 		this._max_start_slider = Number(param._max_start_slider) || 1000;
@@ -29,8 +29,12 @@ class View_horizontal {
 		this.value_field = param.value_field || "on"
 
 		// this.controller = controller;
+		// this.view_code_start = this.view_code_start.bind(this);
 	};
 
+	a = 5;
+	b = 60;
+	// c = document.getElementById(this._element_id);
 	view_code_start(controller: any) { // а оно здесь надо??
 		this.controller = controller
 		// 	this._element_id = param._element_id
@@ -61,6 +65,11 @@ class View_horizontal {
 		this.controller.facade_controller_set_from_view(obj);
 	};
 
+	get_parent() {
+		return document.getElementById(this._element_id)
+	};
+
+	// parent = document.getElementById(this._element_id);
 	create_stuff() {
 		if (this._elem) {
 			if (this._slider_type == "duble") {
@@ -228,7 +237,7 @@ class View_horizontal {
 
 	_create_listeners() {
 		if (this._slider_type == "duble") {
-			// console.log("create_listeners рабоатет")
+			console.log("create_listeners рабоатет")
 			this._drag_events();
 		} else if (this._slider_type == "single") {
 			// console.log("создан одиночный слайдер")
