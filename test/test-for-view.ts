@@ -122,9 +122,13 @@ describe('Тестирование View',
 				// const { document } = (new JSDOM(`<!DOCTYPE html><html><body><div id="ias-slider"> Привет! </div></body></html>`)).window;
 				let view: any;
 				beforeEach(function () {
-					return JSDOM.fromFile('./index copy 4.html')
+					// let options =  {resources: "usable", pretendToBeVisual: true};
+					return JSDOM.fromFile('./index copy 5.html', {contentType: "text/html", resources: "usable", pretendToBeVisual: true})
 						// return new JSDOM(`<!DOCTYPE html><html><body><div id="ias-slider"> Привет! </div></body></html>`)
+						// const jsd = new JSDOM(`<!DOCTYPE html><html><body><div id="ias-slider"> Привет! </div></body></html>`)
 						.then((dom) => {
+							// let style = document.createElement("link");
+
 							// document = dom.window.document.body;
 							interface Global extends NodeJS.Global {
 								window: Window,
@@ -135,6 +139,13 @@ describe('Тестирование View',
 							}
 							(global as Global).window = dom.window;
 							(global as Global).document = window.document;
+
+							let style = dom.window.document.createElement("link");
+							style.type = "text/css";
+							style.rel = 'stylesheet';
+							style.href = "styles.css";
+							window.document.getElementsByTagName("head")[0].appendChild(style);
+
 							view = new View_horizontal({
 								_element_id: "ias-slider",
 								_sign: "₽",
@@ -151,6 +162,12 @@ describe('Тестирование View',
 							} as View_horizontal);
 						});
 						view.create_stuff();
+						// let style = window.document.createElement("link");
+						// style.type = "text/css";
+						// style.rel = 'stylesheet';
+						// style.href = "styles.css";
+						// window.document.getElementsByTagName("head")[0].appendChild(style);
+
 				});
 				//  jsdom();
 
@@ -197,17 +214,23 @@ describe('Тестирование View',
 					// let b = document.getElementById("ias-slider").textContent;
 					// console.log("Проверяю работу document, запускается ли он !!:: " + b);
 
-					// assert.equal(b, " Привет! ");
+					assert.isOk(a);
 
 				});
 
 				it('Проверяю захват document изнутри класса View', () => {
+					let style = window.document.createElement("link");
+					style.type = "text/css";
+					style.rel = 'stylesheet';
+					style.href = "styles.css";
+					window.document.getElementsByTagName("head")[0].appendChild(style);
+
 					view.create_stuff();
 					let parent_element = window.document.querySelector("#ias-slider") as HTMLElement;
-					console.log("Существует ли родительский элемент в DOM? Создан ли он? -- " + parent_element.innerHTML);
+					console.log("Верни мне HTML который у тебя внутри! Приказываю! -- " + parent_element.innerHTML);
 					let parent_width = parent_element.offsetWidth// ширина родительского элемента
-					console.log("Чему равна ширина родительского элемента? -- " + parent_width);
-					// assert.equal(parent_width, "500px", "значение не найдено")
+					console.log("Верни мне имя id родительского элемента! Приказываю! -- " + parent_element.id);
+					assert.equal(parent_width, 500, "значение не найдено")
 
 				});
 
