@@ -14,6 +14,7 @@
 };
 
 class View_horizontal {
+	parent_element: HTMLElement;
 
 	constructor(param: View_horizontal) {
 		this._element_id = param._element_id;
@@ -34,8 +35,8 @@ class View_horizontal {
 
 	a = 5;
 	b = 60;
-	// c = document.getElementById(this._element_id);
-	view_code_start(controller: any) { // а оно здесь надо??
+	c = this._elem;
+	view_code_start(controller: any) {
 		this.controller = controller
 		// 	this._element_id = param._element_id
 		// 	this._elem = document.getElementById(param._element_id)
@@ -59,7 +60,7 @@ class View_horizontal {
 
 	facade_view_set_param_controller() { // done ? передает данные в фасад контроллера
 		let obj = {
-			min_limit: this._min_start_slider,
+			_min_start_slider: this._min_start_slider,
 			_max_start_slider: this._max_start_slider,
 		};
 		this.controller.facade_controller_set_from_view(obj);
@@ -86,6 +87,7 @@ class View_horizontal {
 					'<div id="color-bar_horizontal"></div>' +
 					'</div>';
 
+					this.create_this_sliders_elements();
 				this.create_ribon();
 
 			} else if (this._slider_type == "single") {
@@ -108,7 +110,10 @@ class View_horizontal {
 		this.set_visible_text_field();
 		this._create_listeners();
 	};
+	create_this_sliders_elements = () => {
+  // this.parent_element = document.querySelector("#" + this._element_id) as HTMLElement;
 
+	}
 	set_visible_text_field = () => {
 		let parent_element = document.querySelector("#" + this._element_id) as HTMLElement;
 
@@ -116,7 +121,7 @@ class View_horizontal {
 		let b = this._max_start_slider;
 		let c = this._min_slider_value;
 		let d = this._max_slider_value;
-		console.log("до  этого момента ок")
+		// console.log("до  этого момента ок")
 		if (this._slider_type == "duble" && a < b && c < b && c < d && d <= b && c - a >= 0) {
 
 			let value_field_1 = parent_element.querySelector("#value_field_1-field") as HTMLElement;
@@ -171,7 +176,7 @@ class View_horizontal {
 		let steps = (this._max_start_slider - this._min_start_slider) / this._step; // количество шагов
 		let pixel_step = parent_width / steps; // размер шага в пикселях
 		let first_slider_position = pixel_step * ((this._min_slider_value - this._min_start_slider) / this._step);
-		console.log("view -first_slider_position  " + first_slider_position)
+		// console.log("view -first_slider_position  " + first_slider_position)
 		let second_slider_position = pixel_step * ((this._max_slider_value - this._min_start_slider) / this._step);
 
 		slider_1.style.left = first_slider_position + "px";
@@ -237,7 +242,7 @@ class View_horizontal {
 
 	_create_listeners() {
 		if (this._slider_type == "duble") {
-			console.log("create_listeners рабоатет")
+			// console.log("create_listeners рабоатет")
 			this._drag_events();
 		} else if (this._slider_type == "single") {
 			// console.log("создан одиночный слайдер")
