@@ -13,7 +13,7 @@ type obj_fixed_values = {
 	value_field: object
 }
 
-let obj_fixed_values = {
+let obj_fixed_values:obj_fixed_values = {
 	sign: {
 		title: "Sign",
 		description: "Валюта",
