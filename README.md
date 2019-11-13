@@ -20,10 +20,12 @@
 		Совмещает координаты полоски и слайдеров или координаты начала и слайдера(если слайдер одиночный).
 
 ### set_visible_text_field()
+
 	В зависимости от того двойной слайдер или одиночный:
 		Проверяет условие, что все элементы подчинены логике и ни одно из значений не является больше или меньше, чем оно должно быть
 		Присваивает текстовым полям(придназначенным для отображения денежного диапазона) значения
 		Проверяет необходимость показа или скрытия текстовых полей, соответственно показывает или скрывает
+
 	После создания обращается к методу
 		move_sliders_on_inizialization();
 		move_single_slider_on_inizialization();
@@ -38,31 +40,25 @@
 
 ### _create_listeners()
 	В зависимости от того двойной слайдер или одинарный ссылается на методы инициализации событий
-	Обращается к методам
-		_drag_events();
-		_drag_event_single();
 
-### _drag_event_single()
-	При событии нажатия на ползунок вызвает метод
-		_drag_mouse_down_single
+	При событии нажатия на одинарный ползунок вызвает метод
+		_mouse_down_single
 
-### _drag_events()
 	При событии нажатия на один из ползунков вызвает соответствующий метод
-		_drag_mouse_down_1
-		_drag_mouse_down_2
+		_mouse_down_first_slider
+		_mouse_down_second_slider
 
-
-### _drag_mouse_down_single
+### _mouse_down_single
 	function expression
 	Arguments:
 		event
 	e.preventDefault() - отменяет любые действия браузера связанные с этим элементом
 	При событии движения мыши запускает метод
-		_drag_element_single
+		_move_element_single
 	При событии отпускания клавиши мыши запускает метод
-		_close_drag_element
+		_cancel_move_events
 
-### _drag_element_single
+### _move_element_single
 	Arguments:
 		event
 	Если шаг слайдера больше размера ползунка, то запустит
@@ -98,29 +94,29 @@ Arguments
 
 Обновляет переменные, содержащие положение по осям X или Y, ползунков или ползунка
 
-### _drag_mouse_down_1
+### _mouse_down_first_slider
 
 function expression
 	Arguments:
 		event
 	e.preventDefault() - отменяет любые действия браузера связанные с этим элементом
 	При событии движения мыши запускает метод
-		_drag_element_1
+		_move_element_1
 	При событии отпускания клавиши мыши запускает метод
-		_close_drag_element
+		_cancel_move_events
 
-### _drag_mouse_down_2
+### _mouse_down_second_slider
 
 function expression
 	Arguments:
 		event
 	e.preventDefault() - отменяет любые действия браузера связанные с этим элементом
 	При событии движения мыши запускает метод
-		_drag_element_2
+		_move_element_2
 	При событии отпускания клавиши мыши запускает метод
-		_close_drag_element
+		_cancel_move_events
 
-### _drag_element_1
+### _move_element_1
 
     Arguments:
       event
@@ -137,7 +133,7 @@ function expression
 
     move_ribon()
 
-### _drag_element_2
+### _move_element_2
 
     Arguments:
       event
@@ -219,6 +215,6 @@ function expression
 
 		Вычисляет значение, на котором остановился пользователь, отображает это значение в динамичных и статичных полях, поля следуют за ползунком.
 
-### _cancel_drag_events 
+### _cancel_move_events
 
 		Срабатывает при отжатии клавиши мыши, аннулирует все прослушки событий.

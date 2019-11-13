@@ -276,7 +276,7 @@ class View_horizontal {
 
 	_mouse_down_single = (e: Event) => {
 		e.preventDefault();
-		document.onmouseup = this._cancel_drag_events; // обработчик на событие поднятие клавиши мыши - запустит код, который обнулит события
+		document.onmouseup = this._cancel_move_events; // обработчик на событие поднятие клавиши мыши - запустит код, который обнулит события
 		document.onmousemove = this._move_element_single;
 	};
 
@@ -304,13 +304,13 @@ class View_horizontal {
 
 	_mouse_down_first_slider = (e: Event) => {
 		e.preventDefault(); // отменили все действия которые происходили раньше
-		document.onmouseup = this._cancel_drag_events; // обработчик на событие поднятие клавиши мыши - запустит код, который обнулит события
+		document.onmouseup = this._cancel_move_events; // обработчик на событие поднятие клавиши мыши - запустит код, который обнулит события
 		document.onmousemove = this._move_element_1; // событие, произойдет если сдвинуть мышу
 	};
 
 	_mouse_down_second_slider = (e: Event) => {
 		e.preventDefault(); // отменили все действия которые происходили раньше
-		document.onmouseup = this._cancel_drag_events; // обработчик на событие поднятие клавиши мыши - запустит код, который обнулит события
+		document.onmouseup = this._cancel_move_events; // обработчик на событие поднятие клавиши мыши - запустит код, который обнулит события
 		document.onmousemove = this._move_element_2; // событие, произойдет если сдвинуть мышу
 	};
 
@@ -541,12 +541,13 @@ class View_horizontal {
 		}
 	};
 
-	_cancel_drag_events = () => {
+	_cancel_move_events = () => {
 		/* stop moving when mouse button is released:*/
 		// console.log("close_drag_element работает")
 		document.onmouseup = null;
 		document.onmousemove = null;
 	};
+
 };
 export { View_horizontal };
 // let param = {};
