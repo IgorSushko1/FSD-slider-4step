@@ -104,14 +104,14 @@
 Создает HTML элементы двойного или одинарного слайдера в зависимости от переданных параметров.
 
 >После обращается к методам
-
-`create_this_sliders_elements();`
-
-`move_ribon();`
-
-`set_visible_text_field();`
-
-  `_create_listeners();`
+>
+>`create_this_sliders_elements();`
+>
+>`move_ribon();`
+>
+>`set_visible_text_field();`
+>
+>`_create_listeners();`
 
 [⇱ К навигации ](#Навигация "Навигация")
 
