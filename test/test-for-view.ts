@@ -1,4 +1,4 @@
-import { View_horizontal } from '../src/ias_slider v2/view_horizontal';
+import { View_horizontal } from '../src/ias_slider/view_horizontal';
 // import { IasSlider } from '';
 import { expect, assert } from 'chai';
 import * as mocha from 'mocha';
@@ -14,7 +14,7 @@ describe('Тестирование View',
 				let view: any;
 				beforeEach(function () {
 
-					return JSDOM.fromFile('./index copy 5.html', { runScripts: "dangerously", pretendToBeVisual: true, resources: "usable" })
+					return JSDOM.fromFile('./index.html', { runScripts: "dangerously", pretendToBeVisual: true, resources: "usable" })
 						.then((dom) => {
 							interface Global extends NodeJS.Global {
 								window: Window,
@@ -42,7 +42,7 @@ describe('Тестирование View',
 								_slider_type: "duble",
 								_step: 50,
 								tooltip: "on",
-								value_field: "on"
+								value_field_state: "on"
 							} as View_horizontal);
 						});
 
@@ -102,7 +102,7 @@ describe('Тестирование View',
 				let view: any;
 				beforeEach(function () {
 
-					return JSDOM.fromFile('./index copy 5.html', { runScripts: "dangerously", pretendToBeVisual: true, resources: "usable" })
+					return JSDOM.fromFile('./index.html', { runScripts: "dangerously", pretendToBeVisual: true, resources: "usable" })
 						.then((dom) => {
 							interface Global extends NodeJS.Global {
 								window: Window,
@@ -130,7 +130,7 @@ describe('Тестирование View',
 								_slider_type: "duble",
 								_step: 50,
 								tooltip: "on",
-								value_field: "on"
+								value_field_state: "on"
 							} as View_horizontal);
 						});
 				});
@@ -194,7 +194,7 @@ describe('Тестирование View',
 				let view: any;
 				beforeEach(function () {
 
-					return JSDOM.fromFile('./index copy 5.html', { runScripts: "dangerously", pretendToBeVisual: true, resources: "usable" })
+					return JSDOM.fromFile('./index.html', { runScripts: "dangerously", pretendToBeVisual: true, resources: "usable" })
 						.then((dom) => {
 							interface Global extends NodeJS.Global {
 								window: Window,
@@ -216,7 +216,7 @@ describe('Тестирование View',
 								_slider_type: "duble",
 								_step: 50,
 								tooltip: "on",
-								value_field: "on"
+								value_field_state: "on"
 							} as View_horizontal);
 						});
 				});
