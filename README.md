@@ -12,9 +12,9 @@
 		- [Описание](#%d0%9e%d0%bf%d0%b8%d1%81%d0%b0%d0%bd%d0%b8%d0%b5)
 		- [Методы](#%d0%9c%d0%b5%d1%82%d0%be%d0%b4%d1%8b)
 			- [create_stuff()](#createstuff)
-			- [create_this_sliders_elements()](#createthissliderselements)
-			- [move_ribon()](#moveribon)
-			- [set_visible_text_field()](#setvisibletextfield)
+		- [create_this_sliders_elements()](#createthissliderselements)
+		- [move_ribon()](#moveribon)
+		- [set_visible_text_field()](#setvisibletextfield)
 			- [move_sliders_on_inizialization()](#moveslidersoninizialization)
 			- [move_single_slider_on_inizialization()](#movesingleslideroninizialization)
 			- [_create_listeners()](#createlisteners)
@@ -116,12 +116,12 @@
 [⇱ К навигации ](#Навигация "Навигация")
 
 
-#### create_this_sliders_elements()
+### create_this_sliders_elements()
 Сообщает переменным класса значения типа HTMLElement, к этим переменным далее будут обращаться другие методы.
 
 [⇱ К навигации ](#Навигация "Навигация")
 
-#### move_ribon()
+### move_ribon()
 
 >`refresh_positions();`
 
@@ -129,7 +129,7 @@
 
 [⇱ К навигации ](#Навигация "Навигация")
 
-#### set_visible_text_field()
+### set_visible_text_field()
 
 В зависимости от того двойной слайдер или одиночный:
 	Проверяет условие, что все элементы подчинены логике и ни одно из значений не является больше или меньше, чем оно должно быть
