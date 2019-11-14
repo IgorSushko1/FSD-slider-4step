@@ -123,7 +123,7 @@
 
 #### move_ribon()
 
->refresh_positions();
+>`refresh_positions();`
 
 Совмещает координаты полоски и слайдеров или координаты начала и слайдера(если слайдер одиночный).
 
@@ -136,88 +136,114 @@
 	Присваивает текстовым полям(придназначенным для отображения денежного диапазона) значения
 	Проверяет необходимость показа или скрытия текстовых полей, соответственно показывает или скрывает
 
-После обращается к методам
-
->move_sliders_on_inizialization();
-
->move_single_slider_on_inizialization();
+>После обращается к методам
+>
+>`move_sliders_on_inizialization();`
+>
+>`move_single_slider_on_inizialization();`
 
 [⇱ К навигации ](#Навигация "Навигация")
 
 #### move_sliders_on_inizialization()
 
-		Переводит слайдеры в начальное положение по исходных данным
+Переводит слайдеры в начальное положение по исходных данным
 
 [⇱ К навигации ](#Навигация "Навигация")
 
 #### move_single_slider_on_inizialization()
 
-		Переводит слайдер в начальное положение по исходных данным
+Переводит слайдер в начальное положение по исходных данным
 
 [⇱ К навигации ](#Навигация "Навигация")
 
 #### _create_listeners()
 
->В зависимости от того двойной слайдер или одинарный
->>ссылается на методы
->>>инициализации событий
+В зависимости от того двойной слайдер или одинарный ссылается на методы инициализации событий
 
-	При событии нажатия на одинарный ползунок вызвает метод
-		_mouse_down_single
+>При событии нажатия на одинарный ползунок вызвает метод
+>
+>`_mouse_down_single`
 
-	При событии нажатия на один из ползунков вызвает соответствующий метод
-		_mouse_down_first_slider
-		_mouse_down_second_slider
+>При событии нажатия на один из ползунков вызвает соответствующий метод
+>
+>`_mouse_down_first_slider`
+>
+>`_mouse_down_second_slider`
 
 [⇱ К навигации ](#Навигация "Навигация")
 
 #### _mouse_down_single
 
-Arguments:
-event
-e.preventDefault() - отменяет любые действия браузера связанные с этим элементом
-При событии движения мыши запускает метод
-_move_element_single
-При событии отпускания клавиши мыши запускает метод
-_cancel_move_events
+>Arguments:
+>
+>event
+>
+>e.preventDefault() - отменяет любые действия браузера связанные с этим элементом
+
+>При событии движения мыши запускает метод
+>
+>`_move_element_single`
+
+>При событии отпускания клавиши мыши запускает метод
+>
+>`_cancel_move_events`
 
 [⇱ К навигации ](#Навигация "Навигация")
 
 #### _move_element_single
-Arguments:
-event
-Если шаг слайдера больше размера ползунка, то запустит
-_step_implementation(e, this.parent_element, this.slider_single);
+
+>Arguments:
+>
+>event
+
+Если:
++ Шаг слайдера больше размера ползунка, то запустит
++	>`_step_implementation(e, this.parent_element, this.slider_single);`
 
 Иначе:
+
 + Если Координаты мыши выходят за рамки элемента слайдера, то ползунок встает в крайнее положение
+
 + Иначе Если Координаты мыши меньше координат начала элемента слайдера, то ползунок встает в нулевое положение
+
 + Иначе Ползунок перемещается за мышью.
 
-  Вызвает методы:
-  + refresh_positions();
-  + _math__sliders_value_single(this.pixel_step, e);
++  >Вызвает методы:
+     >
+     >`refresh_positions();`
+     >
+     >`_math__sliders_value_single(this.pixel_step, e);`
 
-После вызывает метод:
-+ move_ribon();
+>После вызывает метод:
+>
+>`move_ribon();`
 
 [⇱ К навигации ](#Навигация "Навигация")
 
 #### _math__sliders_value_single(this.pixel_step, e);
-Arguments
- + Events
- + this.pixel_step
+>Arguments
+>
+>Events
+>
+>this.pixel_step
 
-Код:
-+ refresh_positions();
-+ Если координаты мыши за пределами слайдера, то
-в поля помещаются максимальные значения
-+ Иначе в поля помещаются вычисляемые значения в зависимости от положения ползунка
-+ Сдвиг всплывающей подсказки за ползунком
+ >refresh_positions();
+
+Если:
+
++ Координаты мыши за пределами слайдера, то
+в поля помещаются минимальные/максимальные значения
+
+Иначе
+
++ В поля помещаются вычисляемые значения в зависимости от положения ползунка
+
+Сдвиг всплывающей подсказки за ползунком
 
 [⇱ К навигации ](#Навигация "Навигация")
 
 #### refresh_positions()
+
 Обновляет переменную родительского элемента слайдера, и его позицию - это понадобится в случае если пользователь изменит разрешение экрана во время просмотра страницы или увеличит/уменьшит страницу.
 
 Обновляет переменные, содержащие положение по осям X или Y, ползунков или ползунка
@@ -226,95 +252,128 @@ Arguments
 
 #### _mouse_down_first_slider
 
-function expression
-	Arguments:
-		event
-	e.preventDefault() - отменяет любые действия браузера связанные с этим элементом
-	При событии движения мыши запускает метод
-		_move_element_1
-	При событии отпускания клавиши мыши запускает метод
-		_cancel_move_events
+>Arguments:
+>
+>event
+>
+>e.preventDefault() - отменяет любые действия браузера связанные с этим элементом
+
+>При событии движения мыши запускает метод
+>
+>`_move_element_1`
+
+>При событии отпускания клавиши мыши запускает метод
+>
+>`_cancel_move_events`
 
 [⇱ К навигации ](#Навигация "Навигация")
 
 #### _mouse_down_second_slider
 
-function expression
-	Arguments:
-		event
-	e.preventDefault() - отменяет любые действия браузера связанные с этим элементом
-	При событии движения мыши запускает метод
-		_move_element_2
-	При событии отпускания клавиши мыши запускает метод
-		_cancel_move_events
+
+>Arguments:
+>
+>event
+>
+>e.preventDefault() - отменяет любые действия браузера связанные с этим элементом
+
+>При событии движения мыши запускает метод
+>
+>`_move_element_2`
+
+>При событии отпускания клавиши мыши запускает метод
+>
+>`_cancel_move_events`
 
 [⇱ К навигации ](#Навигация "Навигация")
 
 #### _move_element_1
 
-Arguments:
-  event
+>Arguments:
+>
+>event
 
-refresh_positions();
+>`refresh_positions();`
 
 Если
-  Шаг больше ширины слайдера, то запускается 
-  _step_implementation(e, this.parent_element, this.slider_1, this.slider_2)
+
++ Шаг больше заданного размера, то запускается
+
++ >`_step_implementation(e, this.parent_element, this.slider_1, this.slider_2)`
+
 Иначе
-	Слайдер ведет себя как будто шаг равен 1.
-	refresh_positions();
-	_math__sliders_value_left(this.pixel_step, e);
 
-move_ribon()
++ Слайдер ведет себя как будто шаг равен 1.
 
-Перемещает полоску вслед за ползунк[ом/ами]
++ >refresh_positions();
+  >
+	>_math__sliders_value_left(this.pixel_step, e);
+
+>`move_ribon()`
+
+
 
 [⇱ К навигации ](#Навигация "Навигация")
 
 #### _move_element_2
 
-Arguments:
-  event
+>Arguments:
+>
+>event
 
-refresh_positions();
+>`refresh_positions();`
 
 Если
-  Шаг больше ширины ползунка, то запускается
-  _step_implementation(e, this.parent_element, this.slider_1, this.slider_2)
-Иначе
-	Слайдер ведет себя как будто шаг равен 1. ахахах
-	refresh_positions();
-	_math__sliders_value_left(this.pixel_step, e);
++ Шаг больше заданного размера, то запускается
 
-move_ribon()
++  >`_step_implementation(e, this.parent_element, this.slider_1, this.slider_2)`
+
+Иначе
+
++ Слайдер ведет себя как будто шаг равен 1
+
++ >`refresh_positions();`
+  >
+	>`_math__sliders_value_left(this.pixel_step, e);`
+
+>`move_ribon()`
 
 [⇱ К навигации ](#Навигация "Навигация")
 
 #### _step_implementation(e: MouseEvent,	modified_object: HTMLElement, static_object?: HTMLElement)
 
-Arguments:
-  e: MouseEvent;
-  modified_object: HTMLElement - ползунок, с которым взаимодействует пользователь
-  static_object?: HTMLElement - ползунок в двойном слайдере, в данный момент остающийся статичным
+>Arguments:
+>
+>e: MouseEvent;
+>
+>modified_object: HTMLElement - ползунок, с которым взаимодействует пользователь
+>
+>static_object?: HTMLElement - ползунок в двойном слайдере, в данный момент остающийся статичным
 
-refresh_positions();
+>`refresh_positions();`
 
-Если есть static_object
-Если modified_object расположен перед static_object
-Манипуляции с ползунком в зависимости от положения мыши
-.refresh_positions();
-_math__sliders_value_left_new(step, pixel_step, e);
-Если modified_object расположен после static_object
-Манипуляции с ползунком в зависимости от положения мыши
-.refresh_positions();
-_math__sliders_value_right_new(step, pixel_step, e);
+Если есть `static_object`
 
++ Если modified_object расположен перед static_object
+	+ Манипуляции с ползунком в зависимости от положения мыши
+  
+	+ >`.refresh_positions();`
+	+ >`_math__sliders_value_left_new(step, pixel_step, e);`
 
++ Если modified_object расположен после static_object
+  
+	+ Манипуляции с ползунком в зависимости от положения мыши
+  + >`.refresh_positions();`
+
+  + >`_math__sliders_value_right_new(step, pixel_step, e);`
 
 Если static_object осутствует
-Манипуляции с ползунком в зависимости от положения мыши
-.refresh_positions();
-_math__sliders_value_single_step(step, pixel_step, e);
+
++ Манипуляции с ползунком в зависимости от положения мыши
+
++ >`.refresh_positions();`
+
++ >`_math__sliders_value_single_step(step, pixel_step, e);`
 
 [⇱ К навигации ](#Навигация "Навигация")
 
@@ -326,9 +385,9 @@ _math__sliders_value_single_step(step, pixel_step, e);
 
 #### _math__sliders_value_right(e: MouseEvent)
 
-Arguments:
-
-e: MouseEvent
+>Arguments:
+>
+>e: MouseEvent
 
 Вычисляет значения для помещения в поля(в зависимости от положения мыши), перемещает всплывающую подсказку
 
@@ -336,9 +395,11 @@ e: MouseEvent
 
 #### _math__sliders_value_single_step(steps: number, e: MouseEvent)
 
-Arguments:
-		steps: number - это значение конкретного шага, на котором остановился ползунок;
-		e: MouseEvent;
+>Arguments:
+>
+>steps: number - это значение конкретного шага, на котором остановился ползунок;
+>
+>e: MouseEvent;
 
 Вычисляет значение шага, помещает его в поля и перемещает всплывающую подсказку
 
@@ -346,10 +407,13 @@ Arguments:
 
 #### _math__sliders_value_left_step(steps: number, pixel_step: number, e: MouseEvent)
 
-Arguments:
-	step: number - это шаг, на котором пользователь остановил ползунок. Округляется до целого числа.
-		pixel_step: number - это размер шага в пикселях, отличается от другого шага тем, что у этого из ширины/высоты родительского элемента вычтена ширина/высота ползунка, что не дает выйти ползунку за пределы границ родительского элемента;
-		e: MouseEvent;
+>Arguments:
+>
+>step: number - это шаг, на котором пользователь остановил ползунок. Округляется до целого числа.
+>
+>pixel_step: number - это размер шага в пикселях, отличается от другого шага тем, что у этого из ширины/высоты родительского элемента вычтена ширина/высота ползунка, что не дает выйти ползунку за пределы границ родительского элемента;
+>
+>e: MouseEvent;
 
 Вычисляет значение, на котором остановился пользователь, отображает это значение в динамичных и статичных полях, поля следуют за ползунком.
 
@@ -357,10 +421,13 @@ Arguments:
 
 #### _math__sliders_value_right_step(steps: number, pixel_step: number, e: MouseEvent)
 
-Arguments:
-	step: number - это шаг, на котором пользователь остановил ползунок. Округляется до целого числа.
-		pixel_step: number - это размер шага в пикселях, отличается от другого шага тем, что у этого из ширины/высоты родительского элемента вычтена ширина/высота ползунка, что не дает выйти ползунку за пределы границ родительского элемента;
-		e: MouseEvent;
+>Arguments:
+>
+>step: number - это шаг, на котором пользователь остановил ползунок. Округляется до целого числа.
+>
+>pixel_step: number - это размер шага в пикселях, отличается от другого шага тем, что у этого из ширины/высоты родительского элемента вычтена ширина/высота ползунка, что не дает выйти ползунку за пределы границ родительского элемента;
+>
+>e: MouseEvent;
 
 Вычисляет значение, на котором остановился пользователь, отображает это значение в динамичных и статичных полях, поля следуют за ползунком.
 
@@ -368,6 +435,6 @@ Arguments:
 
 #### _cancel_move_events
 
-Срабатывает при отжатии клавиши мыши, аннулирует все прослушки событий.
+Срабатывает при поднятии клавиши мыши, аннулирует все прослушки событий.
 
 [⇱ К навигации ](#Навигация "Навигация")
