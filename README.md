@@ -22,7 +22,7 @@
 			- [_move_element_single](#_move_element_single)
 			- [_math__sliders_value_single(this.pixel_step, e);](#_math__sliders_value_singlethispixel_step-e)
 			- [refresh_positions()](#refresh_positions)
-			- [_mouse_down_first_slider](#_mouse_down_firsts_lider)
+			- [_mouse_down_first_slider](#_mouse_down_first_slider)
 			- [_mouse_down_second_slider](#_mouse_down_second_slider)
 			- [_move_element_1](#_move_element_1)
 			- [_move_element_2](#_move_element_2)
