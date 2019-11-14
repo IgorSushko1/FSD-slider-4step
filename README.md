@@ -103,15 +103,15 @@
 Проверяет наличие элемента с указанным id для создания слайдера.
 Создает HTML элементы двойного или одинарного слайдера в зависимости от переданных параметров.
 
-`После создания обращается к методам`
+>После обращается к методам
 
-+ >create_this_sliders_elements();
+`create_this_sliders_elements();`
 
-- >move_ribon();
+`move_ribon();`
 
-* >set_visible_text_field();
+`set_visible_text_field();`
 
-1. >_create_listeners();
+  `_create_listeners();`
 
 [⇱ К навигации ](#Навигация "Навигация")
 
