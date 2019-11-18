@@ -1,13 +1,15 @@
 import { View_horizontal } from '../src/ias_slider/view_horizontal';
+import { Model } from '../src/ias_slider/model';
+import { Controller } from '../src/ias_slider/controller';
 // import { IasSlider } from '';
 import { expect, assert } from 'chai';
 import * as mocha from 'mocha';
+import { is_slider } from "../src/ias_slider/main";
 
 import { JSDOM, FromFileOptions, DOMWindow } from 'jsdom';
 
 describe('Тестирование View',
 	() => {
-		let document: any;
 
 		describe('Пробное тестирование',
 			() => {
@@ -290,4 +292,101 @@ describe('Тестирование View',
 					};
 				});
 			});
-	})
+
+		describe('Проверка работы сборки плагина',
+			() => {
+				let view: any;
+				beforeEach(function () {
+
+					JSDOM.fromFile('./index.html', {
+						// resources: 'usable',
+					})
+						.then((dom) => {
+							const { window } = dom;
+							// const document = window.document;
+							// window.document.getElementById("ias-slider").style.width = "500px";// не работает , не переписывает
+							window.onload = () => {
+								is_slider("ias-slider", "doc_panel")
+							};
+						});
+				});
+				it('Есть ли родительский элемент на странице', () => {
+
+					assert.isOk(window.document.getElementById("ias-slider__duble_2_horizontal"));
+				});
+
+				it('Есть ли другие элементы на странице', () => {
+					assert.isOk(window.document.getElementById("ias-slider__duble_1_horizontal"));
+				})
+
+			});
+	});
+
+// ПОДВОДЯ ИТОГ ВСЕХ ЭТИХ КОНСОЛЕЙ ВНИЗУ:
+
+//ШИРИНА ЗАДАЁТСЯ, ЭЛЕМЕНТЫ СОЗДАЮТСЯ НО Я НЕ МОГУ ПРИСВОИТЬ ИМ НЕОБХОДИМЫЕ СВОЙСТВА
+// ПОТОМУ ЧТО, СКОРЕЕ ВСЕГО, В NODEJS НЕТ ТАКОГО ИНТСРУМЕНТА КАК LEFT? МОГУ ПРОВЕРИТЬ ТОЛЬКО ВЫПОЛНЕНИЕ 
+// ИНИЦИАЛИЗАЦИИ ВСЕХ 'this' во вью
+
+// console.log(window.getComputedStyle(window.document.getElementById("ias-slider")).width);// если пустой то вернет undifined
+// console.log(window.getComputedStyle(window.document.getElementById("ias-slider__duble_1_horizontal")).left);// 0PX НЕ ВНЕСЕНЫ НОВЫЕ ДАННЫЕ
+// console.log(window.getComputedStyle(window.document.getElementById("ias-slider__duble_2_horizontal")));
+// console.log(window.document.getElementById("ias-slider__duble_2_horizontal").style.background);
+
+describe('Тестирование Controller', () => {
+	// let settings_for_controller: any = {
+	// _element_id: "ias-slider",
+	// _slider_type: "duble",
+	// _step: 50,
+	// tooltip: "on",
+	// value_field: "on",
+	// };
+
+	// let settings_for_view: any = {
+	// 	_element_id: "ias-slider",
+	// 	_sign: "₽",
+	// 	_min_start_slider: 0,
+	// 	_max_start_slider: 1000,
+	// 	_min_slider_value: 200,
+	// 	_max_slider_value: 800,
+	// 	_slider_type: "duble",
+	// 	_step: 50,
+	// 	tooltip: "on",
+	// 	value_field_state: "on",
+	// 	};
+
+	// let settings_for_model: any = {
+	// 		_sign: "₽",
+	// _min_start_slider: 0,
+	// _max_start_slider: 1000,
+	// _min_slider_value: 200,
+	// _max_slider_value: 800
+	// }
+	// let view = new View_horizontal(settings_for_view);
+	// let model = new Model(settings_for_model);
+	let controller = new Controller({}, {}, {
+	_element_id: "ias-slider",
+	_slider_type: "duble",
+	_step: 50,
+	tooltip: "on",
+	value_field: "on"
+	});
+	it('Проверка контроллера', () => {
+		assert.isOk(controller)
+	});
+	it('Проверка наличия метода _get_model', () => {
+		assert.isOk(controller._get_model)
+	});
+	it('Проверка наличия метода _get_view', () => {
+		assert.isNotOk(controller._get_view)
+	});
+	it('Проверка наличия метода _set_model', () => {
+		assert.isOk(controller._set_model)
+	});
+	it('Проверка наличия метода _set_view', () => {
+		assert.isOk(controller._set_view)
+	});
+	it('Проверка наличия метода create_slider', () => {
+		assert.isOk(controller.create_slider)
+	});
+})

@@ -23,7 +23,7 @@ view?: any;
 
 class Controller {
 
-	constructor(view, model, param) {
+	constructor(view: any, model: any, param: any) {
 		this.view = view;
 		this.model = model;
 		this.min_slider_value = param.min_slider_value;
@@ -32,16 +32,18 @@ class Controller {
 		this._max_start_limit = param.max_start_limit;
 	};
 
-	facade_controller_set_from_view(obj) { // done ? передает данные пользователя
+	// facade_controller_set_from_view(obj) { // done ? передает данные пользователя
 		//полученные через пользовательский интерфейс в модель для бизнес-задач
 		// for (let a in obj) {
 		// 	if (a in this) {
 		// 	this[a] = a
-		Object.assign(this, obj);
-		this.facade_controller_update_model();
+		// Object.assign(this, obj);
+		// this.facade_controller_update_model();
 		// 	}
 		// }
-	}
+	// }
+
+	_get_model() {}
 
 	facade_controller_update_model() { // done ?  переписывает пользовательские данные в модели
 		let obj_to_model = {

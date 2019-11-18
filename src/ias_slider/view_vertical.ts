@@ -45,7 +45,7 @@ class View_vertical {
 	facade_view_set_param_view(obj: Object) { // done ? принимает данные из контроллера и перестраивает view
 		for (let a in obj) {
 			if (a in this) {
-				this[a] = obj[a]
+				// this[a] = obj[a]
 			}
 		};
 		this.create_stuff();

@@ -2,18 +2,21 @@ import { View_horizontal } from "./view_horizontal";
 import { View_vertical } from "./view_vertical";
 import { Model } from "./model";
 import { Controller } from "./controller";
-// console.log("Запись 1. Импорты прошли");
-// import { Control_panel } from "./control_panel";
-function start_ias_slider(id:string, settings_id: string) {
-type obj_fixed_values = {
-	sign: object,
-	type_view: object,
-	slider_type: object,
-	tooltip: object,
-	value_field: object
-}
 
-let obj_fixed_values = {
+function  is_slider(id:string, settings_id: string) {
+interface obj_fixed_values {
+	[a: string]: fixed_values_obj;
+};
+
+interface fixed_values_obj {
+	title: string,
+	description: string,
+	key_word: string,
+	value: any,
+	function_name: string
+};
+
+let obj_fixed_values:obj_fixed_values = {
 	sign: {
 		title: "Sign",
 		description: "Валюта",
@@ -51,7 +54,19 @@ let obj_fixed_values = {
 	}
 };
 
-let obj_changeable_values = {
+interface obj_changeable_values {
+	[sign: string]: changeable_values_obj;
+};
+
+interface changeable_values_obj {
+	title: string,
+	description: string,
+	key_word: string,
+	type: string,
+	function_name: string
+};
+
+let obj_changeable_values: obj_changeable_values= {
 	step: {
 		title: "Step",
 		description: "Шаг ползунка",
@@ -87,8 +102,7 @@ let obj_changeable_values = {
 		type: "number",
 		function_name: "_max_slider_value"
 	},
-}
-
+};
 
 let settings: any = {
 	// _element_id: "ias-slider",
@@ -106,10 +120,10 @@ let settings: any = {
 	settings_id: settings_id
 };
 
-
+// let key_one:any;
 for (let key_one in obj_fixed_values) {
 	let select = document.createElement("select");
-	let key = obj_fixed_values[key_one];
+	let key =obj_fixed_values[key_one];
 	let title: string = obj_fixed_values[key_one].description;
 	let text_node_title = document.createTextNode(title);
 	let div = document.createElement("div");
@@ -142,14 +156,13 @@ for (let key_one in obj_fixed_values) {
 
 		console.log("до изменения : " + settings[obj_fixed_values[key_one].function_name]);
 
-		settings[obj_fixed_values[key_one].function_name] = this.value;
-		console.log("после изменения : " + settings[obj_fixed_values[key_one].function_name]);
+		settings[obj_fixed_values[key_one].function_name] = (this as any).value;
 
+		console.log("после изменения : " + settings[obj_fixed_values[key_one].function_name]);
 
 		change_string(key_one, settings[obj_fixed_values[key_one].function_name]);
 	};
 };
-
 
 for (let key_one in obj_changeable_values) {
 	let description = obj_changeable_values[key_one].description;
@@ -186,17 +199,11 @@ for (let key_one in obj_changeable_values) {
 	};
 };
 
-
-
-
-
 function change_string(n: string, x: string) {
 
 	document.getElementById("settings").innerText = n + ": " + x;
 	slider_refresh();
 };
-
-
 
 //ПОСТРОЕНИЕ СЛАЙДЕРА ПРИ ПЕРВОМ ЗАПУСКЕ
 let view;
@@ -206,11 +213,13 @@ if (settings._type_view == "vertical") {
 
 } else if (settings._type_view == "horizontal") {
 	view = new View_horizontal(settings);
+};
 
-}
 let model = new Model(settings);
+
 let controller = new Controller(view, model, settings);
-console.log("Запись 2. Копии классов созданы")
+
+// console.log("Запись 2. Копии классов созданы")
 
 controller.create_slider();
 
@@ -232,4 +241,4 @@ function slider_refresh() {
 };
 
 
-export {start_ias_slider};
+export {is_slider};

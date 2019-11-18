@@ -14,13 +14,13 @@ class Model {
 		this._sign = param._sign || "₽"
 	};
 
-	facade_model_update(obj: Object) {
-		Object.assign(this, obj)
-	};
+	// facade_model_update(obj: Object) {
+	// 	Object.assign(this, obj)
+	// };
 
-	_facade_model_to_server () {
-		return this;
-	}
+	// _facade_model_to_server () {
+	// 	return this;
+	// }
 
 };
 
