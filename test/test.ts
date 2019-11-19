@@ -4,7 +4,7 @@ import { Controller } from '../src/ias_slider/controller';
 // import { IasSlider } from '';
 import { expect, assert } from 'chai';
 import * as mocha from 'mocha';
-import { is_slider } from "../src/ias_slider/main";
+import { is_slider } from "../src/ias_slider/is_slider";
 
 import { JSDOM, FromFileOptions, DOMWindow } from 'jsdom';
 
@@ -34,27 +34,26 @@ describe('Тестирование View',
 							// style.href = "styles.css";
 							// window.document.getElementsByTagName("head")[0].appendChild(style);
 
-							view = new View_horizontal({
-									_element_id: "ias-slider",
-									_sign: "₽",
-									_min_value: 0,
-									_max_value: 1000,
-									_min_slider_value: 200,
-									_max_slider_value: 800,
-									_slider_type: "duble",
-									_step: 50,
-									tooltip: "on",
-									value_field_state: "on"
-								} as View_horizontal);
+							view = new View_horizontal();
+							view._set_for_view({
+								_element_id: "ias-slider",
+								_sign: "₽",
+								_min_value: 0,
+								_max_value: 1000,
+								_min_slider_value: 200,
+								_max_slider_value: 800,
+								_slider_type: "duble",
+								_step: 50,
+								tooltip: "on",
+								value_field_state: "on"
+							} as View_horizontal)
 						});
 
 				});
-				// view.create_stuff();
 
 				it('Цель - запустить jsDOM и получить положительный результат', () => {
 
 					assert.isOk(window.document, "window не существует");
-					// assert.isOk(view.a, "window не существует");
 
 				});
 
@@ -116,7 +115,21 @@ describe('Тестирование View',
 							(global as Global).window = dom.window;
 							(global as Global).document = window.document;
 
-							view = new View_horizontal({
+							// view = new View_horizontal({
+							// 	_element_id: "ias-slider",
+							// 	_sign: "₽",
+							// 	_min_value: 0,
+							// 	_max_value: 1000,
+							// 	_min_slider_value: 200,
+							// 	_max_slider_value: 800,
+							// 	_slider_type: "duble",
+							// 	_step: 50,
+							// 	tooltip: "on",
+							// 	value_field_state: "on"
+							// } as View_horizontal);
+							// });
+							view = new View_horizontal();
+							view._set_for_view({
 								_element_id: "ias-slider",
 								_sign: "₽",
 								_min_value: 0,
@@ -127,7 +140,8 @@ describe('Тестирование View',
 								_step: 50,
 								tooltip: "on",
 								value_field_state: "on"
-							} as View_horizontal);
+							} as View_horizontal)
+
 						});
 				});
 
@@ -202,7 +216,20 @@ describe('Тестирование View',
 							(global as Global).window = dom.window;
 							(global as Global).document = window.document;
 
-							view = new View_horizontal({
+							// view = new View_horizontal({
+							// 	_element_id: "ias-slider",
+							// 	_sign: "₽",
+							// 	_min_value: 0,
+							// 	_max_value: 1000,
+							// 	_min_slider_value: 200,
+							// 	_max_slider_value: 800,
+							// 	_slider_type: "duble",
+							// 	_step: 50,
+							// 	tooltip: "on",
+							// 	value_field_state: "on"
+							// } as View_horizontal);
+							view = new View_horizontal();
+							view._set_for_view({
 								_element_id: "ias-slider",
 								_sign: "₽",
 								_min_value: 0,
@@ -213,7 +240,7 @@ describe('Тестирование View',
 								_step: 50,
 								tooltip: "on",
 								value_field_state: "on"
-							} as View_horizontal);
+							} as View_horizontal)
 						});
 				});
 				it('Наличие функции создания this - элементов', () => {
@@ -328,39 +355,29 @@ describe('Тестирование View',
 // console.log(window.document.getElementById("ias-slider__duble_2_horizontal").style.background);
 
 describe('Тестирование Controller', () => {
-	// let settings_for_controller: any = {
-	// _element_id: "ias-slider",
-	// _slider_type: "duble",
-	// _step: 50,
-	// tooltip: "on",
-	// value_field_state: "on",
-	// };
 
-	// let settings_for_view: any = {
-	// 	_element_id: "ias-slider",
-	// 	_sign: "₽",
-	// 	_min_value: 0,
-	// 	_max_value: 1000,
-	// 	_min_slider_value: 200,
-	// 	_max_slider_value: 800,
-	// 	_slider_type: "duble",
-	// 	_step: 50,
-	// 	tooltip: "on",
-	// 	value_field_state_state: "on",
-	// 	};
+	let view: any;
+	beforeEach(function () {
 
-		// let view = new View_horizontal(settings_for_view);
+		JSDOM.fromFile('./index.html', { runScripts: "dangerously", pretendToBeVisual: true, resources: "usable" })
+			.then((dom) => {
+
+			const	{ window } = dom;
+
+				view = new View_horizontal();
+			});
+	});
 
 	let settings_for_model: any = {
-			_sign: "₽",
-	_min_value: 0,
-	_max_value: 1000,
-	_min_slider_value: 300,
-	_max_slider_value: 900
+		_sign: "₽",
+		_min_value: 0,
+		_max_value: 1000,
+		_min_slider_value: 300,
+		_max_slider_value: 900
 	};
 	let model = new Model(settings_for_model);
 
-	let controller = new Controller({}, model, {
+	let controller = new Controller(view, model, {
 		_element_id: "ias-slider",
 		_slider_type: "duble",
 		_step: 50,
@@ -368,42 +385,87 @@ describe('Тестирование Controller', () => {
 		value_field_state: "on"
 	});
 
-	it('Проверка контроллера', () => {
+
+
+	it('_1_ Проверка контроллера', () => {
 		assert.isOk(controller)
 	});
 
-	it('Проверка наличия метода _get_model', () => {
+	it('_2_ Проверка наличия метода _get_model', () => {
 		assert.isOk(controller._get_model)
 	});
-	it('Проверка наличия метода _get_model', () => {
+
+	it('_3_ Проверка _get_model -- должен вернуть объект с данными, равными данным объекта полученным из модели', () => {
 		assert.deepEqual(controller._get_model(), settings_for_model)
 	});
 
-	it('Проверка наличия метода _get_view', () => {
+	it('_4_ Проверка наличия метода _get_view', () => {
 		assert.isOk(controller._get_view)
 	});
 
-	it('Проверка наличия метода _set_model', () => {
+	it('_5_ Проверка _get_view -- вызывается из вида, получает объект, кносит изменения в информацию контроллера', () => {
+		controller._get_view({
+			_min_slider_value: 100,
+			_max_slider_value: 700
+		});
+		assert.deepEqual({ _min_slider_value: controller._min_slider_value, _max_slider_value: controller._max_slider_value }, {
+			_min_slider_value: 100,
+			_max_slider_value: 700
+		});
+
+	});
+
+	it('_6_ Проверка наличия метода _set_model', () => {
+
 		assert.isOk(controller._set_model)
 	});
 
-	it('Проверка наличия метода _set_view', () => {
+	it('_7_ Проверка _set_model -- работает ли настройка-передача даных из Controller в Model ', () => {
+		controller._set_model();
+		assert.deepEqual({ _min_slider_value: model._min_slider_value, _max_slider_value: model._max_slider_value }, {
+			_min_slider_value: 100,
+			_max_slider_value: 700
+		});
+	});
+
+	it('_8_ Проверка наличия метода _set_view', () => {
 		assert.isOk(controller._set_view)
 	});
 
-	it('Проверка _get_controller() - возвращает объект с данными, которые были переданы для построения слайдера', () => {
+	it('_9_ ?????? Проверка _set_for_view -- работает ли настройка-передача даных из Controller во View ', () => {
+		// controller.create_slider();
+		controller._set_controller();
+		view._set_for_view({
+			_element_id: controller._element_id,
+			_sign: controller._sign,
+			_min_value: controller._min_value,
+			_max_value: controller._max_value,
+			_min_slider_value: controller._min_slider_value,
+			_max_slider_value: controller._max_slider_value,
+			_slider_type: controller._slider_type,
+			_step: controller._step,
+			tooltip: controller.tooltip,
+			value_field_state: controller.value_field_state
+		})
+		// console.log(view);
+		// console.log(controller._get_controller());
+		// console.log(view._get_view());
+		assert.deepEqual(controller._get_controller(), view._get_view())
+	});
+
+	it('_10_ Проверка _get_controller() - возвращает объект с данными, которые были переданы для построения слайдера', () => {
 		assert.isOk(controller._get_controller())
 	});
 
-	
-	it('Проверка работы _set_controller() - получает данные из модели, добавляет эти данные в свои свойства', () => {
+
+	it('_1_ Проверка работы _set_controller() - получает данные из модели, добавляет эти данные в свои свойства', () => {
 		controller._set_controller()
 		assert.include(controller._get_controller(), {
 			_sign: "₽",
 			_min_value: 0,
 			_max_value: 1000,
-			_min_slider_value: 300,
-			_max_slider_value: 900,
+			_min_slider_value: 100,
+			_max_slider_value: 700,
 			_element_id: "ias-slider",
 			_slider_type: "duble",
 			_step: 50,
@@ -412,14 +474,14 @@ describe('Тестирование Controller', () => {
 		})
 	});
 
-	it('Проверка наличия метода create_slider', () => {
+	it('_1_ Проверка наличия метода create_slider', () => {
 		assert.isOk(controller.create_slider)
 	});
 
 });
 
 describe('Тестирование Model', () => {
-	let settings:any = {
+	let settings: any = {
 		_sign: "₽",
 		_min_value: 0,
 		_max_value: 1000,

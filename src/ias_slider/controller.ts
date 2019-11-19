@@ -17,6 +17,11 @@ interface Controller {
 	view?: any;
 }
 
+interface Obj_from_view {
+	_min_slider_value?: number,
+	_max_slider_value?: number
+};
+
 class Controller {
 
 	constructor(view: any, model: any, param: any) {
@@ -35,20 +40,42 @@ class Controller {
 	};
 
 	_get_model() {
-
+  return this.model._get_model()
 	};
 
 	_set_model() {
-
+		this.model._set_model({
+			_min_slider_value: this._min_slider_value,
+			_max_slider_value: this._max_slider_value
+		})
 	};
 
 
-	_get_view() {
 
+	_get_view(obj: Obj_from_view) {
+		if (this._slider_type == "duble") {
+			this._min_slider_value = obj._min_slider_value;
+			this._max_slider_value = obj._max_slider_value;
+		};
+		if (this._slider_type == "single") {
+			this._min_slider_value = obj._min_slider_value;
+		};
+		this._set_model();
 	};
 
 	_set_view() {
-
+		this.view._set_for_view({
+			_element_id: this._element_id,
+			_sign: this._sign,
+			_min_value: this._min_value,
+			_max_value: this._max_value,
+			_min_slider_value: this._min_slider_value,
+			_max_slider_value: this._max_slider_value,
+			_slider_type: this._slider_type,
+			_step: this._step,
+			tooltip: this.tooltip,
+			value_field_state: this.value_field_state
+		})
 	};
 
 	_get_controller() {
@@ -67,17 +94,18 @@ class Controller {
 	};
 
 	_set_controller() {
-		let obj_from_model = this.model._get_model();
+		let obj_from_model = this._get_model();
 		this._min_slider_value = obj_from_model._min_slider_value;
 		this._max_slider_value = obj_from_model._max_slider_value;
 		this._min_value = obj_from_model._min_value;
 		this._max_value = obj_from_model._max_value;
+		this._sign = obj_from_model._sign;
 	};
 
 	create_slider() {
 		this._set_controller();
-		this.view.create_stuff()
-	}
+		this._set_view();
+	};
 
 }
 // let view = new View();

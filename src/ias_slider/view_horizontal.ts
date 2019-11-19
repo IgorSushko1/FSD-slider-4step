@@ -13,6 +13,9 @@ interface View_horizontal {
 	value_field_state?: string
 };
 
+interface Obj_from_controller {
+	[a: string]: number
+}
 class View_horizontal {
 
 	parent_element: HTMLElement;
@@ -48,46 +51,69 @@ class View_horizontal {
 	slider_single_width: any;
 	multiplier: number;
 
-	constructor(param: View_horizontal) {
-		this._element_id = param._element_id;
-		this._elem = document.getElementById(param._element_id);
-		this._sign = param._sign || "₽";
-		this._min_value = Number(param._min_value) || 0;
-		this._max_value = Number(param._max_value) || 1000;
-		this._min_slider_value = Number(param._min_slider_value) || 200;
-		this._max_slider_value = Number(param._max_slider_value) || 800;
-		this._slider_type = param._slider_type || "single";
-		this._step = param._step || 2;
-		this.tooltip = param.tooltip || "on";
-		this.value_field_state = param.value_field_state || "on"
+	constructor() {
+	// this._element_id = param._element_id;
+	// this._elem = document.getElementById(param._element_id);
+	// this._sign = param._sign || "₽";
+	// this._min_value = Number(param._min_value) || 0;
+	// this._max_value = Number(param._max_value) || 1000;
+	// this._min_slider_value = Number(param._min_slider_value) || 200;
+	// this._max_slider_value = Number(param._max_slider_value) || 800;
+	// this._slider_type = param._slider_type || "single";
+	// this._step = param._step || 2;
+	// this.tooltip = param.tooltip || "on";
+	// this.value_field_state = param.value_field_state || "on"
 
-		// this.controller = controller;
-		// this.view_code_start = this.view_code_start.bind(this);
+	// this.controller = controller;
+	// this.view_code_start = this.view_code_start.bind(this);
 	};
 
 	a = 5;//for first test
 	b = 60;//for first test
-	c = this._elem;//for first test
+	// c = this._elem;//for first test
 
 	view_code_bind_controller(controller: any) {
 		this.controller = controller
 	};
 
-	// facade_view_set_param_view(obj: Object) { // done ? принимает данные из контроллера и перестраивает view
-	// 	for (let a in obj) {
-	// 		if (a in this) {
-	// 			this[a] = obj[a]
-	// 		}
-	// 	};
-	// 	this.create_stuff();
-	// };
+	_set_for_view(obj_from_controller: View_horizontal) { // done ? принимает данные из контроллера и перестраивает view
 
-	facade_view_set_param_to_controller() { // done ? передает данные в фасад контроллера
+		this._element_id = obj_from_controller._element_id;
+		this._elem = document.getElementById(obj_from_controller._element_id);
+		this._sign = obj_from_controller._sign || "₽";
+		this._min_value = Number(obj_from_controller._min_value) || 0;
+		this._max_value = Number(obj_from_controller._max_value) || 1000;
+		this._min_slider_value = Number(obj_from_controller._min_slider_value) || 200;
+		this._max_slider_value = Number(obj_from_controller._max_slider_value) || 800;
+		this._slider_type = obj_from_controller._slider_type || "single";
+		this._step = obj_from_controller._step || 2;
+		this.tooltip = obj_from_controller.tooltip || "on";
+		this.value_field_state = obj_from_controller.value_field_state || "on"
+
+		this.create_stuff();
+	};
+
+	_get_view() {
+		return {
+			_element_id: this._element_id,
+			_sign: this._sign,
+			_min_value: this._min_value,
+			_max_value: this._max_value,
+			_min_slider_value: this._min_slider_value,
+			_max_slider_value: this._max_slider_value,
+			_slider_type: this._slider_type,
+			_step: this._step,
+			tooltip: this.tooltip,
+			value_field_state: this.value_field_state
+		};
+	};
+
+	_set_controller() { // done ? передает данные в фасад контроллера
 		let obj = {
 			_min_value: this._min_value,
 			_max_value: this._max_value,
 		};
-		this.controller.facade_controller_set_from_view(obj);
+		this.controller._get_view(obj);
 	};
 
 	create_stuff() {

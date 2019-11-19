@@ -79,14 +79,14 @@ let obj_changeable_values: obj_changeable_values= {
 		description: "Минимальное значение шкалы слайдера",
 		key_word: "min_start_slider",
 		type: "number",
-		function_name: "_min_start_slider"
+		function_name: "_min_value"
 	},
 	max_start_slider: {
 		title: "Max_slider",
 		description: "Максимальное значение шкалы слайдера",
 		key_word: "max_start_slider",
 		type: "number",
-		function_name: "_max_start_slider"
+		function_name: "_max_value"
 	},
 	min_slider_value: {
 		title: "Min_slider",
@@ -108,8 +108,8 @@ let settings: any = {
 	// _element_id: "ias-slider",
 	_element_id: id,
 	_sign: "₽",
-	_min_start_slider: 0,
-	_max_start_slider: 1000,
+	_min_value: 0,
+	_max_value: 1000,
 	_min_slider_value: 200,
 	_max_slider_value: 800,
 	_slider_type: "duble",
@@ -150,6 +150,7 @@ for (let key_one in obj_fixed_values) {
 	document.getElementById(settings.settings_id).appendChild(div).appendChild(select);
 
 	let vb = document.getElementById(settings.settings_id);
+
 	let vv = vb.querySelector("#" + obj_fixed_values[key_one].key_word) as HTMLElement;
 
 	vv.onchange = function () {
@@ -184,6 +185,7 @@ for (let key_one in obj_changeable_values) {
 	let vb = document.getElementById(settings.settings_id);
 
 	let vv = vb.querySelector("#ias-slider__" + obj_changeable_values[key_one].key_word) as HTMLElement;
+	
 	let f_name = obj_changeable_values[key_one].function_name;
 
 	vv.oninput = function () {
@@ -212,7 +214,7 @@ if (settings._type_view == "vertical") {
 	view = new View_vertical(settings);
 
 } else if (settings._type_view == "horizontal") {
-	view = new View_horizontal(settings);
+	view = new View_horizontal();
 };
 
 let model = new Model(settings);
@@ -230,13 +232,13 @@ function slider_refresh() {
 		view = new View_vertical(settings);
 
 	} else if (settings._type_view == "horizontal") {
-		view = new View_horizontal(settings);
+		view = new View_horizontal();
 
 	}
 	let model = new Model(settings);
 	let controller = new Controller(view, model, settings);
 	controller.create_slider();
-}
+};
 // передаю контролеру созданные view и model;
 };
 
