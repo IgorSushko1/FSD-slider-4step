@@ -163,13 +163,13 @@ describe('Тестирование View',
 
 				it('Создание области вывода значения с левого ползунка в статичном поле', () => {
 					view.create_stuff();
-					let value_field_state = window.document.getElementById("value_field_state_1-field");
+					let value_field_state = window.document.getElementById("value_field_1-field");
 					assert.isOk(value_field_state);
 				});
 
 				it('Создание области вывода значения с правого ползунка в статичном поле ', () => {
 					view.create_stuff();
-					let value_field_state = window.document.getElementById("value_field_state_2-field");
+					let value_field_state = window.document.getElementById("value_field_2-field");
 					assert.isOk(value_field_state);
 				});
 
@@ -235,36 +235,36 @@ describe('Тестирование View',
 					view.create_stuff();
 					// console.log(view.parent_element);// если пустой то вернет undifined
 					if (view._slider_type == "duble") {
-						assert.isOk(view.value_field_state_1);
+						assert.isOk(view.value_field_1);
 					} else {
-						assert.isOk(view.value_field_state_single_static);
+						assert.isOk(view.value_field_single_static);
 					};
 				});
 				it('Наличие переменной для обращения к статичному элементу вывода результатов второго элемента', () => {
 					view.create_stuff();
 					// console.log(view.parent_element);// если пустой то вернет undifined
 					if (view._slider_type == "duble") {
-						assert.isOk(view.value_field_state_2);
+						assert.isOk(view.value_field_2);
 					} else {
-						assert.isOk(view.value_field_state_single_static);
+						assert.isOk(view.value_field_single_static);
 					};
 				});
 				it('Наличие переменной для обращения к всплывающей подсказке первого слайдера', () => {
 					view.create_stuff();
 					// console.log(view.parent_element);// если пустой то вернет undifined
 					if (view._slider_type == "duble") {
-						assert.isOk(view.value_field_state_1_fly);
+						assert.isOk(view.value_field_1_fly);
 					} else {
-						assert.isOk(view.value_field_state_single);
+						assert.isOk(view.value_field_single);
 					};
 				});
 				it('Наличие переменной для обращения к всплывающей подсказке второго слайдера', () => {
 					view.create_stuff();
 					// console.log(view.parent_element);// если пустой то вернет undifined
 					if (view._slider_type == "duble") {
-						assert.isOk(view.value_field_state_2_fly);
+						assert.isOk(view.value_field_2_fly);
 					} else {
-						assert.isOk(view.value_field_state_single);
+						assert.isOk(view.value_field_single);
 					};
 				});
 				it('Наличие переменной для обращения к первому слайдеру', () => {

@@ -75,6 +75,7 @@ class Controller {
 	};
 
 	create_slider() {
+		this._set_controller();
 		this.view.create_stuff()
 	}
 
