@@ -5,15 +5,16 @@ interface Controller {
 	_element_id?: string,
 	_elem?: any,
 	_sign?: string,
-	_min_start_slider?: number,
-	_max_start_slider?: number,
+	_min_value?: number,
+	_max_value?: number,
 	_min_slider_value?: number,
 	_max_slider_value?: number,
 	_slider_type?: string,
-	controller?: any;
-
-model?: any;
-view?: any;
+	_step?: number,
+	tooltip?: string;
+	value_field_state?: string,
+	model?: any;
+	view?: any;
 }
 
 class Controller {
@@ -21,47 +22,57 @@ class Controller {
 	constructor(view: any, model: any, param: any) {
 		this.view = view;
 		this.model = model;
-		this._min_slider_value = param._min_slider_value;
-		this._max_slider_value = param._max_slider_value;
-		this._min_start_slider = param.min_start_limit;
-		this._max_start_slider = param.max_start_limit;
+		// this._min_slider_value = param._min_slider_value;
+		// this._max_slider_value = param._max_slider_value;
+		// this._min_value = param._min_value;
+		// this._max_value = param._max_value;
+		this._element_id = param._element_id;
+		this._sign = param._sign || "₽";
+		this._slider_type = param._slider_type || "single";
+		this._step = param._step || 2;
+		this.tooltip = param.tooltip || "on";
+		this.value_field_state = param.value_field_state || "on"
 	};
-
-	// facade_controller_set_from_view(obj) { // done ? передает данные пользователя
-		//полученные через пользовательский интерфейс в модель для бизнес-задач
-		// for (let a in obj) {
-		// 	if (a in this) {
-		// 	this[a] = a
-		// Object.assign(this, obj);
-		// this.facade_controller_update_model();
-		// 	}
-		// }
-	// }
 
 	_get_model() {
 
-	}
+	};
 
 	_set_model() {
 
-	}
+	};
 
-	
+
 	_get_view() {
 
-	}
+	};
 
 	_set_view() {
-		
-	}
 
-	// facade_controller_update_model() { // done ?  переписывает пользовательские данные в модели
-	// 	let obj_to_model = {
-	// 		min_slider_value : this._min_slider_value,
-	// 		max_slider_value : this._max_slider_value
-	// 	}
-	// 	this.model.facade_model_update(obj_to_model)
-	// }
+	};
+
+	_get_controller() {
+		return {
+			_element_id: this._element_id,
+			_sign: this._sign,
+			_min_value: this._min_value,
+			_max_value: this._max_value,
+			_min_slider_value: this._min_slider_value,
+			_max_slider_value: this._max_slider_value,
+			_slider_type: this._slider_type,
+			_step: this._step,
+			tooltip: this.tooltip,
+			value_field_state: this.value_field_state
+		}
+	};
+
+	_set_controller() {
+		let obj_from_model = this.model._get_model();
+		this._min_slider_value = obj_from_model._min_slider_value;
+		this._max_slider_value = obj_from_model._max_slider_value;
+		this._min_value = obj_from_model._min_value;
+		this._max_value = obj_from_model._max_value;
+	};
 
 	create_slider() {
 		this.view.create_stuff()

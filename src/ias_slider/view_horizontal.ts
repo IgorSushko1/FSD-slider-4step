@@ -2,8 +2,8 @@ interface View_horizontal {
 	_element_id?: string,
 	_elem?: any,
 	_sign?: string,
-	_min_start_slider?: number,
-	_max_start_slider?: number,
+	_min_value?: number,
+	_max_value?: number,
 	_min_slider_value?: number,
 	_max_slider_value?: number,
 	_slider_type?: string,
@@ -52,8 +52,8 @@ class View_horizontal {
 		this._element_id = param._element_id;
 		this._elem = document.getElementById(param._element_id);
 		this._sign = param._sign || "₽";
-		this._min_start_slider = Number(param._min_start_slider) || 0;
-		this._max_start_slider = Number(param._max_start_slider) || 1000;
+		this._min_value = Number(param._min_value) || 0;
+		this._max_value = Number(param._max_value) || 1000;
 		this._min_slider_value = Number(param._min_slider_value) || 200;
 		this._max_slider_value = Number(param._max_slider_value) || 800;
 		this._slider_type = param._slider_type || "single";
@@ -84,8 +84,8 @@ class View_horizontal {
 
 	facade_view_set_param_to_controller() { // done ? передает данные в фасад контроллера
 		let obj = {
-			_min_start_slider: this._min_start_slider,
-			_max_start_slider: this._max_start_slider,
+			_min_value: this._min_value,
+			_max_value: this._max_value,
 		};
 		this.controller.facade_controller_set_from_view(obj);
 	};
@@ -142,9 +142,9 @@ class View_horizontal {
 		this.ribon = this.parent_element.querySelector("#color-bar_horizontal") as HTMLElement;
 
 		//РАСЧЕТЫ ШАГА
-		this.steps = (this._max_start_slider - this._min_start_slider) / this._step; // количество шагов
+		this.steps = (this._max_value - this._min_value) / this._step; // количество шагов
 		this.pixel_step = this.parent_width / this.steps; // размер шага в пикселях
-		this.multiplier = (this._max_start_slider - this._min_start_slider) / this.parent_width;
+		this.multiplier = (this._max_value - this._min_value) / this.parent_width;
 
 		if (this._slider_type == "duble") {
 
@@ -190,8 +190,8 @@ class View_horizontal {
 
 	set_visible_text_field = () => {
 
-		let a = this._min_start_slider;
-		let b = this._max_start_slider;
+		let a = this._min_value;
+		let b = this._max_value;
 		let c = this._min_slider_value;
 		let d = this._max_slider_value;
 		// console.log("до  этого момента ок")
@@ -227,9 +227,9 @@ class View_horizontal {
 
 	move_sliders_on_inizialization() {
 
-		let first_slider_position = this.pixel_step * ((this._min_slider_value - this._min_start_slider) / this._step);
+		let first_slider_position = this.pixel_step * ((this._min_slider_value - this._min_value) / this._step);
 
-		let second_slider_position = this.pixel_step * ((this._max_slider_value - this._min_start_slider) / this._step);
+		let second_slider_position = this.pixel_step * ((this._max_slider_value - this._min_value) / this._step);
 
 		this.slider_1.style.left = first_slider_position + "px";
 		this.slider_2.style.left = second_slider_position + "px";
@@ -243,7 +243,7 @@ class View_horizontal {
 
 	move_single_slider_on_inizialization = () => {
 
-		let first_slider_position = this.pixel_step * ((this._min_slider_value - this._min_start_slider) / this._step);
+		let first_slider_position = this.pixel_step * ((this._min_slider_value - this._min_value) / this._step);
 
 		this.slider_single.style.left = first_slider_position + "px";
 		this.value_field_single.style.left = first_slider_position + "px";
@@ -387,7 +387,7 @@ class View_horizontal {
 
 	_math__sliders_value_left() {
 
-		let answer1 = Math.floor(this.slider_1_position_left_x_axis * this.multiplier) + this._min_start_slider;
+		let answer1 = Math.floor(this.slider_1_position_left_x_axis * this.multiplier) + this._min_value;
 
 		this.value_field_1.innerText = answer1 + " " + this._sign;
 
@@ -400,11 +400,11 @@ class View_horizontal {
 
 	_math__sliders_value_right(e: MouseEvent) {
 
-		let answer2 = Math.floor(this.slider_2_position_left_x_axis * this.multiplier) + this._min_start_slider;
+		let answer2 = Math.floor(this.slider_2_position_left_x_axis * this.multiplier) + this._min_value;
 
 		if (e.clientX > this.parent_width + this.parent_position_x - this.pixel_step) {
-			this.value_field_2_fly.innerText = this._max_start_slider + " " + this._sign;
-			this.value_field_2.innerText = this._max_start_slider + " " + this._sign;
+			this.value_field_2_fly.innerText = this._max_value + " " + this._sign;
+			this.value_field_2.innerText = this._max_value + " " + this._sign;
 		} else {
 			this.value_field_2_fly.innerText = answer2 + " " + this._sign;
 			this.value_field_2.innerText = answer2 + " " + this._sign;
@@ -415,17 +415,17 @@ class View_horizontal {
 
 	_math__sliders_value_single_step(steps: number, e: MouseEvent) {
 
-		let answer = this._step * steps + Number(this._min_start_slider);
+		let answer = this._step * steps + Number(this._min_value);
 
 		if (e.clientX > this.parent_position_x && e.clientX + this.slider_single_width < this.parent_width + this.parent_position_x) {
 			this.value_field_single.innerText = answer + " " + this._sign;
 			this.value_field_single_static.innerText = answer + " " + this._sign;
 		} else if (e.clientX > this.parent_width + this.parent_position_x) {
-			this.value_field_single.innerText = this._max_start_slider + " " + this._sign;
-			this.value_field_single_static.innerText = this._max_start_slider + " " + this._sign;
+			this.value_field_single.innerText = this._max_value + " " + this._sign;
+			this.value_field_single_static.innerText = this._max_value + " " + this._sign;
 		} else if (e.clientX <= this.parent_position_x) {
-			this.value_field_single.innerText = this._min_start_slider + " " + this._sign;
-			this.value_field_single_static.innerText = this._min_start_slider + " " + this._sign;
+			this.value_field_single.innerText = this._min_value + " " + this._sign;
+			this.value_field_single_static.innerText = this._min_value + " " + this._sign;
 		};
 
 		this.value_field_single.style.left = this._slider_single_position_left_x_axis + "px";
@@ -433,7 +433,7 @@ class View_horizontal {
 	};
 
 	_math__sliders_value_left_step(steps: number, pixel_step: number, e: MouseEvent) {
-		let answer1 = this._step * steps + Number(this._min_start_slider);
+		let answer1 = this._step * steps + Number(this._min_value);
 
 		if (e.clientX <= this.slider_2_position_left_x_axis + this.parent_position.left - pixel_step && e.clientX >= this.parent_position.left) {
 			this.value_field_1_fly.innerText = answer1 + " " + this._sign;
@@ -453,10 +453,10 @@ class View_horizontal {
 	};
 
 	_math__sliders_value_right_step(steps: number, pixel_step: number, e: MouseEvent) {
-		let answer2 = this._step * steps + Number(this._min_start_slider);
+		let answer2 = this._step * steps + Number(this._min_value);
 
-		if (answer2 > this._max_start_slider) {
-			answer2 = this._max_start_slider;
+		if (answer2 > this._max_value) {
+			answer2 = this._max_value;
 			steps -= 1;
 		};
 
