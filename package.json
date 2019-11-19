@@ -39,9 +39,7 @@
     "webpack-cli": "^3.3.9"
   },
   "scripts": {
-    "test": "mocha",
-    "ts-test": "mocha -r ts-node/register test/test-file-for-test.ts",
-    "ttv": "mocha -r ts-node/register test/test-for-view.ts",
+    "test": "mocha -r ts-node/register test/test.ts",
     "build": "webpack --config webpack.config.js",
     "ts": "tsc",
     "bundle": "tsc & npm run build"
@@ -49,6 +47,6 @@
   "keywords": [
     "Слайдер"
   ],
-  "author": "Игорь Сушко",
+  "author": "Igor Sushko",
   "license": "MIT"
 }
