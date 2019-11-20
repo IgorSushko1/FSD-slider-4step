@@ -1,3 +1,7 @@
+import { Model } from "./model";
+import { View_horizontal } from "./view_horizontal";
+import { View_vertical } from "./view_vertical";
+
 // import { View } from "./view";
 // import { Model } from "./model";
 
@@ -24,9 +28,8 @@ interface Obj_from_view {
 
 class Controller {
 
-	constructor(view: any, model: any, param: any) {
-		this.view = view;
-		this.model = model;
+
+	constructor(param: any) {
 		// this._min_slider_value = param._min_slider_value;
 		// this._max_slider_value = param._max_slider_value;
 		// this._min_value = param._min_value;
@@ -39,8 +42,16 @@ class Controller {
 		this.value_field_state = param.value_field_state || "on"
 	};
 
+	_bind_model(model: Model) {
+		this.model = model
+	};
+
+	_bind_view(view:(View_horizontal | View_vertical)) {
+		this.view = view;
+	}
+
 	_get_model() {
-  return this.model._get_model()
+		return this.model._get_model()
 	};
 
 	_set_model() {
@@ -64,7 +75,7 @@ class Controller {
 	};
 
 	_set_view() {
-		this.view._set_for_view({
+		let obj = {
 			_element_id: this._element_id,
 			_sign: this._sign,
 			_min_value: this._min_value,
@@ -75,7 +86,8 @@ class Controller {
 			_step: this._step,
 			tooltip: this.tooltip,
 			value_field_state: this.value_field_state
-		})
+		};
+		this.view._set_for_view(obj)
 	};
 
 	_get_controller() {
