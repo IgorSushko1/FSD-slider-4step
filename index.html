@@ -2,11 +2,10 @@
 <html>
 
 	<head>
-		<!-- <link rel="stylesheet" href="styles.css"> -->
-		<style>
-			/* body {
-				display: flex;
-			} */
+		<link rel="stylesheet" type="text/css" href="is_horizontal.css">
+		<link rel="stylesheet" type="text/css" href="is_vertical.css">
+		<!-- <style>
+
 			.flex {
 				display: flex;
 				margin-bottom: 100px;
@@ -28,7 +27,7 @@
 			}
 
 			#bord,
-			#ias-slider, #ias-slider_2 {
+			#iss, #iss_2 {
 				width: 700px;
 				height: 100px;
 				/* background: rgb(217, 254, 255); */
@@ -38,7 +37,7 @@
 				/* z-index: 100; */
 			}
 
- #ias-slider_2 {
+ #iss_2 {
 				width: 700px;
 				height: 500px;
 				/* background: rgb(217, 254, 255); */
@@ -48,11 +47,11 @@
 				/* z-index: 100; */
 			}
 
-			#ias-slider__single,
-			#ias-slider__duble_1_horizontal,
-			#ias-slider__duble_2_horizontal,
-			#ias-slider__duble_1_vertical,
-			#ias-slider__duble_2_vertical {
+			#iss__single,
+			#iss__duble_1_horizontal,
+			#iss__duble_2_horizontal,
+			#iss__duble_1_vertical,
+			#iss__duble_2_vertical {
 				/* z-index: -1; */
 				/* margin-top: 50px; */
 				background: linear-gradient(180deg, #BC9CFF, #8BA4F9);
@@ -66,12 +65,12 @@
 				cursor: move;
 			}
 
-			#ias-slider__duble_2_horizontal {
+			#iss__duble_2_horizontal {
 				left: 40px;
 				background: linear-gradient(0deg, #66D2EA, #6FCF97);
 			}
 
-			#ias-slider__duble_2_vertical {
+			#iss__duble_2_vertical {
 				top: 40px;
 				background: linear-gradient(0deg, #66D2EA, #6FCF97);
 			}
@@ -99,9 +98,9 @@
 				z-index: -200;
 			}
 
-			#ias-slider__duble_fly-value-1,
-			#ias-slider__duble_fly-value-2,
-			#ias-slider__single_fly-value {
+			#iss__duble_fly-value-1,
+			#iss__duble_fly-value-2,
+			#iss__single_fly-value {
 				/* visibility: hidden; */
 				position: absolute;
 				width: 50px;
@@ -114,9 +113,9 @@
 				border-radius: 6px;
 			}
 
-			#ias-slider__duble_fly-value-1_vertical,
-			#ias-slider__duble_fly-value-2_vertical,
-			#ias-slider__single_fly-value_vertical {
+			#iss__duble_fly-value-1_vertical,
+			#iss__duble_fly-value-2_vertical,
+			#iss__single_fly-value_vertical {
 				/* visibility: hidden; */
 				position: absolute;
 				width: 50px;
@@ -144,7 +143,7 @@
 				z-index: 1;
 			}
 
-			#ias-container #ias-slider__duble_fly-value-1::after {
+			#ias-container #iss__duble_fly-value-1::after {
 				content: "";
 				position: absolute;
 				top: 100%;
@@ -155,7 +154,7 @@
 				border-color: rgba(144, 144, 144, 0.239) transparent transparent transparent;
 			}
 
-			#ias-container #ias-slider__duble_fly-value-2::after {
+			#ias-container #iss__duble_fly-value-2::after {
 				content: "";
 				position: absolute;
 				top: 100%;
@@ -166,7 +165,7 @@
 				border-color: rgba(144, 144, 144, 0.239) transparent transparent transparent;
 			}
 
-			#ias-container #ias-slider__single_fly-value::after {
+			#ias-container #iss__single_fly-value::after {
 				content: "";
 				position: absolute;
 				top: 100%;
@@ -177,70 +176,70 @@
 				border-color: rgba(144, 144, 144, 0.239) transparent transparent transparent;
 			}
 
-			#ias-container #ias-slider__duble_fly-value-1 {
+			#ias-container #iss__duble_fly-value-1 {
 				visibility: hidden;
 				opacity: 0;
 				transition: opacity 1s;
 			}
 
-			#ias-container #ias-slider__duble_fly-value-2 {
+			#ias-container #iss__duble_fly-value-2 {
 				visibility: hidden;
 				opacity: 0;
 				transition: opacity 1s;
 			}
 
-			#ias-container #ias-slider__single_fly-value {
+			#ias-container #iss__single_fly-value {
 				visibility: hidden;
 				opacity: 0;
 				transition: opacity 1s;
 			}
 
-			#ias-container:hover #ias-slider__duble_fly-value-1 {
+			#ias-container:hover #iss__duble_fly-value-1 {
 				visibility: visible;
 				opacity: 1;
 			}
 
-			#ias-container:hover #ias-slider__duble_fly-value-2 {
+			#ias-container:hover #iss__duble_fly-value-2 {
 				visibility: visible;
 				opacity: 1;
 			}
 
-			#ias-container:hover #ias-slider__single_fly-value {
+			#ias-container:hover #iss__single_fly-value {
 				visibility: visible;
 				opacity: 1;
 			}
 
 
 
-			#ias-container_vertical #ias-slider__duble_fly-value-1_vertical {
+			#ias-container_vertical #iss__duble_fly-value-1_vertical {
 				visibility: hidden;
 				opacity: 0;
 				transition: opacity 1s;
 			}
 
-			#ias-container_vertical #ias-slider__duble_fly-value-2_vertical {
+			#ias-container_vertical #iss__duble_fly-value-2_vertical {
 				visibility: hidden;
 				opacity: 0;
 				transition: opacity 1s;
 			}
 
-			#ias-container_vertical #ias-slider__single_fly-value_vertical {
+			#ias-container_vertical #iss__single_fly-value_vertical {
 				visibility: hidden;
 				opacity: 0;
 				transition: opacity 1s;
 			}
 
-			#ias-container_vertical:hover #ias-slider__duble_fly-value-1_vertical {
+			#ias-container_vertical:hover #iss__duble_fly-value-1_vertical {
 				visibility: visible;
 				opacity: 1;
 			}
 
-			#ias-container_vertical:hover #ias-slider__duble_fly-value-2_vertical {
+			#ias-container_vertical:hover #iss__duble_fly-value-2_vertical {
 				visibility: visible;
 				opacity: 1;
 			}
 
-			#ias-container_vertical:hover #ias-slider__single_fly-value_vertical {
+			#ias-container_vertical:hover #iss__single_fly-value_vertical {
 				visibility: visible;
 				opacity: 1;
 			}
@@ -260,24 +259,24 @@
 			#doc_panel {
 				margin-left: 60px;
 			}
-		</style>
+		</style> -->
 		<title>Getting Started</title>
 	</head>
 
 	<body>
 		<!-- <div id="drag2"></div> -->
 	<div class="flex">
-		<div id="ias-slider"></div>
+		<div id="iss"></div>
 		<div id="doc_panel"></div>
 	</div>
-	<!-- <div class="flex">
-		<div id="ias-slider_2"></div>
+	<div class="flex">
+		<div id="iss_2"></div>
 		<div id="doc_panel_2"></div>
-	</div> -->
+	</div>
 
 		<div id="settings">
 		</div>
-		<div id="second-ias-slider"></div>
+		<div id="second-iss"></div>
 
 		</script>
 

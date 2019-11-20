@@ -52,20 +52,20 @@ class View_horizontal {
 	multiplier: number;
 
 	constructor() {
-	// this._element_id = param._element_id;
-	// this._elem = document.getElementById(param._element_id);
-	// this._sign = param._sign || "₽";
-	// this._min_value = Number(param._min_value) || 0;
-	// this._max_value = Number(param._max_value) || 1000;
-	// this._min_slider_value = Number(param._min_slider_value) || 200;
-	// this._max_slider_value = Number(param._max_slider_value) || 800;
-	// this._slider_type = param._slider_type || "single";
-	// this._step = param._step || 2;
-	// this.tooltip = param.tooltip || "on";
-	// this.value_field_state = param.value_field_state || "on"
+		// this._element_id = param._element_id;
+		// this._elem = document.getElementById(param._element_id);
+		// this._sign = param._sign || "₽";
+		// this._min_value = Number(param._min_value) || 0;
+		// this._max_value = Number(param._max_value) || 1000;
+		// this._min_slider_value = Number(param._min_slider_value) || 200;
+		// this._max_slider_value = Number(param._max_slider_value) || 800;
+		// this._slider_type = param._slider_type || "single";
+		// this._step = param._step || 2;
+		// this.tooltip = param.tooltip || "on";
+		// this.value_field_state = param.value_field_state || "on"
 
-	// this.controller = controller;
-	// this.view_code_start = this.view_code_start.bind(this);
+		// this.controller = controller;
+		// this.view_code_start = this.view_code_start.bind(this);
 	};
 
 	a = 5;//for first test
@@ -89,7 +89,7 @@ class View_horizontal {
 		this._step = obj_from_controller._step || 2;
 		this.tooltip = obj_from_controller.tooltip || "on";
 		this.value_field_state = obj_from_controller.value_field_state || "on"
-
+		console.log("Создаю горизонтальный вид")
 		this.create_stuff();
 	};
 
@@ -120,29 +120,31 @@ class View_horizontal {
 		if (this._elem) {
 			if (this._slider_type == "duble") {
 				this._elem.innerHTML =
-					'<div id="value-field">' +
-					'<span id="value_field_1-field"></span>' + '-' +
-					'<span id="value_field_2-field"></span>' +
+					'<div id="iss_value-field">' +
+					'<span id="iss_value_field_1-field"></span>' + '-' +
+					'<span id="iss_value_field_2-field"></span>' +
 					'</div>' +
-					'<div id= "ias-container">' +
-					'<div id="ias-slider__duble_fly-value-1"  class="tooltip"></div>' +
-					'<div id="ias-slider__duble_1_horizontal" class="drag"></div>' +
-					'<div id="ias-slider__duble_fly-value-2" class="tooltip"></div>' +
-					'<div id="ias-slider__duble_2_horizontal" class="drag"></div>' +
-					'<div id="color-bar_horizontal"></div>' +
+					'<div id= "iss-container">' +
+					'<div id="iss__duble_fly-value-1"  class="iss_tooltip"></div>' +
+					'<div id="iss__duble_1_horizontal" class="iss_drag"></div>' +
+					'<div id="iss__duble_fly-value-2" class="iss_tooltip"></div>' +
+					'<div id="iss__duble_2_horizontal" class="iss_drag"></div>' +
+					'<div id="iss__color-bar_horizontal"></div>' +
 					'</div>';
 
 				this.create_this_sliders_elements();
 				this.move_ribon();
 
 			} else if (this._slider_type == "single") {
-				this._elem.innerHTML = '<div id="value-field">' +
+
+				this._elem.innerHTML =
+					'<div id="iss_value-field">' +
 					'<span id="value_field_single"></span>' +
 					'</div>' +
-					'<div id= "ias-container">' +
-					'<div id="color-bar_horizontal"></div>' +
-					'<div id="ias-slider__single_fly-value" class="tooltip"></div>' +
-					'<div id="ias-slider__single" class="drag"></div>' +
+					'<div id= "iss-container">' +
+					'<div id="iss__color-bar_horizontal"></div>' +
+					'<div id="iss__single_fly-value" class="iss_tooltip"></div>' +
+					'<div id="iss__single" class="iss_drag"></div>' +
 					'</div>';
 
 				this.create_this_sliders_elements();
@@ -163,9 +165,9 @@ class View_horizontal {
 		this.parent_position = this.parent_element.getBoundingClientRect();// родительский контейнер
 		this.parent_position_x = this.parent_position.left;//размещение контейнера относительно левого края экрана
 
-		this.value_field = this.parent_element.querySelector("#value-field") as HTMLElement;
+		this.value_field = this.parent_element.querySelector("#iss_value-field") as HTMLElement;
 
-		this.ribon = this.parent_element.querySelector("#color-bar_horizontal") as HTMLElement;
+		this.ribon = this.parent_element.querySelector("#iss__color-bar_horizontal") as HTMLElement;
 
 		//РАСЧЕТЫ ШАГА
 		this.steps = (this._max_value - this._min_value) / this._step; // количество шагов
@@ -173,16 +175,16 @@ class View_horizontal {
 		this.multiplier = (this._max_value - this._min_value) / this.parent_width;
 
 		if (this._slider_type == "duble") {
+			
+			this.value_field_1 = this.parent_element.querySelector("#iss_value_field_1-field") as HTMLElement;
+			this.value_field_2 = this.parent_element.querySelector("#iss_value_field_2-field") as HTMLElement;
+			this.value_field_1_fly = this.parent_element.querySelector("#iss__duble_fly-value-1") as HTMLElement;
+			this.value_field_2_fly = this.parent_element.querySelector("#iss__duble_fly-value-2") as HTMLElement;
 
-			this.value_field_1 = this.parent_element.querySelector("#value_field_1-field") as HTMLElement;
-			this.value_field_2 = this.parent_element.querySelector("#value_field_2-field") as HTMLElement;
-			this.value_field_1_fly = this.parent_element.querySelector("#ias-slider__duble_fly-value-1") as HTMLElement;
-			this.value_field_2_fly = this.parent_element.querySelector("#ias-slider__duble_fly-value-2") as HTMLElement;
-
-			this.slider_1 = this.parent_element.querySelector("#ias-slider__duble_1_horizontal") as HTMLElement;
+			this.slider_1 = this.parent_element.querySelector("#iss__duble_1_horizontal") as HTMLElement;
 			this.slider_1_width = this.slider_1.offsetWidth;
 
-			this.slider_2 = this.parent_element.querySelector("#ias-slider__duble_2_horizontal") as HTMLElement;
+			this.slider_2 = this.parent_element.querySelector("#iss__duble_2_horizontal") as HTMLElement;
 			this.slider_2_width = this.slider_2.offsetWidth;
 
 			this.slider_1_position_left_x_axis = this.slider_1.offsetLeft;
@@ -192,10 +194,10 @@ class View_horizontal {
 
 		if (this._slider_type == "single") {
 
-			this.value_field_single = this.parent_element.querySelector("#ias-slider__single_fly-value") as HTMLElement;
+			this.value_field_single = this.parent_element.querySelector("#iss__single_fly-value") as HTMLElement;
 			this.value_field_single_static = this.parent_element.querySelector("#value_field_single") as HTMLElement;
 
-			this.slider_single = this.parent_element.querySelector("#ias-slider__single") as HTMLElement;
+			this.slider_single = this.parent_element.querySelector("#iss__single") as HTMLElement;
 			this.slider_single_width = this.slider_single.offsetWidth;
 
 			this._slider_single_position_left_x_axis = this.slider_single.offsetLeft;
@@ -203,7 +205,7 @@ class View_horizontal {
 	};
 
 	refresh_positions = () => {
-		this.parent_position = this.parent_element.getBoundingClientRect();// родительский контейнер
+		this.parent_position = this.parent_element.getBoundingClientRect();// родительский контейнер, если вдруг поменяется разрешение экрана
 		this.parent_position_x = this.parent_position.left;//размещение контейнера относительно левого края экрана
 		if (this._slider_type == "duble") {
 			this.slider_1_position_left_x_axis = this.slider_1.offsetLeft;
@@ -233,8 +235,10 @@ class View_horizontal {
 		};
 
 		if (this._slider_type == "single" && a < b && c - a >= 0) {
-			;
+
+			this.value_field_single_static.innerText = c + " " + this._sign;
 			this.value_field_single.innerText = c + " " + this._sign;
+
 			this.move_single_slider_on_inizialization()
 		};
 
@@ -578,4 +582,4 @@ class View_horizontal {
 export { View_horizontal };
 // let param = {};
 // let view = new View(param);
-// view.view_code_start({ _element_id: "ias-slider_parent", _slider_type: "duble" })
+// view.view_code_start({ _element_id: "iss_parent", _slider_type: "duble" })
