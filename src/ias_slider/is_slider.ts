@@ -3,8 +3,24 @@ import { View_horizontal } from "./view_horizontal";
 import { View_vertical } from "./view_vertical";
 import { Model } from "./model";
 import { Controller } from "./controller";
+interface Param {
+	settings_id?: string;
+	_type_view?: string;
+	_element_id?: string,
+	_elem?: any,
+	_sign?: string,
+	_min_value?: number,
+	_max_value?: number,
+	_min_slider_value?: number,
+	_max_slider_value?: number,
+	_slider_type?: string,
+	_step?: number,
+	controller?: any;
+	tooltip?: string;
+	value_field_state?: string
+};
 
-function is_slider(id: string, settings_id?: string) {
+function is_slider(param: Param) {
 	interface obj_fixed_values {
 		[a: string]: fixed_values_obj;
 	};
@@ -107,18 +123,18 @@ function is_slider(id: string, settings_id?: string) {
 
 	let settings: any = {
 		// _element_id: "ias-slider",
-		_element_id: id,
-		_sign: "₽",
-		_min_value: 0,
-		_max_value: 1000,
-		_min_slider_value: 200,
-		_max_slider_value: 800,
-		_slider_type: "duble",
-		_type_view: "horizontal",
-		_step: 50,
-		tooltip: "on",
-		value_field_state: "on",
-		settings_id: settings_id
+		_element_id: param._element_id || "iss",
+		_sign: param._sign || "₽",
+		_min_value: param._min_value || 0,
+		_max_value: param._max_value || 1000,
+		_min_slider_value: param._min_slider_value || 200,
+		_max_slider_value: param._max_slider_value || 800,
+		_slider_type: param._slider_type || "duble",
+		_type_view: param._type_view || "horizontal",
+		_step: param._step || 50,
+		tooltip: param.tooltip || "on",
+		value_field_state: param.value_field_state || "on",
+		settings_id: param.settings_id || "doc_panel"
 	};
 
 	// let key_one:any;
@@ -131,7 +147,6 @@ function is_slider(id: string, settings_id?: string) {
 		let span = document.createElement("span");
 		span.appendChild(text_node_title);
 		div.appendChild(span);
-		// console.log(a);
 
 		select.id = obj_fixed_values[key_one].key_word;
 
@@ -156,11 +171,11 @@ function is_slider(id: string, settings_id?: string) {
 
 		vv.onchange = function () {
 
-			console.log("до изменения : " + settings[obj_fixed_values[key_one].function_name]);
+			// console.log("до изменения : " + settings[obj_fixed_values[key_one].function_name]);
 
 			settings[obj_fixed_values[key_one].function_name] = (this as any).value;
 
-			console.log("после изменения : " + settings[obj_fixed_values[key_one].function_name]);
+			// console.log("после изменения : " + settings[obj_fixed_values[key_one].function_name]);
 			slider_refresh();
 			// change_string(key_one, settings[obj_fixed_values[key_one].function_name]);
 		};
@@ -196,7 +211,7 @@ function is_slider(id: string, settings_id?: string) {
 
 			settings[f_name] = input.value;
 
-			console.log("после изменения в динамичном слайдере : " + settings[f_name]);
+			// console.log("после изменения в динамичном слайдере : " + settings[f_name]);
 
 			slider_refresh();
 		};
@@ -210,7 +225,7 @@ function is_slider(id: string, settings_id?: string) {
 
 	//ПОСТРОЕНИЕ СЛАЙДЕРА ПРИ ПЕРВОМ ЗАПУСКЕ
 	let view: any;
-
+	// console.log('settings._type_view  === ' + settings._type_view)
 	if (settings._type_view == "vertical") {
 		// view = new View_vertical(settings);
 		view = new View_vertical();
@@ -220,15 +235,16 @@ function is_slider(id: string, settings_id?: string) {
 		view = new View_horizontal();
 
 	};
-
 	let model = new Model(settings);
 
-	let controller = new Controller(view, model, settings);
+	let controller = new Controller(settings);
 
-	// console.log("Запись 2. Копии классов созданы")
-	view.view_code_bind_controller(controller);
+	controller._bind_model(model);
+	controller._bind_view(view);
+	view._bind_controller(controller);
 
 	controller.create_slider();
+
 
 	function slider_refresh() {
 		// let view;
@@ -243,7 +259,14 @@ function is_slider(id: string, settings_id?: string) {
 
 		};
 		model = new Model(settings);
-		controller = new Controller(view, model, settings);
+
+		controller = new Controller(settings);
+
+		controller._bind_model(model);
+		controller._bind_view(view);
+		view._bind_controller(controller);
+
+
 		controller.create_slider();
 	};
 	// передаю контролеру созданные view и model;
