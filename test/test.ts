@@ -28,15 +28,9 @@ describe('Тестирование View',
 							(global as Global).window = dom.window;
 							(global as Global).document = window.document;
 
-							// let style = dom.window.document.createElement("link");
-							// style.type = "text/css";
-							// style.rel = 'stylesheet';
-							// style.href = "styles.css";
-							// window.document.getElementsByTagName("head")[0].appendChild(style);
-
 							view = new View_horizontal();
 							view._set_for_view({
-								_element_id: "ias-slider",
+								_element_id: "iss",
 								_sign: "₽",
 								_min_value: 0,
 								_max_value: 1000,
@@ -65,7 +59,7 @@ describe('Тестирование View',
 
 				it('Проверяю работу document, запускается ли он просто так', () => {
 
-					let a = window.document.getElementById("ias-slider");
+					let a = window.document.getElementById("iss");
 
 					assert.isOk(a);
 
@@ -75,10 +69,10 @@ describe('Тестирование View',
 
 
 					view.create_stuff();// обязательно запускать сборку плагина, иначе не работает
-					let parent_element = window.document.querySelector("#ias-slider") as HTMLElement;
+					let parent_element = window.document.querySelector("#iss") as HTMLElement;
 
 					// console.log("Верни мне HTML который у тебя внутри! Приказываю! -- " + parent_element.innerHTML);
-					let r = window.document.getElementById("ias-slider__duble_1_horizontal").style;
+					let r = window.document.getElementById("iss__duble_1_horizontal").style;
 					// console.log("Цвет внутри! Покажи! -- " + r.left);
 					assert.isOk(parent_element, "значение не найдено")
 
@@ -87,13 +81,8 @@ describe('Тестирование View',
 				it('Проверяю захват document изнутри класса View', () => {
 					view.create_stuff();// обязательно запускать сборку плагина, иначе не работает
 
-					let abc = window.document.getElementById("ias-slider__duble_fly-value-1").style.left;
+					let abc = window.document.getElementById("iss__duble_fly-value-1").style.left;
 
-					// let parent_element = window.document.querySelector("#ias-slider") as HTMLElement;
-
-					// console.log("Верни мне HTML который у тебя внутри! Приказываю! -- " + parent_element.innerHTML);
-
-					// console.log(abc);
 					assert.isOk(view.a, "значение не найдено")
 
 				});
@@ -115,22 +104,9 @@ describe('Тестирование View',
 							(global as Global).window = dom.window;
 							(global as Global).document = window.document;
 
-							// view = new View_horizontal({
-							// 	_element_id: "ias-slider",
-							// 	_sign: "₽",
-							// 	_min_value: 0,
-							// 	_max_value: 1000,
-							// 	_min_slider_value: 200,
-							// 	_max_slider_value: 800,
-							// 	_slider_type: "duble",
-							// 	_step: 50,
-							// 	tooltip: "on",
-							// 	value_field_state: "on"
-							// } as View_horizontal);
-							// });
 							view = new View_horizontal();
 							view._set_for_view({
-								_element_id: "ias-slider",
+								_element_id: "iss",
 								_sign: "₽",
 								_min_value: 0,
 								_max_value: 1000,
@@ -147,55 +123,55 @@ describe('Тестирование View',
 
 				it('Создание контейнера для графического представления слайдера', () => {
 					view.create_stuff();
-					let slider = window.document.getElementById("ias-container");
+					let slider = window.document.getElementById("iss-container");
 					assert.isOk(slider);
 				});
 
 				it('Создание первого ползунка', () => {
 					view.create_stuff();
-					let slider_1 = window.document.getElementById("ias-slider__duble_1_horizontal");
+					let slider_1 = window.document.getElementById("iss__duble_1_horizontal");
 					assert.isOk(slider_1);
 				});
 
 				it('Создание второго ползунка', () => {
 					view.create_stuff();
-					let slider_2 = window.document.getElementById("ias-slider__duble_2_horizontal");
+					let slider_2 = window.document.getElementById("iss__duble_2_horizontal");
 					assert.isOk(slider_2);
 				});
 
 				it('Создание цветной полоски между ползунками', () => {
 					view.create_stuff();
-					let ribon = window.document.getElementById("color-bar_horizontal");
+					let ribon = window.document.getElementById("iss__color-bar_horizontal");
 					assert.isOk(ribon);
 				});
 
 				it('Создание статичного поля для вывода значений', () => {
 					view.create_stuff();
-					let value_field_state = window.document.getElementById("value-field");
+					let value_field_state = window.document.getElementById("iss_value-field");
 					assert.isOk(value_field_state);
 				});
 
 				it('Создание области вывода значения с левого ползунка в статичном поле', () => {
 					view.create_stuff();
-					let value_field_state = window.document.getElementById("value_field_1-field");
+					let value_field_state = window.document.getElementById("iss_value_field_1-field");
 					assert.isOk(value_field_state);
 				});
 
 				it('Создание области вывода значения с правого ползунка в статичном поле ', () => {
 					view.create_stuff();
-					let value_field_state = window.document.getElementById("value_field_2-field");
+					let value_field_state = window.document.getElementById("iss_value_field_2-field");
 					assert.isOk(value_field_state);
 				});
 
 				it('Создание всплывающего значения над левым ползунком', () => {
 					view.create_stuff();
-					let value_field_state = window.document.getElementById("ias-slider__duble_fly-value-1");
+					let value_field_state = window.document.getElementById("iss__duble_fly-value-1");
 					assert.isOk(value_field_state);
 				});
 
 				it('Создание всплывающего значения над правым ползунком', () => {
 					view.create_stuff();
-					let value_field_state = window.document.getElementById("ias-slider__duble_fly-value-2");
+					let value_field_state = window.document.getElementById("iss__duble_fly-value-2");
 					assert.isOk(value_field_state);
 				});
 			});
@@ -216,21 +192,9 @@ describe('Тестирование View',
 							(global as Global).window = dom.window;
 							(global as Global).document = window.document;
 
-							// view = new View_horizontal({
-							// 	_element_id: "ias-slider",
-							// 	_sign: "₽",
-							// 	_min_value: 0,
-							// 	_max_value: 1000,
-							// 	_min_slider_value: 200,
-							// 	_max_slider_value: 800,
-							// 	_slider_type: "duble",
-							// 	_step: 50,
-							// 	tooltip: "on",
-							// 	value_field_state: "on"
-							// } as View_horizontal);
 							view = new View_horizontal();
 							view._set_for_view({
-								_element_id: "ias-slider",
+								_element_id: "iss",
 								_sign: "₽",
 								_min_value: 0,
 								_max_value: 1000,
@@ -245,17 +209,14 @@ describe('Тестирование View',
 				});
 				it('Наличие функции создания this - элементов', () => {
 					view.create_stuff();
-					// console.log(view.parent_element);// если пустой то вернет undifined
 					assert.isOk(view.create_this_sliders_elements);
 				});
 				it('Наличие переменной для обращения к родительскому элементу', () => {
 					view.create_stuff();
-					// console.log(view.parent_element);// если пустой то вернет undifined
 					assert.isOk(view.parent_element);
 				});
 				it('Наличие переменной для обращения к элементу, объединяющему элементы статичного отображения', () => {
 					view.create_stuff();
-					// console.log(view.parent_element);// если пустой то вернет undifined
 					assert.isOk(view.value_field_state);
 				});
 				it('Наличие переменной для обращения к статичному элементу вывода результатов первого элемента', () => {
@@ -327,17 +288,17 @@ describe('Тестирование View',
 							// const document = window.document;
 							// window.document.getElementById("ias-slider").style.width = "500px";// не работает , не переписывает
 							window.onload = () => {
-								is_slider("ias-slider", "doc_panel")
+								is_slider("iss", "doc_panel")
 							};
 						});
 				});
 				it('Есть ли родительский элемент на странице', () => {
 
-					assert.isOk(window.document.getElementById("ias-slider__duble_2_horizontal"));
+					assert.isOk(window.document.getElementById("iss__duble_2_horizontal"));
 				});
 
 				it('Есть ли другие элементы на странице', () => {
-					assert.isOk(window.document.getElementById("ias-slider__duble_1_horizontal"));
+					assert.isOk(window.document.getElementById("iss__duble_1_horizontal"));
 				})
 
 			});
@@ -378,7 +339,7 @@ describe('Тестирование Controller', () => {
 	let model = new Model(settings_for_model);
 
 	let controller = new Controller(view, model, {
-		_element_id: "ias-slider",
+		_element_id: "iss",
 		_slider_type: "duble",
 		_step: 50,
 		tooltip: "on",
@@ -466,7 +427,7 @@ describe('Тестирование Controller', () => {
 			_max_value: 1000,
 			_min_slider_value: 100,
 			_max_slider_value: 700,
-			_element_id: "ias-slider",
+			_element_id: "iss",
 			_slider_type: "duble",
 			_step: 50,
 			tooltip: "on",
