@@ -12,10 +12,6 @@ interface View_horizontal {
 	tooltip?: string;
 	value_field_state?: string
 };
-
-interface Obj_from_controller {
-	[a: string]: number
-}
 class View_horizontal {
 
 	parent_element: HTMLElement;
@@ -68,11 +64,7 @@ class View_horizontal {
 		// this.view_code_start = this.view_code_start.bind(this);
 	};
 
-	a = 5;//for first test
-	b = 60;//for first test
-	// c = this._elem;//for first test
-
-	view_code_bind_controller(controller: any) {
+	_bind_controller(controller: any) {
 		this.controller = controller
 	};
 
@@ -89,7 +81,7 @@ class View_horizontal {
 		this._step = obj_from_controller._step || 2;
 		this.tooltip = obj_from_controller.tooltip || "on";
 		this.value_field_state = obj_from_controller.value_field_state || "on"
-		console.log("Создаю горизонтальный вид")
+		// console.log("Создаю горизонтальный вид")
 		this.create_stuff();
 	};
 
@@ -110,8 +102,8 @@ class View_horizontal {
 
 	_set_controller() { // done ? передает данные в фасад контроллера
 		let obj = {
-			_min_value: this._min_value,
-			_max_value: this._max_value,
+			_min_slider_value: this._min_slider_value,
+			_max_slider_value: this._max_slider_value,
 		};
 		this.controller._get_view(obj);
 	};
@@ -175,7 +167,7 @@ class View_horizontal {
 		this.multiplier = (this._max_value - this._min_value) / this.parent_width;
 
 		if (this._slider_type == "duble") {
-			
+
 			this.value_field_1 = this.parent_element.querySelector("#iss_value_field_1-field") as HTMLElement;
 			this.value_field_2 = this.parent_element.querySelector("#iss_value_field_2-field") as HTMLElement;
 			this.value_field_1_fly = this.parent_element.querySelector("#iss__duble_fly-value-1") as HTMLElement;
@@ -311,7 +303,7 @@ class View_horizontal {
 	};
 
 	_move_element_single = (e: MouseEvent) => {
-		if (this._step >= this.slider_single_width) {
+		if (this._step >= 2) {
 			this._step_implementation(e, this.slider_single);; // Рабочая функция
 		} else {
 			if (e.clientX > this.parent_width + this.parent_position_x) {
@@ -347,7 +339,7 @@ class View_horizontal {
 	_move_element_1 = (e: MouseEvent) => {
 		this.refresh_positions();
 
-		if (this._step >= this.slider_1_width) {
+		if (this._step >= 2) {
 			this._step_implementation(e, this.slider_1, this.slider_2); // Рабочая функция
 		} else {
 			if (e.clientX > this.parent_width + this.parent_position_x) { // РАБОЧАЯ ФУНКЦИЯ
@@ -374,7 +366,7 @@ class View_horizontal {
 	_move_element_2 = (e: MouseEvent) => {
 		this.refresh_positions();
 
-		if (this._step >= this.slider_2_width) {
+		if (this._step >= 2) {
 			this._step_implementation(e, this.slider_2, this.slider_1); // Рабочая функция
 		} else {
 			if (e.clientX > this.parent_width + this.parent_position_x) { //если курсор выходит за пределы элемента справа РАБОЧАЯ ФУНКЦИЯ
@@ -465,20 +457,21 @@ class View_horizontal {
 	_math__sliders_value_left_step(steps: number, pixel_step: number, e: MouseEvent) {
 		let answer1 = this._step * steps + Number(this._min_value);
 
-		if (e.clientX <= this.slider_2_position_left_x_axis + this.parent_position.left - pixel_step && e.clientX >= this.parent_position.left) {
+		if (e.clientX <= this.slider_2_position_left_x_axis + this.parent_position_x - pixel_step && e.clientX >= this.parent_position_x) {
 			this.value_field_1_fly.innerText = answer1 + " " + this._sign;
-
 			this.value_field_1.innerText = answer1 + " " + this._sign;
 
-			this.value_field_1_fly.style.left = pixel_step * steps + "px";
-
+			// this.value_field_1_fly.style.left = pixel_step * steps + "px";
+			// this.value_field_1_fly.style.left = this.slider_1_position_left_x_axis + "px";
 		};
-
-		if (this.value_field_1_fly.offsetLeft >= this.value_field_2_fly.offsetLeft - this.slider_1.offsetWidth) {
-
-			this.value_field_1_fly.style.left = this.value_field_2_fly.offsetLeft - this.slider_1.offsetWidth * 2 + "px"
-
+		if (e.clientX <= this.parent_position_x) {
+			this.value_field_1_fly.innerText = this._min_value + " " + this._sign;
+			this.value_field_1.innerText = this._min_value + " " + this._sign;
 		};
+		// if (this.value_field_1_fly.offsetLeft >= this.value_field_2_fly.offsetLeft - this.slider_1.offsetWidth) {
+			// this.value_field_1_fly.style.left = this.value_field_2_fly.offsetLeft - this.slider_1_width* 2 + "px"
+		// };
+			this.value_field_1_fly.style.left = this.slider_1_position_left_x_axis - this.slider_1_width/4 + "px";
 
 	};
 
@@ -534,8 +527,18 @@ class View_horizontal {
 					modified_object.style.left = "0px";
 				} else if (e.clientX > this.parent_position_x && e.clientX <= this.parent_position_x + static_object_position - pixel_step) {
 					modified_object.style.left = (pixel_step * step) + "px";
-				}
+				};
+
 				this.refresh_positions();
+
+				if (modified_object_position + modified_object_width >= static_object_position) {
+					modified_object.style.zIndex = "2";
+					static_object.style.zIndex = "1";
+				} else {
+					modified_object.style.zIndex = "1";
+					static_object.style.zIndex = "2";
+				};
+
 				this._math__sliders_value_left_step(step, pixel_step, e);
 
 			};
@@ -549,7 +552,17 @@ class View_horizontal {
 				} else if (e.clientX < this.parent_position_x + static_object_position + modified_object_width) {
 					modified_object.style.left = static_object_position + modified_object_width + "px";
 				}
+
 				this.refresh_positions();
+
+				if (modified_object_position - modified_object_width <= static_object_position) {
+					modified_object.style.zIndex = "2";
+					static_object.style.zIndex = "1";
+				} else {
+					modified_object.style.zIndex = "1";
+					static_object.style.zIndex = "2";
+				};
+
 				this._math__sliders_value_right_step(step, pixel_step, e);
 
 			};
@@ -580,6 +593,3 @@ class View_horizontal {
 
 };
 export { View_horizontal };
-// let param = {};
-// let view = new View(param);
-// view.view_code_start({ _element_id: "iss_parent", _slider_type: "duble" })

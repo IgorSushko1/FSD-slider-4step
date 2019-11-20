@@ -12,8 +12,6 @@ interface View_vertical {
 	tooltip?: string;
 	value_field_state?: string
 };
-
-
 class View_vertical {
 
 	parent_element: HTMLElement;
@@ -34,7 +32,7 @@ class View_vertical {
 	slider_1: HTMLElement;
 	slider_1_width: number;
 	slider_1_position_left_x_axis: number;
-	// _height
+
 	slider_2: HTMLElement;
 	slider_2_width: number;
 	slider_2_position_left_x_axis: number;
@@ -52,7 +50,7 @@ class View_vertical {
 	constructor() {
 	};
 
-	view_code_bind_controller(controller: any) {
+	_bind_controller(controller: any) {
 		this.controller = controller
 	};
 
@@ -69,7 +67,7 @@ class View_vertical {
 		this._step = obj_from_controller._step || 2;
 		this.tooltip = obj_from_controller.tooltip || "on";
 		this.value_field_state = obj_from_controller.value_field_state || "on"
-		console.log("Создаю вертикальный вид")
+		// console.log("Создаю вертикальный вид")
 		this.create_stuff();
 	};
 
@@ -290,7 +288,7 @@ class View_vertical {
 	};
 
 	_move_element_single = (e: MouseEvent) => {
-		if (this._step >= this.slider_single_width) {
+		if (this._step >= 2) {
 			this._step_implementation(e, this.slider_single);; // Рабочая функция
 		} else {
 			if (e.clientY > this.parent_width + this.parent_position_x) {
@@ -326,7 +324,7 @@ class View_vertical {
 	_move_element_1 = (e: MouseEvent) => {
 		this.refresh_positions();
 
-		if (this._step >= this.slider_1_width) {
+		if (this._step >= 2) {
 			this._step_implementation(e, this.slider_1, this.slider_2); // Рабочая функция
 		} else {
 			if (e.clientY > this.parent_width + this.parent_position_x) { // РАБОЧАЯ ФУНКЦИЯ
@@ -353,7 +351,7 @@ class View_vertical {
 	_move_element_2 = (e: MouseEvent) => {
 		this.refresh_positions();
 
-		if (this._step >= this.slider_2_width) {
+		if (this._step >= 2) {
 			this._step_implementation(e, this.slider_2, this.slider_1); // Рабочая функция
 		} else {
 			if (e.clientY > this.parent_width + this.parent_position_x) { //если курсор выходит за пределы элемента справа РАБОЧАЯ ФУНКЦИЯ
@@ -449,16 +447,17 @@ class View_vertical {
 
 			this.value_field_1.innerText = answer1 + " " + this._sign;
 
-			this.value_field_1_fly.style.top = pixel_step * steps + "px";
+			// this.value_field_1_fly.style.top = pixel_step * steps + "px";
 
 		};
-
-		if (this.value_field_1_fly.offsetTop >= this.value_field_2_fly.offsetTop - this.slider_1.offsetHeight) {
-
-			this.value_field_1_fly.style.top = this.value_field_2_fly.offsetTop - this.slider_1.offsetHeight * 2 + "px"
-
+		if (e.clientX <= this.parent_position_x) {
+			this.value_field_1_fly.innerText = this._min_value + " " + this._sign;
+			this.value_field_1.innerText = this._min_value + " " + this._sign;
 		};
-
+		// if (this.value_field_1_fly.offsetTop >= this.value_field_2_fly.offsetTop - this.slider_1.offsetHeight) {
+		// 	this.value_field_1_fly.style.top = this.value_field_2_fly.offsetTop - this.slider_1.offsetHeight * 2 + "px"
+		// };
+		this.value_field_1_fly.style.top = this.slider_1_position_left_x_axis - this.slider_1_width/4 + "px";
 	};
 
 	_math__sliders_value_right_step(steps: number, pixel_step: number, e: MouseEvent) {
@@ -513,8 +512,18 @@ class View_vertical {
 					modified_object.style.top = "0px";
 				} else if (e.clientY > this.parent_position_x && e.clientY <= this.parent_position_x + static_object_position - pixel_step) {
 					modified_object.style.top = (pixel_step * step) + "px";
-				}
+				};
+
 				this.refresh_positions();
+
+				if (modified_object_position + modified_object_width >= static_object_position) {
+					modified_object.style.zIndex = "2";
+					static_object.style.zIndex = "1";
+				} else {
+					modified_object.style.zIndex = "1";
+					static_object.style.zIndex = "2";
+				};
+
 				this._math__sliders_value_left_step(step, pixel_step, e);
 
 			};
@@ -527,8 +536,18 @@ class View_vertical {
 					modified_object.style.top = this.parent_width - modified_object_width + "px";
 				} else if (e.clientY < this.parent_position_x + static_object_position + modified_object_width) {
 					modified_object.style.top = static_object_position + modified_object_width + "px";
-				}
+				};
+
 				this.refresh_positions();
+
+				if (modified_object_position - modified_object_width <= static_object_position) {
+					modified_object.style.zIndex = "2";
+					static_object.style.zIndex = "1";
+				} else {
+					modified_object.style.zIndex = "1";
+					static_object.style.zIndex = "2";
+				};
+
 				this._math__sliders_value_right_step(step, pixel_step, e);
 
 			};
