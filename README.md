@@ -6,7 +6,6 @@ GitHub страница: https://igorsushko1.github.io/FSD-slider-4step/dist/ind
 
 для выполнения бандла необходимо выполнить команду `npm run bundle`
 
-
 для выполнения тестирования необходимо выполнить команду `npm run test`
 
 
@@ -162,6 +161,7 @@ GitHub страница: https://igorsushko1.github.io/FSD-slider-4step/dist/ind
 
 Вид отвечает за построение графической части, содержит логику работы плагина. С построенным Видом взаимодействует пользователь. При манипуляциях пользователя Вид вызывает метод Контроллера для сбора необходимых данных.
 
+Схемка архитектуры, очень простая https://drive.google.com/file/d/1BXpP8KkfTi6AnifXiFUrZE54Eor77LYT/view?usp=sharing
 ## Модель
 
 ---
