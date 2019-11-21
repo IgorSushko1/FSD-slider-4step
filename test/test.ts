@@ -1,9 +1,9 @@
-import { View_horizontal } from '../src/ias_slider/view_horizontal';
-import { Model } from '../src/ias_slider/model';
-import { Controller } from '../src/ias_slider/controller';
+import { View_horizontal } from '../src/is_slider/view_horizontal';
+import { Model } from '../src/is_slider/model';
+import { Controller } from '../src/is_slider/controller';
 import { expect, assert } from 'chai';
 import * as mocha from 'mocha';
-import { is_slider } from "../src/ias_slider/is_slider";
+import { is_slider } from "../src/is_slider/is_slider";
 
 import { JSDOM, FromFileOptions, DOMWindow } from 'jsdom';
 
@@ -35,7 +35,7 @@ describe('Тестирование View',
 								_max_value: 1000,
 								_min_slider_value: 200,
 								_max_slider_value: 800,
-								_slider_type: "duble",
+								_slider_type: "double",
 								_step: 50,
 								tooltip: "on",
 								value_field_state: "on"
@@ -83,7 +83,7 @@ describe('Тестирование View',
 							_max_value: 1000,
 							_min_slider_value: 200,
 							_max_slider_value: 800,
-							_slider_type: "duble",
+							_slider_type: "double",
 							_step: 50,
 							tooltip: "on",
 							value_field_state: "on"
@@ -100,13 +100,13 @@ describe('Тестирование View',
 
 			it('Создание первого ползунка', () => {
 				view.create_stuff();
-				let slider_1 = window.document.getElementById("iss__duble_1_horizontal");
+				let slider_1 = window.document.getElementById("iss__double_1_horizontal");
 				assert.isOk(slider_1);
 			});
 
 			it('Создание второго ползунка', () => {
 				view.create_stuff();
-				let slider_2 = window.document.getElementById("iss__duble_2_horizontal");
+				let slider_2 = window.document.getElementById("iss__double_2_horizontal");
 				assert.isOk(slider_2);
 			});
 
@@ -136,13 +136,13 @@ describe('Тестирование View',
 
 			it('Создание всплывающего значения над левым ползунком', () => {
 				view.create_stuff();
-				let value_field_state = window.document.getElementById("iss__duble_fly-value-1");
+				let value_field_state = window.document.getElementById("iss__double_fly-value-1");
 				assert.isOk(value_field_state);
 			});
 
 			it('Создание всплывающего значения над правым ползунком', () => {
 				view.create_stuff();
-				let value_field_state = window.document.getElementById("iss__duble_fly-value-2");
+				let value_field_state = window.document.getElementById("iss__double_fly-value-2");
 				assert.isOk(value_field_state);
 			});
 		});
@@ -171,7 +171,7 @@ describe('Тестирование View',
 							_max_value: 1000,
 							_min_slider_value: 200,
 							_max_slider_value: 800,
-							_slider_type: "duble",
+							_slider_type: "double",
 							_step: 50,
 							tooltip: "on",
 							value_field_state: "on"
@@ -193,7 +193,7 @@ describe('Тестирование View',
 			});
 			it('Наличие переменной для обращения к статичному элементу вывода результатов первого элемента', () => {
 				view.create_stuff();
-				if (view._slider_type == "duble") {
+				if (view._slider_type == "double") {
 					assert.isOk(view.value_field_1);
 				} else {
 					assert.isOk(view.value_field_single_static);
@@ -201,7 +201,7 @@ describe('Тестирование View',
 			});
 			it('Наличие переменной для обращения к статичному элементу вывода результатов второго элемента', () => {
 				view.create_stuff();
-				if (view._slider_type == "duble") {
+				if (view._slider_type == "double") {
 					assert.isOk(view.value_field_2);
 				} else {
 					assert.isOk(view.value_field_single_static);
@@ -209,7 +209,7 @@ describe('Тестирование View',
 			});
 			it('Наличие переменной для обращения к всплывающей подсказке первого слайдера', () => {
 				view.create_stuff();
-				if (view._slider_type == "duble") {
+				if (view._slider_type == "double") {
 					assert.isOk(view.value_field_1_fly);
 				} else {
 					assert.isOk(view.value_field_single);
@@ -217,7 +217,7 @@ describe('Тестирование View',
 			});
 			it('Наличие переменной для обращения к всплывающей подсказке второго слайдера', () => {
 				view.create_stuff();
-				if (view._slider_type == "duble") {
+				if (view._slider_type == "double") {
 					assert.isOk(view.value_field_2_fly);
 				} else {
 					assert.isOk(view.value_field_single);
@@ -225,7 +225,7 @@ describe('Тестирование View',
 			});
 			it('Наличие переменной для обращения к первому слайдеру', () => {
 				view.create_stuff();
-				if (view._slider_type == "duble") {
+				if (view._slider_type == "double") {
 					assert.isOk(view.slider_1);
 				} else {
 					assert.isOk(view.slider_single);
@@ -233,7 +233,7 @@ describe('Тестирование View',
 			});
 			it('Наличие переменной для обращения ко второму слайдеру', () => {
 				view.create_stuff();
-				if (view._slider_type == "duble") {
+				if (view._slider_type == "double") {
 					assert.isOk(view.slider_2);
 				} else {
 					assert.isOk(view.slider_single);
@@ -260,11 +260,11 @@ describe('Тестирование View',
 
 			it('Есть ли на странице правый ползунок', () => {
 
-				assert.isOk(window.document.getElementById("iss__duble_2_horizontal"));
+				assert.isOk(window.document.getElementById("iss__double_2_horizontal"));
 			});
 
 			it('Есть ли на странице левый ползунок', () => {
-				assert.isOk(window.document.getElementById("iss__duble_1_horizontal"));
+				assert.isOk(window.document.getElementById("iss__double_1_horizontal"));
 			})
 
 		});
@@ -297,7 +297,7 @@ describe('Тестирование Controller',
 
 		let controller = new Controller({
 			_element_id: "iss",
-			_slider_type: "duble",
+			_slider_type: "double",
 			_step: 50,
 			tooltip: "on",
 			value_field_state: "on"
