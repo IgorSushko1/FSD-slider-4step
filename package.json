@@ -1,6 +1,6 @@
 {
   "name": "fsd-slider-4step",
-  "version": "1.0.0",
+  "version": "0.99.1",
   "description": "Слайдер",
   "main": "index.js",
   "private": true,
