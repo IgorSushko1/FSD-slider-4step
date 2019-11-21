@@ -3,13 +3,13 @@
 				margin-bottom: 100px;
 			}
 
-			#iss_2,
+			#iss_2, #iss_3,
 			#iss-container_vertical {
 				width: 700px;
 				height: 500px;
 			}
 
-			#iss_2 {
+			#iss_2, #iss_3 {
 				position: relative;
 				margin-top: 20px;
 				margin-left: 200px;
@@ -140,6 +140,6 @@
 				left: 200px;
 			}
 
-			#doc_panel {
+			#doc_panel, #doc_panel_2, #doc_panel_3 {
 				margin-left: 60px;
 			}
