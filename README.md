@@ -2,6 +2,8 @@
 
 Простой слайдер с двумя или одним ползунками и с горизонтальным/вериткальным видом.
 
+GitHub страница: https://igorsushko1.github.io/FSD-slider-4step/dist/index.html
+
 # Навигация:
 
 - [IS_SLIDER](#is_slider)
