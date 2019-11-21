@@ -40,9 +40,11 @@
   },
   "scripts": {
     "test": "mocha -r ts-node/register test/test.ts",
-    "build": "webpack --config webpack.config.js",
-    "ts": "tsc",
-    "bundle": "tsc & npm run build"
+		"build": "webpack --config webpack.config.js",
+		"js": "webpack --config webpack.config.forts.js",
+		"ts": "tsc",
+		"ts-to-js": "tsc ./src/is_slider/index",
+		"bundle": "tsc & npm run build"
   },
   "keywords": [
     "Слайдер"

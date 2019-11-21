@@ -30,10 +30,6 @@ class Controller {
 
 
 	constructor(param: any) {
-		// this._min_slider_value = param._min_slider_value;
-		// this._max_slider_value = param._max_slider_value;
-		// this._min_value = param._min_value;
-		// this._max_value = param._max_value;
 		this._element_id = param._element_id;
 		this._sign = param._sign || "₽";
 		this._slider_type = param._slider_type || "single";
@@ -61,10 +57,8 @@ class Controller {
 		})
 	};
 
-
-
 	_get_view(obj: Obj_from_view) {
-		if (this._slider_type == "duble") {
+		if (this._slider_type == "double") {
 			this._min_slider_value = obj._min_slider_value;
 			this._max_slider_value = obj._max_slider_value;
 		};

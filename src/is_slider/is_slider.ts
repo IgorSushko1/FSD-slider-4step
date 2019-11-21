@@ -45,7 +45,7 @@ function is_slider(param: Param) {
 			title: "Type",
 			description: "Тип слайдера - одинарный или двойной",
 			key_word: "slider_view",
-			value: ["duble", "single"],
+			value: ["double", "single"],
 			function_name: "_slider_type"
 		},
 		slider_type: {
@@ -129,7 +129,7 @@ function is_slider(param: Param) {
 		_max_value: param._max_value || 1000,
 		_min_slider_value: param._min_slider_value || 200,
 		_max_slider_value: param._max_slider_value || 800,
-		_slider_type: param._slider_type || "duble",
+		_slider_type: param._slider_type || "double",
 		_type_view: param._type_view || "horizontal",
 		_step: param._step || 50,
 		tooltip: param.tooltip || "on",
@@ -161,23 +161,19 @@ function is_slider(param: Param) {
 			stuff.appendChild(text_node);
 			select.appendChild(stuff);
 
-		}
+		};
 
 		document.getElementById(settings.settings_id).appendChild(div).appendChild(select);
 
-		let vb = document.getElementById(settings.settings_id);
+		let parent = document.getElementById(settings.settings_id);
 
-		let vv = vb.querySelector("#" + obj_fixed_values[key_one].key_word) as HTMLElement;
+		let element_i_choose = parent.querySelector("#" + obj_fixed_values[key_one].key_word) as HTMLElement;
 
-		vv.onchange = function () {
-
-			// console.log("до изменения : " + settings[obj_fixed_values[key_one].function_name]);
+		element_i_choose.onchange = function () {
 
 			settings[obj_fixed_values[key_one].function_name] = (this as any).value;
 
-			// console.log("после изменения : " + settings[obj_fixed_values[key_one].function_name]);
 			slider_refresh();
-			// change_string(key_one, settings[obj_fixed_values[key_one].function_name]);
 		};
 	};
 
@@ -198,20 +194,15 @@ function is_slider(param: Param) {
 
 		document.getElementById(settings.settings_id).appendChild(div);
 
-		let vb = document.getElementById(settings.settings_id);
+		let parent = document.getElementById(settings.settings_id);
 
-		let vv = vb.querySelector("#iss__" + obj_changeable_values[key_one].key_word) as HTMLElement;
+		let element_i_choose = parent.querySelector("#iss__" + obj_changeable_values[key_one].key_word) as HTMLElement;
 
 		let f_name = obj_changeable_values[key_one].function_name;
 
-		vv.oninput = function () {
-
-			// console.log("до изменения в динамичном слайдере : " + f_name);
-			// console.log("this.value : " + input.value);
+		element_i_choose.oninput = function () {
 
 			settings[f_name] = input.value;
-
-			// console.log("после изменения в динамичном слайдере : " + settings[f_name]);
 
 			slider_refresh();
 		};
@@ -235,6 +226,7 @@ function is_slider(param: Param) {
 		view = new View_horizontal();
 
 	};
+
 	let model = new Model(settings);
 
 	let controller = new Controller(settings);
@@ -244,7 +236,6 @@ function is_slider(param: Param) {
 	view._bind_controller(controller);
 
 	controller.create_slider();
-
 
 	function slider_refresh() {
 		// let view;
@@ -269,7 +260,7 @@ function is_slider(param: Param) {
 
 		controller.create_slider();
 	};
-	// передаю контролеру созданные view и model;
+
 };
 
 

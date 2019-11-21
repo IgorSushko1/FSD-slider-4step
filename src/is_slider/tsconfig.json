@@ -2,7 +2,7 @@
 	"compilerOptions": {
 		"strictPropertyInitialization": false,
     "strictNullChecks": false,
-		"outDir": "./dist/",
+		"outDir": "/dist/",
 		"sourceMap": true,
 		"noImplicitAny": true,
 		// "strictPropertyInitialization" : false, // Убедитесь, что свойства класса, имеющие значения undefined, получают новые значения внутри конструктора.
@@ -33,6 +33,6 @@
 		// "./src/ias_slider/ias-slider.ts",
 		// "./src/ias_slider/ias-slider.d.ts"
 		// для проверки плагина
-		"./src/is_slider/index.ts"
+		"index.ts"
 	]
 }
