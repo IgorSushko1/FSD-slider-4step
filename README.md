@@ -4,6 +4,12 @@
 
 GitHub страница: https://igorsushko1.github.io/FSD-slider-4step/dist/index.html
 
+для выполнения бандла необходимо выполнить команду `npm run bundle`
+
+
+для выполнения тестирования необходимо выполнить команду `npm run test`
+
+
 # Навигация:
 
 - [IS_SLIDER](#is_slider)
