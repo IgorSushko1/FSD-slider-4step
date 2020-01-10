@@ -54,7 +54,7 @@ class View_horizontal {
 		this.controller = controller
 	};
 
-	_set_for_view(obj_from_controller: View_horizontal) { // done ? принимает данные из контроллера и перестраивает view
+	_set_for_view(obj_from_controller: View_horizontal) { 
 
 		this._element_id = obj_from_controller._element_id;
 		this._elem = document.getElementById(obj_from_controller._element_id);
@@ -67,7 +67,6 @@ class View_horizontal {
 		this._step = obj_from_controller._step || 2;
 		this.tooltip = obj_from_controller.tooltip || "on";
 		this.value_field_state = obj_from_controller.value_field_state || "on"
-		// console.log("Создаю горизонтальный вид")
 		this.create_stuff();
 	};
 
@@ -86,7 +85,7 @@ class View_horizontal {
 		};
 	};
 
-	_set_controller() { // done ? передает данные в фасад контроллера
+	_set_controller() {
 		let obj = {
 			_min_slider_value: this._min_slider_value,
 			_max_slider_value: this._max_slider_value,
@@ -139,17 +138,17 @@ class View_horizontal {
 
 	create_this_sliders_elements = () => {
 		this.parent_element = document.querySelector("#" + this._element_id) as HTMLElement;
-		this.parent_width = this.parent_element.offsetWidth;// ширина родительского элемента
-		this.parent_position = this.parent_element.getBoundingClientRect();// родительский контейнер
-		this.parent_position_x = this.parent_position.left;//размещение контейнера относительно левого края экрана
+		this.parent_width = this.parent_element.offsetWidth;
+		this.parent_position = this.parent_element.getBoundingClientRect();
+		this.parent_position_x = this.parent_position.left;
 
 		this.value_field = this.parent_element.querySelector("#iss_value-field") as HTMLElement;
 
 		this.ribbon = this.parent_element.querySelector("#iss__color-bar_horizontal") as HTMLElement;
 
-		//РАСЧЕТЫ ШАГА
-		this.steps = (this._max_value - this._min_value) / this._step; // количество шагов
-		this.pixel_step = this.parent_width / this.steps; // размер шага в пикселях
+
+		this.steps = (this._max_value - this._min_value) / this._step;
+		this.pixel_step = this.parent_width / this.steps; 
 		this.multiplier = (this._max_value - this._min_value) / this.parent_width;
 
 		if (this._slider_type == "double") {
@@ -183,8 +182,8 @@ class View_horizontal {
 	};
 
 	refresh_positions = () => {
-		this.parent_position = this.parent_element.getBoundingClientRect();// родительский контейнер, если вдруг поменяется разрешение экрана
-		this.parent_position_x = this.parent_position.left;//размещение контейнера относительно левого края экрана
+		this.parent_position = this.parent_element.getBoundingClientRect(); 
+		this.parent_position_x = this.parent_position.left;
 		if (this._slider_type == "double") {
 			this.slider_1_position_left_x_axis = this.slider_1.offsetLeft;
 			this.slider_2_position_left_x_axis = this.slider_2.offsetLeft;
@@ -200,7 +199,6 @@ class View_horizontal {
 		let b = this._max_value;
 		let c = this._min_slider_value;
 		let d = this._max_slider_value;
-		// console.log("до  этого момента ок")
 		if (this._slider_type == "double" && a < b && c < b && c < d && d <= b && c - a >= 0) {
 
 			this.value_field_1.innerText = c + " " + this._sign;
@@ -284,13 +282,13 @@ class View_horizontal {
 
 	_mouse_down_single = (e: Event) => {
 		e.preventDefault();
-		document.onmouseup = this._cancel_move_events; // обработчик на событие поднятие клавиши мыши - запустит код, который обнулит события
+		document.onmouseup = this._cancel_move_events;
 		document.onmousemove = this._move_element_single;
 	};
 
 	_move_element_single = (e: MouseEvent) => {
 		if (this._step >= 2) {
-			this._step_implementation(e, this.slider_single);; // Рабочая функция
+			this._step_implementation(e, this.slider_single);
 		} else {
 			if (e.clientX > this.parent_width + this.parent_position_x) {
 
@@ -311,24 +309,24 @@ class View_horizontal {
 	};
 
 	_mouse_down_first_slider = (e: Event) => {
-		e.preventDefault(); // отменили все действия которые происходили раньше
-		document.onmouseup = this._cancel_move_events; // обработчик на событие поднятие клавиши мыши - запустит код, который обнулит события
-		document.onmousemove = this._move_element_1; // событие, произойдет если сдвинуть мышу
+		e.preventDefault();
+		document.onmouseup = this._cancel_move_events;
+		document.onmousemove = this._move_element_1;
 	};
 
 	_mouse_down_second_slider = (e: Event) => {
-		e.preventDefault(); // отменили все действия которые происходили раньше
-		document.onmouseup = this._cancel_move_events; // обработчик на событие поднятие клавиши мыши - запустит код, который обнулит события
-		document.onmousemove = this._move_element_2; // событие, произойдет если сдвинуть мышу
+		e.preventDefault();
+		document.onmouseup = this._cancel_move_events;
+		document.onmousemove = this._move_element_2;
 	};
 
 	_move_element_1 = (e: MouseEvent) => {
 		this.refresh_positions();
 
 		if (this._step >= 2) {
-			this._step_implementation(e, this.slider_1, this.slider_2); // Рабочая функция
+			this._step_implementation(e, this.slider_1, this.slider_2);
 		} else {
-			if (e.clientX > this.parent_width + this.parent_position_x) { // РАБОЧАЯ ФУНКЦИЯ
+			if (e.clientX > this.parent_width + this.parent_position_x) {
 
 				this.slider_1.style.left = (this.parent_width - (this.slider_1_width / 2)) + "px"
 
@@ -353,17 +351,17 @@ class View_horizontal {
 		this.refresh_positions();
 
 		if (this._step >= 2) {
-			this._step_implementation(e, this.slider_2, this.slider_1); // Рабочая функция
+			this._step_implementation(e, this.slider_2, this.slider_1);
 		} else {
-			if (e.clientX > this.parent_width + this.parent_position_x) { //если курсор выходит за пределы элемента справа РАБОЧАЯ ФУНКЦИЯ
+			if (e.clientX > this.parent_width + this.parent_position_x) {
 
 				this.slider_2.style.left = (this.parent_width - (this.slider_2_width / 2)) + "px"
 
-			} else if (e.clientX < this.parent_position_x) { //если курсор выходит за пределы элемента слева
+			} else if (e.clientX < this.parent_position_x) {
 
 				this.slider_2.style.left = (this.slider_2_width / (2)) + 'px'
 
-			} else { //если курсор внутри элемента
+			} else {
 				this.slider_2.style.left = (e.clientX - this.parent_position_x - (this.slider_2_width / 2)) + "px";
 			};
 
@@ -447,16 +445,14 @@ class View_horizontal {
 			this.value_field_1_fly.innerText = answer1 + " " + this._sign;
 			this.value_field_1.innerText = answer1 + " " + this._sign;
 
-			// this.value_field_1_fly.style.left = pixel_step * steps + "px";
-			// this.value_field_1_fly.style.left = this.slider_1_position_left_x_axis + "px";
+			
+
 		};
 		if (e.clientX <= this.parent_position_x) {
 			this.value_field_1_fly.innerText = this._min_value + " " + this._sign;
 			this.value_field_1.innerText = this._min_value + " " + this._sign;
 		};
-		// if (this.value_field_1_fly.offsetLeft >= this.value_field_2_fly.offsetLeft - this.slider_1.offsetWidth) {
-			// this.value_field_1_fly.style.left = this.value_field_2_fly.offsetLeft - this.slider_1_width* 2 + "px"
-		// };
+
 			this.value_field_1_fly.style.left = this.slider_1_position_left_x_axis - this.slider_1_width/4 + "px";
 
 	};
@@ -496,14 +492,14 @@ class View_horizontal {
 
 		this.refresh_positions();
 
-		let modified_object_position = modified_object.offsetLeft; //смещение относительно левого верхнего угла родителя по Х
-		let modified_object_width = modified_object.offsetWidth; // ширина ползунка
-		let pixel_step = (this.parent_width - modified_object_width) / this.steps; // размер шага в пикселях
+		let modified_object_position = modified_object.offsetLeft;
+		let modified_object_width = modified_object.offsetWidth;
+		let pixel_step = (this.parent_width - modified_object_width) / this.steps;
 
 		if (static_object) {
 
-			let static_object_position = static_object.offsetLeft;//смещение относительно левого верхнего угла родителя по Х
-			let step = Math.round((e.clientX - this.parent_position_x) / pixel_step); // это количество шагов в позиции
+			let static_object_position = static_object.offsetLeft;
+			let step = Math.round((e.clientX - this.parent_position_x) / pixel_step);
 
 			if (modified_object_position < static_object_position) {
 
@@ -555,8 +551,7 @@ class View_horizontal {
 
 		} else {
 
-			// this.refresh_positions();
-			let step = Math.round((e.clientX - this.parent_position_x) / pixel_step); // это количество шагов в позиции
+			let step = Math.round((e.clientX - this.parent_position_x) / pixel_step);
 
 			if (e.clientX < this.parent_position_x) {
 				modified_object.style.left = 0 + "px";
@@ -571,8 +566,6 @@ class View_horizontal {
 	};
 
 	_cancel_move_events = () => {
-		/* stop moving when mouse button is released:*/
-		// console.log("close_drag_element работает")
 		document.onmouseup = null;
 		document.onmousemove = null;
 	};
