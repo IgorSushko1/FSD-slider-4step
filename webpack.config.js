@@ -5,52 +5,55 @@ var webpack = require('webpack');
 // declare var require: any;
 
 module.exports = {
-	mode: 'development',
-	devtool: 'inline-source-map',
-	// entry: './dist/main.js',
-	entry: './dist/index.js',
-	output: {
-		path: path.resolve(__dirname, 'dist'),
-		// filename: 'bundle.js',
-		filename: 'bundle.js'
-	},
-	module: {
-		rules: [{
-			test: /\.tsx?$/,
-			use: 'ts-loader',
-			exclude: /node_modules/,
-		},
-		{
-			test: /\.css$/,
-			use: [
-				{	loader: MiniCssExtractPlugin.loader},
-				{	loader: "css-loader"},
-				// {loader: "sass-loader"}
-			]
-		}
-	],
-	},
-	resolve: {
-		extensions: [ '.tsx', '.ts', '.js'],
-	},
-	plugins: [
+  mode: 'development',
+  devtool: 'inline-source-map',
+  // entry: './dist/main.js',
+  entry: './dist/index.js',
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    // filename: 'bundle.js',
+    filename: 'bundle.js'
+  },
+  module: {
+    rules: [{
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.css$/,
+        use: [{
+            loader: MiniCssExtractPlugin.loader
+          },
+          {
+            loader: "css-loader"
+          },
+          // {loader: "sass-loader"}
+        ]
+      }
+    ],
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
+  },
+  plugins: [
     new HtmlWebpackPlugin({
-			title: 'My App',
-			template: './index.html',
-			// template: 'src/index.html',
+      title: 'My App',
+      template: './index.html',
+      // template: 'src/index.html',
       filename: 'index.html'
-		}),
-		new MiniCssExtractPlugin({
+    }),
+    new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // all options are optional
       filename: '[name].css',
       chunkFilename: '[id].css',
       ignoreOrder: false, // Enable to remove warnings about conflicting order
-		}),
-			new webpack.ProvidePlugin({
-				$: "jquery/dist/jquery.min.js",
-				jQuery: "jquery/dist/jquery.min.js",
-				"window.jQuery": "jquery/dist/jquery.min.js"
-			})
+    }),
+    new webpack.ProvidePlugin({
+      $: "jquery/dist/jquery.min.js",
+      jQuery: "jquery/dist/jquery.min.js",
+      "window.jQuery": "jquery/dist/jquery.min.js"
+    })
   ]
 };

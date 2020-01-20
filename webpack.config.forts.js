@@ -1,19 +1,17 @@
 const path = require('path');
 
 module.exports = {
-	mode: 'development',
+  mode: 'development',
   entry: './src/is_slider/is_slider.ts',
   module: {
-    rules: [
-      {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /node_modules/,
-      },
-    ],
+    rules: [{
+      test: /\.tsx?$/,
+      use: 'ts-loader',
+      exclude: /node_modules/,
+    }, ],
   },
   resolve: {
-    extensions: [ '.tsx', '.ts', '.js' ],
+    extensions: ['.tsx', '.ts', '.js'],
   },
   output: {
     filename: 'index.js',

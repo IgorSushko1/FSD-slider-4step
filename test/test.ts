@@ -246,12 +246,9 @@ describe('Тестирование View',
 			beforeEach(function () {
 
 				JSDOM.fromFile('./index.html', {
-					// resources: 'usable',
 				})
 					.then((dom) => {
 						const { window } = dom;
-						// const document = window.document;
-						// window.document.getElementById("ias-slider").style.width = "500px";// не работает , не переписывает
 						window.onload = () => {
 							is_slider({ _element_id: "iss", settings_id: "doc_panel" })
 						};
@@ -304,8 +301,6 @@ describe('Тестирование Controller',
 		});
 		controller._bind_model(model);
 		controller._bind_view(view);
-		// view.bind_controller(controller);
-
 
 		it('_1_ Проверка контроллера', () => {
 			assert.isOk(controller)

@@ -1,256 +1,246 @@
-/* body {
-				display: flex;
-			} */
-			.flex {
-				display: flex;
-				margin-bottom: 100px;
-			}
+.flex {
+  display: flex;
+  margin-bottom: 100px;
+}
 
-			#drag,
-			#drag1 {
-				background: orange;
-				width: 20px;
-				height: 20px;
-				position: relative;
-				left: 0px;
-			}
+#drag,
+#drag1 {
+  background: orange;
+  width: 20px;
+  height: 20px;
+  position: relative;
+  left: 0px;
+}
 
-			#one {
-				background-color: #99c2ff;
-				height: 150px;
-				width: 150px;
-			}
+#one {
+  background-color: #99c2ff;
+  height: 150px;
+  width: 150px;
+}
 
-			#bord,
-			#ias-slider, #ias-slider_2 {
-				width: 700px;
-				height: 100px;
-				/* background: rgb(217, 254, 255); */
-				position: relative;
-				margin-top: 100px;
-				margin-left: 200px;
-				/* z-index: 100; */
-			}
+#bord,
+#ias-slider,
+#ias-slider_2 {
+  width: 700px;
+  height: 100px;
+  position: relative;
+  margin-top: 100px;
+  margin-left: 200px;
+}
 
- #ias-slider_2 {
-				width: 700px;
-				height: 500px;
-				/* background: rgb(217, 254, 255); */
-				position: relative;
-				margin-top: 20px;
-				margin-left: 200px;
-				/* z-index: 100; */
-			}
+#ias-slider_2 {
+  width: 700px;
+  height: 500px;
+  position: relative;
+  margin-top: 20px;
+  margin-left: 200px;
+}
 
-			#ias-slider__single,
-			#ias-slider__duble_1_horizontal,
-			#ias-slider__duble_2_horizontal,
-			#ias-slider__duble_1_vertical,
-			#ias-slider__duble_2_vertical {
-				/* z-index: -1; */
-				/* margin-top: 50px; */
-				background: linear-gradient(180deg, #BC9CFF, #8BA4F9);
-				width: 30px;
-				height: 30px;
-				position: absolute;
-				top: 0px;
-				/* left: -15px; */
-				margin-right: 15px;
-				border-radius: 50%;
-				cursor: move;
-			}
+#ias-slider__single,
+#ias-slider__duble_1_horizontal,
+#ias-slider__duble_2_horizontal,
+#ias-slider__duble_1_vertical,
+#ias-slider__duble_2_vertical {
+  background: linear-gradient(180deg, #bc9cff, #8ba4f9);
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: 0px;
 
-			#ias-slider__duble_2_horizontal {
-				left: 40px;
-				background: linear-gradient(0deg, #66D2EA, #6FCF97);
-			}
+  margin-right: 15px;
+  border-radius: 50%;
+  cursor: move;
+}
 
-			#ias-slider__duble_2_vertical {
-				top: 40px;
-				background: linear-gradient(0deg, #66D2EA, #6FCF97);
-			}
+#ias-slider__duble_2_horizontal {
+  left: 40px;
+  background: linear-gradient(0deg, #66d2ea, #6fcf97);
+}
 
-			#color-bar_horizontal {
-				position: absolute;
-				background: linear-gradient(0deg, rgba(61, 73, 117, 0.219), rgba(144, 144, 144, 0.239));
-				height: 10px;
-				left: 0px;
-				top: 10.5px;
-				width: 10px;
-				z-index: -200;
-				/* margin-left: 200px; */
-				/* border-radius: 50%; */
-				/* border: 1px solid; */
-			}
+#ias-slider__duble_2_vertical {
+  top: 40px;
+  background: linear-gradient(0deg, #66d2ea, #6fcf97);
+}
 
-			#color-bar_vertical {
-				position: absolute;
-				background: linear-gradient(0deg, rgba(61, 73, 117, 0.219), rgba(144, 144, 144, 0.239));
-				height: 20px;
-				left: 10px;
-				top: 6px;
-				width: 10px;
-				z-index: -200;
-			}
+#color-bar_horizontal {
+  position: absolute;
+  background: linear-gradient(
+    0deg,
+    rgba(61, 73, 117, 0.219),
+    rgba(144, 144, 144, 0.239)
+  );
+  height: 10px;
+  left: 0px;
+  top: 10.5px;
+  width: 10px;
+  z-index: -200;
+}
 
-			#ias-slider__duble_fly-value-1,
-			#ias-slider__duble_fly-value-2,
-			#ias-slider__single_fly-value {
-				/* visibility: hidden; */
-				position: absolute;
-				width: 50px;
-				height: 20px;
-				top: -30px;
-				left: 50px;
-				background-color: rgba(144, 144, 144, 0.239);
-				color: rgb(100, 100, 100);
-				text-align: center;
-				border-radius: 6px;
-			}
+#color-bar_vertical {
+  position: absolute;
+  background: linear-gradient(
+    0deg,
+    rgba(61, 73, 117, 0.219),
+    rgba(144, 144, 144, 0.239)
+  );
+  height: 20px;
+  left: 10px;
+  top: 6px;
+  width: 10px;
+  z-index: -200;
+}
 
-			#ias-slider__duble_fly-value-1_vertical,
-			#ias-slider__duble_fly-value-2_vertical,
-			#ias-slider__single_fly-value_vertical {
-				/* visibility: hidden; */
-				position: absolute;
-				width: 50px;
-				height: 20px;
-				top: -30px;
-				left: 50px;
-				background-color: rgba(144, 144, 144, 0.239);
-				color: rgb(100, 100, 100);
-				text-align: center;
-				border-radius: 6px;
-			}
+#ias-slider__duble_fly-value-1,
+#ias-slider__duble_fly-value-2,
+#ias-slider__single_fly-value {
+  position: absolute;
+  width: 50px;
+  height: 20px;
+  top: -30px;
+  left: 50px;
+  background-color: rgba(144, 144, 144, 0.239);
+  color: rgb(100, 100, 100);
+  text-align: center;
+  border-radius: 6px;
+}
 
-			#ias-container {
-				position: relative;
-				width: 700px;
-				height: 100px;
-				/* background-color: rgb(192, 192, 192); */
-				z-index: 1;
-			}
-			#ias-container_vertical {
-				position: relative;
-				width: 100px;
-				height: 400px;
-				/* background-color: rgb(192, 192, 192); */
-				z-index: 1;
-			}
+#ias-slider__duble_fly-value-1_vertical,
+#ias-slider__duble_fly-value-2_vertical,
+#ias-slider__single_fly-value_vertical {
+  position: absolute;
+  width: 50px;
+  height: 20px;
+  top: -30px;
+  left: 50px;
+  background-color: rgba(144, 144, 144, 0.239);
+  color: rgb(100, 100, 100);
+  text-align: center;
+  border-radius: 6px;
+}
 
-			#ias-container #ias-slider__duble_fly-value-1::after {
-				content: "";
-				position: absolute;
-				top: 100%;
-				left: 50%;
-				margin-left: -5px;
-				border-width: 5px;
-				border-style: solid;
-				border-color: rgba(144, 144, 144, 0.239) transparent transparent transparent;
-			}
+#ias-container {
+  position: relative;
+  width: 700px;
+  height: 100px;
+  z-index: 1;
+}
+#ias-container_vertical {
+  position: relative;
+  width: 100px;
+  height: 400px;
+  z-index: 1;
+}
 
-			#ias-container #ias-slider__duble_fly-value-2::after {
-				content: "";
-				position: absolute;
-				top: 100%;
-				left: 50%;
-				margin-left: -5px;
-				border-width: 5px;
-				border-style: solid;
-				border-color: rgba(144, 144, 144, 0.239) transparent transparent transparent;
-			}
+#ias-container #ias-slider__duble_fly-value-1::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: rgba(144, 144, 144, 0.239) transparent transparent transparent;
+}
 
-			#ias-container #ias-slider__single_fly-value::after {
-				content: "";
-				position: absolute;
-				top: 100%;
-				left: 50%;
-				margin-left: -5px;
-				border-width: 5px;
-				border-style: solid;
-				border-color: rgba(144, 144, 144, 0.239) transparent transparent transparent;
-			}
+#ias-container #ias-slider__duble_fly-value-2::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: rgba(144, 144, 144, 0.239) transparent transparent transparent;
+}
 
-			#ias-container #ias-slider__duble_fly-value-1 {
-				visibility: hidden;
-				opacity: 0;
-				transition: opacity 1s;
-			}
+#ias-container #ias-slider__single_fly-value::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: rgba(144, 144, 144, 0.239) transparent transparent transparent;
+}
 
-			#ias-container #ias-slider__duble_fly-value-2 {
-				visibility: hidden;
-				opacity: 0;
-				transition: opacity 1s;
-			}
+#ias-container #ias-slider__duble_fly-value-1 {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 1s;
+}
 
-			#ias-container #ias-slider__single_fly-value {
-				visibility: hidden;
-				opacity: 0;
-				transition: opacity 1s;
-			}
+#ias-container #ias-slider__duble_fly-value-2 {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 1s;
+}
 
-			#ias-container:hover #ias-slider__duble_fly-value-1 {
-				visibility: visible;
-				opacity: 1;
-			}
+#ias-container #ias-slider__single_fly-value {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 1s;
+}
 
-			#ias-container:hover #ias-slider__duble_fly-value-2 {
-				visibility: visible;
-				opacity: 1;
-			}
+#ias-container:hover #ias-slider__duble_fly-value-1 {
+  visibility: visible;
+  opacity: 1;
+}
 
-			#ias-container:hover #ias-slider__single_fly-value {
-				visibility: visible;
-				opacity: 1;
-			}
+#ias-container:hover #ias-slider__duble_fly-value-2 {
+  visibility: visible;
+  opacity: 1;
+}
 
+#ias-container:hover #ias-slider__single_fly-value {
+  visibility: visible;
+  opacity: 1;
+}
 
+#ias-container_vertical #ias-slider__duble_fly-value-1_vertical {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 1s;
+}
 
-			#ias-container_vertical #ias-slider__duble_fly-value-1_vertical {
-				visibility: hidden;
-				opacity: 0;
-				transition: opacity 1s;
-			}
+#ias-container_vertical #ias-slider__duble_fly-value-2_vertical {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 1s;
+}
 
-			#ias-container_vertical #ias-slider__duble_fly-value-2_vertical {
-				visibility: hidden;
-				opacity: 0;
-				transition: opacity 1s;
-			}
+#ias-container_vertical #ias-slider__single_fly-value_vertical {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 1s;
+}
 
-			#ias-container_vertical #ias-slider__single_fly-value_vertical {
-				visibility: hidden;
-				opacity: 0;
-				transition: opacity 1s;
-			}
+#ias-container_vertical:hover #ias-slider__duble_fly-value-1_vertical {
+  visibility: visible;
+  opacity: 1;
+}
 
-			#ias-container_vertical:hover #ias-slider__duble_fly-value-1_vertical {
-				visibility: visible;
-				opacity: 1;
-			}
+#ias-container_vertical:hover #ias-slider__duble_fly-value-2_vertical {
+  visibility: visible;
+  opacity: 1;
+}
 
-			#ias-container_vertical:hover #ias-slider__duble_fly-value-2_vertical {
-				visibility: visible;
-				opacity: 1;
-			}
+#ias-container_vertical:hover #ias-slider__single_fly-value_vertical {
+  visibility: visible;
+  opacity: 1;
+}
 
-			#ias-container_vertical:hover #ias-slider__single_fly-value_vertical {
-				visibility: visible;
-				opacity: 1;
-			}
+#value-field {
+  position: absolute;
+  width: 100px;
+  text-align: center;
+  padding-top: 17px;
+  height: 40px;
+  border-radius: 5px;
+  top: -75px;
+  left: 200px;
+}
 
-			#value-field {
-				position: absolute;
-				width: 100px;
-				text-align: center;
-				padding-top: 17px;
-				height: 40px;
-				border-radius: 5px;
-				/* background: linear-gradient(0deg, #FFBA9C, #FFE39C); */
-				top: -75px;
-				left: 200px;
-			}
-
-			#doc_panel {
-				margin-left: 60px;
-			}
+#doc_panel {
+  margin-left: 60px;
+}

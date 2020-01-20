@@ -1,38 +1,21 @@
 {
-	"compilerOptions": {
-		"strictPropertyInitialization": false,
+  "compilerOptions": {
+    "strictPropertyInitialization": false,
     "strictNullChecks": false,
-		"outDir": "./dist/",
-		"sourceMap": true,
-		"noImplicitAny": true,
-		// "strictPropertyInitialization" : false, // Убедитесь, что свойства класса, имеющие значения undefined, получают новые значения внутри конструктора.
-		// "module": "umd",
-		"target": "es6",
-		// "lib": ["es2015", "es2016.array.include", "dom"],
-		// "jsx": "react",
-		"allowJs": true,
-		"types": [
-			// add node as an option
-			"node"
-		],
-		// typeRoots option has been previously configured
-		"typeRoots": [
-			// add path to @types
-			"node_modules/@types"
-		]
-		// "plugins": [{ "name": "typescript-plugin-css-modules" }]
-	},
-	"include": [
-		// "./src/simpleSlider/**/*", //ищет файлы с именем index.d.ts в папках по структуре напоминающие node модули
-		//  подробнее здесь http://qaru.site/questions/144788/typescript-2-custom-typings-for-untyped-npm-module
-	],
-
-	"files": [
-		// "./src/ias_slider/view.ts",
-		// "./src/ias_slider/main.ts",
-		// "./src/ias_slider/ias-slider.ts",
-		// "./src/ias_slider/ias-slider.d.ts"
-		// для проверки плагина
-		"./src/is_slider/index.ts"
-	]
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "target": "es6",
+    "allowJs": true,
+    "types": [
+      "node"
+    ],
+    "typeRoots": [
+      "node_modules/@types"
+    ]
+  },
+  "include": [],
+  "files": [
+    "./src/is_slider/index.ts"
+  ]
 }
