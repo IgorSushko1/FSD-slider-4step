@@ -21,8 +21,16 @@
   "devDependencies": {
     "@types/chai": "^4.2.3",
     "@types/mocha": "^5.2.7",
+    "@typescript-eslint/eslint-plugin": "^2.17.0",
+    "@typescript-eslint/parser": "^2.17.0",
     "chai": "^4.2.0",
     "css-loader": "^3.2.0",
+    "eslint": "^6.1.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-react-hooks": "^1.7.0",
     "html-webpack-plugin": "^3.2.0",
     "jquery": "^3.4.1",
     "jsdom": "^15.2.1",
@@ -39,12 +47,12 @@
     "webpack-cli": "^3.3.9"
   },
   "scripts": {
-    "test": "mocha -r ts-node/register test/test.ts",
-		"build": "webpack --config webpack.config.js",
-		"js": "webpack --config webpack.config.forts.js",
-		"ts": "tsc",
-		"ts-to-js": "tsc ./src/is_slider/index",
-		"bundle": "tsc & npm run build"
+    "test": "mocha -r ts-node/register test/testRefactoring.ts",
+    "build": "webpack --config webpack.config.js",
+    "js": "webpack --config webpack.config.forts.js",
+    "ts": "tsc",
+    "ts-to-js": "tsc ./src/is_slider/index",
+    "bundle": "tsc & npm run build"
   },
   "keywords": [
     "Слайдер"
