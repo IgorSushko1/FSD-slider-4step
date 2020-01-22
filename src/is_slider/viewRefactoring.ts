@@ -73,7 +73,7 @@ class ViewHorizontal {
   }
 
   setStartingConditions = (obj: ViewStartingConditions) => {
-    this.elementId = obj.elementId || '#is-slider';
+    this.elementId = obj.elementId || '#iss';
     this.elem = document.querySelector(obj.elementId);
 
     this.sign = obj.sign || '₽';
@@ -111,7 +111,7 @@ class ViewHorizontal {
   createDOM = () => {
     if (this.checkParent) {
       if (this.sliderType === 'double') {
-        this.createDubleDOM();
+        this.createDoubleDOM();
       }
       if (this.sliderType === 'single') {
         this.createSingleDOM();
@@ -122,28 +122,28 @@ class ViewHorizontal {
   }
 
   createSingleDOM = () => {
-    this.elem.innerHTML = '<div id="iss_value-field">'
-      + '<span id="flyFieldSingle"></span>'
+    this.elem.innerHTML = '<div class="iss_value-field">'
+      + '<span class="flyFieldSingle"></span>'
       + '</div>'
-      + '<div id= "iss-container">'
-      + '<div id="iss__color-bar_horizontal"></div>'
-      + '<div id="iss__single_fly-value" class="iss_tooltip"></div>'
-      + '<div id="iss__single" class="iss_drag"></div>'
+      + '<div class= "iss-container">'
+      + '<div class="iss__color-bar_horizontal"></div>'
+      + '<div class="iss__single_fly-value" class="iss_tooltip"></div>'
+      + '<div class="iss__single" class="iss_drag"></div>'
       + '</div>';
   }
 
-  createDubleDOM = () => {
-    this.elem.innerHTML = '<div id="iss_value-field">'
-      + '<span id="iss_staticFieldLowerBound-field"></span>'
+  createDoubleDOM = () => {
+    this.elem.innerHTML = '<div class="iss_value-field">'
+      + '<span class="iss_staticFieldLowerBound-field"></span>'
       + '-'
-      + '<span id="iss_staticFieldUpperBound-field"></span>'
+      + '<span class="iss_staticFieldUpperBound-field"></span>'
       + '</div>'
-      + '<div id= "iss-container">'
-      + '<div id="iss__double_fly-value-1"  class="iss_tooltip"></div>'
-      + '<div id="iss__double_1_horizontal" class="iss_drag"></div>'
-      + '<div id="iss__double_fly-value-2" class="iss_tooltip"></div>'
-      + '<div id="iss__double_2_horizontal" class="iss_drag"></div>'
-      + '<div id="iss__color-bar_horizontal"></div>'
+      + '<div class= "iss-container">'
+      + '<div class="iss__double_fly-value-1"  class="iss_tooltip"></div>'
+      + '<div class="iss__double_1_horizontal" class="iss_drag"></div>'
+      + '<div class="iss__double_fly-value-2" class="iss_tooltip"></div>'
+      + '<div class="iss__double_2_horizontal" class="iss_drag"></div>'
+      + '<div class="iss__color-bar_horizontal"></div>'
       + '</div>';
   }
 
@@ -152,7 +152,7 @@ class ViewHorizontal {
   writedVariablesFromDOM = () => {
     this.checksSlidersInDOM();
 
-    this.flyFieldLower = this.parentElement.querySelector('') as HTMLElement;
+    // this.flyFieldLower = this.parentElement.querySelector('') as HTMLElement;
   }
 
   checksSlidersInDOM = () => { }

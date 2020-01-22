@@ -8,7 +8,7 @@ import { JSDOM } from 'jsdom';
 import ViewHorizontal from '../src/is_slider/viewRefactoring';
 
 
-describe('Тестирование View, проверка наличия функций, необходимых для работы слайдера',
+describe('View, проверка наличия функций, необходимых для работы слайдера',
   () => {
     let view: any;
     // const obj = {
@@ -66,7 +66,7 @@ describe('Тестирование View, проверка наличия фун�
     });
 
     it('Функция, которая создает DOM с несколькими бегунками', () => {
-      assert.isOk(view.createDubleDOM);
+      assert.isOk(view.createDoubleDOM);
     });
 
     it('Функция, которая создает переменные для обращения к элементам', () => {
@@ -193,4 +193,90 @@ describe('Тестирование View, проверка наличия фун�
     // it('', () => {
     //   assert.isOk(view.);
     // });
+  });
+
+describe('View, Проверка на правильность приёма параметров классом, построение DOM',
+  () => {
+    let view: any;
+    const conditions = {
+      elementId: '#iss',
+      sign: '₽',
+      lowerScaleBound: 0,
+      upperScaleBound: 1200,
+      lowerSliderValue: 200,
+      upperSliderValue: 1000,
+      sliderType: 'double',
+      step: 5,
+      tooltip: 'on',
+      valueStateField: 'on',
+    };
+
+    const singleDOM = '<div id="iss_value-field">'
+      + '<span id="flyFieldSingle"></span>'
+      + '</div>'
+      + '<div id= "iss-container">'
+      + '<div id="iss__color-bar_horizontal"></div>'
+      + '<div id="iss__single_fly-value" class="iss_tooltip"></div>'
+      + '<div id="iss__single" class="iss_drag"></div>'
+      + '</div>';
+
+    const DoubleDOM = '<div id="iss_value-field">'
+      + '<span id="iss_staticFieldLowerBound-field"></span>'
+      + '-'
+      + '<span id="iss_staticFieldUpperBound-field"></span>'
+      + '</div>'
+      + '<div id= "iss-container">'
+      + '<div id="iss__double_fly-value-1"  class="iss_tooltip"></div>'
+      + '<div id="iss__double_1_horizontal" class="iss_drag"></div>'
+      + '<div id="iss__double_fly-value-2" class="iss_tooltip"></div>'
+      + '<div id="iss__double_2_horizontal" class="iss_drag"></div>'
+      + '<div id="iss__color-bar_horizontal"></div>'
+      + '</div>';
+
+    beforeEach(async () => {
+      const dom = await JSDOM.fromFile('./index.html', { runScripts: 'dangerously', pretendToBeVisual: true, resources: 'usable' });
+      interface Global extends NodeJS.Global {
+        window: Window;
+        document: Document;
+        navigator: {
+          userAgent: string;
+        };
+      }
+      (global as Global).window = dom.window;
+      (global as Global).document = window.document;
+      view = new ViewHorizontal();
+    });
+
+    it('Проверка правильности передачи и приёма начальных данных для построения', () => {
+      view.setStartingConditions(conditions);
+      assert.deepEqual(conditions, view.getStartingConditions());
+    });
+
+    it('Проверка выбора DOM-элемента, нужного для инициализации плагина', () => {
+      view.setStartingConditions(conditions);
+      const parentElement = document.querySelector('#iss');
+      assert.equal(parentElement, view.elem);
+    });
+
+    it('Проверка добавления в DOM новых элементов слайдера с одинарным бегунком', () => {
+      view.setStartingConditions(conditions);
+      view.createSingleDOM();
+      const divElement = document.querySelector('.iss__single');
+      assert.isOk(divElement);
+    });
+
+    it('Проверка добавления в DOM новых элементов слайдера с двойным бегунком', () => {
+      view.setStartingConditions(conditions);
+      view.createDoubleDOM();
+      const divElement = document.querySelector('.iss__double_1_horizontal');
+      assert.isOk(divElement);
+    });
+
+
+    it('Проверка createDOM -- добавления в DOM новых элементов слайдера в зависимости от параметра sliderType', () => {
+      view.setStartingConditions(conditions);
+      view.createDOM();
+      const spanElement = document.querySelector('.iss_staticFieldLowerBound-field');
+      assert.isOk(spanElement);
+    });
   });
