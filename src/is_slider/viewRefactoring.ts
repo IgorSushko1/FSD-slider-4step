@@ -1,11 +1,11 @@
-interface ViewHorizontal {
+interface ViewStartingConditions {
   elementId?: string;
   elem?: any;
   sign?: string;
-  lowerBound?: number;
-  upperBound?: number;
-  minSliderValue?: number;
-  maxSlideValue?: number;
+  lowerScaleBound?: number;
+  upperScaleBound?: number;
+  lowerSliderValue?: number;
+  upperSliderValue?: number;
   sliderType?: string;
   step?: number;
   controller?: any;
@@ -13,82 +13,90 @@ interface ViewHorizontal {
   valueStateField?: string;
 }
 
-class ViewHorizontal {
+interface ViewHorizontal {
+  elementId: string;
+  elem: any;
+  sign: string;
+  lowerScale: number;
+  upperScale: number;
+  lowerSliderValue: number;
+  upperSliderValue: number;
+  sliderType: string;
+  step: number;
+  controller: any;
+  tooltip: string;
+  valueStateField: string;
+
   parentElement: HTMLElement;
-
   parentWidth: number;
-
   parentPosition: ClientRect | DOMRect;
-
-  parentPositionX: number;
+  parentAxisPosition: number;
 
   valueField: HTMLElement;
 
-  valueFieldLeft: HTMLElement;
+  staticFieldLower: HTMLElement;
+  staticFieldUpper: HTMLElement;
+  staticFieldSingle: HTMLElement;
 
-  valueFieldRight: HTMLElement;
+  flyFieldLower: HTMLElement;
+  flyFieldUpper: HTMLElement;
+  flyFieldSingle: HTMLElement;
 
-  valueFieldSingleStatic: HTMLElement;
+  lowerSlider: HTMLElement;
+  lowerSliderWidth: number;
+  lowerSliderPosition: number;
 
-  valueFieldLeftFly: HTMLElement;
-
-  valueFieldRightFly: HTMLElement;
-
-  valueFieldSingleFly: HTMLElement;
-
-  initialSlider: HTMLElement;
-
-  initialSliderWidth: number;
-
-  initialSliderPosition: number;
-
-  finalSlider: HTMLElement;
-
-  finalSliderWidth: number;
-
-  finalSliderPosition: number;
+  upperSlider: HTMLElement;
+  upperSliderWidth: number;
+  upperSliderPosition: number;
 
   singleSlider: HTMLElement;
-
   singleSliderWidth: any;
-
   singleSliderPosition: number;
 
   ribbon: HTMLElement;
 
-  steps: number;
+  workingAttribute: string[]
+}
 
-  pixelstep: number;
-
-  multiplier: number;
-
-  bindController(controller: any) {
+class ViewHorizontal {
+  bindController = (controller: any) => {
     this.controller = controller;
   }
 
-  setView(objFromController: ViewHorizontal) {
-    this.elementId = objFromController.elementId;
-    this.elem = document.getElementById(objFromController.elementId);
-    this.sign = objFromController.sign || '₽';
-    this.lowerBound = Number(objFromController.lowerBound) || 0;
-    this.upperBound = Number(objFromController.upperBound) || 1000;
-    this.minSliderValue = Number(objFromController.minSliderValue) || 200;
-    this.maxSlideValue = Number(objFromController.maxSlideValue) || 800;
-    this.sliderType = objFromController.sliderType || 'single';
-    this.step = objFromController.step || 2;
-    this.tooltip = objFromController.tooltip || 'on';
-    this.valueStateField = objFromController.valueStateField || 'on';
-    this.createStuff();
+  setController() {
+    const obj = {
+      lowerSliderValue: this.lowerSliderValue,
+      upperSliderValue: this.upperSliderValue,
+    };
+    this.controller.getView(obj);
   }
 
-  getView() {
+  setStartingConditions = (obj: ViewStartingConditions) => {
+    this.elementId = obj.elementId || '#is-slider';
+    this.elem = document.querySelector(obj.elementId);
+
+    this.sign = obj.sign || '₽';
+    this.lowerScale = Number(obj.lowerScaleBound) || 0;
+    this.upperScale = Number(obj.upperScaleBound) || 1000;
+    this.lowerSliderValue = Number(obj.lowerSliderValue) || 200;
+    this.upperSliderValue = Number(obj.upperSliderValue) || 800;
+
+    this.sliderType = obj.sliderType || 'single';
+    this.step = obj.step || 2;
+
+    this.tooltip = obj.tooltip || 'on';
+    this.valueStateField = obj.valueStateField || 'on';
+  }
+
+  getStartingConditions() {
     return {
       elementId: this.elementId,
       sign: this.sign,
-      lowerBound: this.lowerBound,
-      upperBound: this.upperBound,
-      minSliderValue: this.minSliderValue,
-      maxSlideValue: this.maxSlideValue,
+      lowerScaleBound: this.lowerScale,
+      upperScaleBound: this.upperScale,
+      lowerSliderValue: this.lowerSliderValue,
+      upperSliderValue: this.upperSliderValue,
       sliderType: this.sliderType,
       step: this.step,
       tooltip: this.tooltip,
@@ -96,49 +104,123 @@ class ViewHorizontal {
     };
   }
 
-  setController() {
-    const obj = {
-      minSliderValue: this.minSliderValue,
-      maxSlideValue: this.maxSlideValue,
-    };
-    this.controller.getView(obj);
+  init = () => {
+    this.createDOM();
   }
 
-  createStuff() {
-    if (this.elem) {
+  createDOM = () => {
+    if (this.checkParent) {
       if (this.sliderType === 'double') {
-        this.elem.innerHTML = '<div id="iss_value-field">'
-          + '<span id="iss_valueFieldLeft-field"></span>'
-          + '-'
-          + '<span id="iss_valueFieldRight-field"></span>'
-          + '</div>'
-          + '<div id= "iss-container">'
-          + '<div id="iss__double_fly-value-1"  class="iss_tooltip"></div>'
-          + '<div id="iss__double_1_horizontal" class="iss_drag"></div>'
-          + '<div id="iss__double_fly-value-2" class="iss_tooltip"></div>'
-          + '<div id="iss__double_2_horizontal" class="iss_drag"></div>'
-          + '<div id="iss__color-bar_horizontal"></div>'
-          + '</div>';
-      } else if (this.sliderType === 'single') {
-        this.elem.innerHTML = '<div id="iss_value-field">'
-          + '<span id="valueFieldSingleFly"></span>'
-          + '</div>'
-          + '<div id= "iss-container">'
-          + '<div id="iss__color-bar_horizontal"></div>'
-          + '<div id="iss__single_fly-value" class="iss_tooltip"></div>'
-          + '<div id="iss__single" class="iss_drag"></div>'
-          + '</div>';
-      } else {
-        throw this.sendConsoleMessage('Неправильно задан параметр для sliderType');
+        this.createDubleDOM();
       }
-    } else {
-      throw this.sendConsoleMessage('На странице не существует указанного elementId для создания слайдера или он просто не указан');
+      if (this.sliderType === 'single') {
+        this.createSingleDOM();
+      }
+    }
+
+    this.writedVariablesFromDOM();
+  }
+
+  createSingleDOM = () => {
+    this.elem.innerHTML = '<div id="iss_value-field">'
+      + '<span id="flyFieldSingle"></span>'
+      + '</div>'
+      + '<div id= "iss-container">'
+      + '<div id="iss__color-bar_horizontal"></div>'
+      + '<div id="iss__single_fly-value" class="iss_tooltip"></div>'
+      + '<div id="iss__single" class="iss_drag"></div>'
+      + '</div>';
+  }
+
+  createDubleDOM = () => {
+    this.elem.innerHTML = '<div id="iss_value-field">'
+      + '<span id="iss_staticFieldLowerBound-field"></span>'
+      + '-'
+      + '<span id="iss_staticFieldUpperBound-field"></span>'
+      + '</div>'
+      + '<div id= "iss-container">'
+      + '<div id="iss__double_fly-value-1"  class="iss_tooltip"></div>'
+      + '<div id="iss__double_1_horizontal" class="iss_drag"></div>'
+      + '<div id="iss__double_fly-value-2" class="iss_tooltip"></div>'
+      + '<div id="iss__double_2_horizontal" class="iss_drag"></div>'
+      + '<div id="iss__color-bar_horizontal"></div>'
+      + '</div>';
+  }
+
+  checkParent = () => !!this.elem
+
+  writedVariablesFromDOM = () => {
+    this.checksSlidersInDOM();
+
+    this.flyFieldLower = this.parentElement.querySelector('') as HTMLElement;
+  }
+
+  checksSlidersInDOM = () => { }
+
+  writeSliderVariables = () => {
+    if (this.sliderType === 'single') {
+      this.workingAttribute = [];
     }
   }
 
-  private sendConsoleMessage = function sendConsoleMessage(message: string) {
-    console.log(message);
+
+  createListenerOnSlider = (slider: HTMLElement) => {
+    const chosenSlider = slider;
+    chosenSlider.onmousedown = this.eventOnSlider;
   }
 
+  eventOnSlider = (_e: MouseEvent) => {
+    _e.preventDefault();
+    document.onmouseup = this.cancelEvents;
+    document.onmousemove = this.moveEventWithHoldSlider;
+  }
+  // private sendConsoleMessage = function sendConsoleMessage(message: string) {
+  //   console.log(message);
+  // }
+
+  moveEventWithHoldSlider = () => { }
+
+  calcMousePosition = () => { }
+
+  writeSelectedSlider = () => { }
+
+  clearSelectedSlider = () => { }
+
+  calcMoneyStep = () => { }
+
+  calcProductStep = () => { }
+
+  calcPixelStep = () => { }
+
+  showMoneyOnScreen = () => { }
+
+  canMoveToPosition = () => { }
+
+  calcSliderPosition = () => { }
+
+  getMouseCoordinates = () => { }
+
+  moveSlider = () => { }
+
+  calcStepsArray = () => { }
+
+  calcStepNumberNearMouse = () => { }
+
+  calcCrossedBound = () => { }
+
+  moveRibon = () => { }
+
+  findSliderNumber = () => { }
+
+  findAndSafeSliderExtremum = () => { }
+
+  calcPluginPosition = () => { }
+
+  setDirection = () => { }
+
+
+
+  cancelEvents = () => { }
 }
+
 export default ViewHorizontal;
