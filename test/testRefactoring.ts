@@ -42,7 +42,7 @@ describe('View, проверка наличия функций, необходи
     });
 
     it('Команда, принимающая отдающая стартовые данные, для проверки', () => {
-      assert.isOk(view.getStartingConditions());
+      assert.isOk(view.getStartingConditions);
     });
 
     it('Команда, записывающая каждую полученную единицу данных в соответствующую переменную view', () => {
@@ -61,28 +61,36 @@ describe('View, проверка наличия функций, необходи
       assert.isOk(view.createSingleDOM);
     });
 
-    it('Функция, которая проверяет созание DOM с одним бегунком', () => {
-      assert.isOk(view.createSingleDOM);
-    });
 
     it('Функция, которая создает DOM с несколькими бегунками', () => {
       assert.isOk(view.createDoubleDOM);
     });
 
-    it('Функция, которая создает переменные для обращения к элементам', () => {
-      assert.isOk(view.writedVariablesFromDOM);
+    it('writeDOM -- определяет какие переменные записать', () => {
+      assert.isOk(view.writeDOM);
+    });
+
+    it('writeSingleDOMtoVariables -- записывает переменные для одного бегунка', () => {
+      assert.isOk(view.writeSingleDOMtoVariables);
+    });
+
+    it('writeSingleDOMtoVariables -- записывает переменные для двойного бегунка', () => {
+      assert.isOk(view.writeDoubleDOMtoVariables);
     });
 
     it('Функция, которая считает количество слайдеров', () => {
-      assert.isOk(view.checksSlidersInDOM);
+      assert.isOk(view.checkElementsInDOM);
     });
 
-    it('Функция, которая проверяет сколько бегунков в слайдере', () => {
-      assert.isOk(view.writeSliderVariables);
+    it('Функция, которая находит в DOM дереве элементы с нужным классом, и возвращает их в массиве', () => {
+      assert.isOk(view.returnElementsFromDOM);
     });
 
     it('Функция, навешивающая событие на бегунок при нажатии на него', () => {
-      // const html = '<div class= "a"></div>' as unknown as HTMLElement;
+      assert.isOk(view.createListenerOnSlider);
+    });
+
+    it('Функция, которая проверяет что слайдер двойной', () => {
       assert.isOk(view.createListenerOnSlider);
     });
 
@@ -93,6 +101,45 @@ describe('View, проверка наличия функций, необходи
     it('Функция, навешивающая событие на бегунок при перемещении мыши с зажатой клавишей над бегунком', () => {
       assert.isOk(view.moveEventWithHoldSlider);
     });
+
+    it('writeGeometryDOMtoVariables -- записывает положение слайдера на странице', () => {
+      assert.isOk(view.writeGeometryDOMtoVariables);
+    });
+
+    it('setDirection -- вызывает функции для создания переменных в горизонтальном или вертикальном виде', () => {
+      assert.isOk(view.setDirection);
+    });
+
+    it('setHorizontalDirection -- задает главную ось по горизонатали', () => {
+      assert.isOk(view.setHorizontalDirection);
+    });
+
+    it('setVerticalDirection -- задает главную ось по вертикали', () => {
+      assert.isOk(view.setVerticalDirection);
+    });
+
+    it('writeGeometryOfSlider -- задает переменные бегунка', () => {
+      assert.isOk(view.writeGeometryOfSlider);
+    });
+
+    it('writeGeometryOfRibbon -- задает переменные для цветной полоски', () => {
+      assert.isOk(view.writeGeometryOfRibbon);
+    });
+
+    it('setHorizontalRibbonVariables -- задает переменные когда плагин ориентирован горизонтально', () => {
+      assert.isOk(view.setHorizontalRibbonVariables);
+    });
+
+    it('writeGeometryOfRibbon -- задает переменные когда плагин ориентирован вертикально', () => {
+      assert.isOk(view.setVerticalRibbonVariables);
+    });
+
+
+
+
+
+
+
 
     it('Функция, которая вычисляет координаты мыши', () => {
       assert.isOk(view.calcMousePosition);
@@ -146,7 +193,11 @@ describe('View, проверка наличия функций, необходи
       assert.isOk(view.calcStepNumberNearMouse);
     });
 
-    it('Функция, сравнение положения мыши и граничных значений слайдера в пикселях', () => {
+    it('Функция, которая вычисляет положение плагина в пикселях', () => {
+      assert.isOk(view.calcPluginPosition);
+    });
+
+    it('Функция, сравнение положения мыши и граничных значений шкалы плагина в пикселях', () => {
       assert.isOk(view.calcCrossedBound);
     });
 
@@ -162,21 +213,13 @@ describe('View, проверка наличия функций, необходи
       assert.isOk(view.findAndSafeSliderExtremum);
     });
 
-    it('Функция, которая вычисляет положение слайдера в пикселях', () => {
-      assert.isOk(view.calcPluginPosition);
+    it('Функция, которая записывает положение статичного бегунка в переменную', () => {
+      // assert.isOk(view.);
     });
 
-    it('Функция, которая переопределяет направление вычислений в зависимости от того, горизонтальный или вертикальный вид', () => {
-      assert.isOk(view.setDirection);
+    it('Функция, которая определяет, с каким бегунком в данный момент работает пользователь', () => {
+      // assert.isOk(view.);
     });
-
-    // it('', () => {
-    //   assert.isOk(view.);
-    // });
-
-    // it('', () => {
-    //   assert.isOk(view.);
-    // });
 
     // it('', () => {
     //   assert.isOk(view.);
@@ -195,7 +238,7 @@ describe('View, проверка наличия функций, необходи
     // });
   });
 
-describe('View, Проверка на правильность приёма параметров классом, построение DOM',
+describe('View, Проверка на правильность приёма параметров классом, построение DOM, подсчет DOM, привязка DOM-элементов к переменным',
   () => {
     let view: any;
     const conditions = {
@@ -276,7 +319,66 @@ describe('View, Проверка на правильность приёма па
     it('Проверка createDOM -- добавления в DOM новых элементов слайдера в зависимости от параметра sliderType', () => {
       view.setStartingConditions(conditions);
       view.createDOM();
-      const spanElement = document.querySelector('.iss_staticFieldLowerBound-field');
+      const spanElement = document.querySelector('.iss_staticField');
       assert.isOk(spanElement);
+    });
+
+    it('Проверка checkElementsInDOM -- должен вернуть массив длинной 2, функция проверяет есть ли элементы бегунков на странице', () => {
+      view.setStartingConditions(conditions);
+      view.createDOM();
+      const arrayDOMElements = view.checkElementsInDOM();
+      assert.equal(arrayDOMElements.length, 2);
+    });
+
+    it('Проверка returnElementsFromDOM -- возвращает массив из элементов по указанному в атрибуте селектору элемента', () => {
+      view.setStartingConditions(conditions);
+      view.createDOM();
+      const arrayDOMElements = view.returnElementsFromDOM('.iss__tooltip', 2);
+      assert.equal(arrayDOMElements.length, 2);
+    });
+
+    it('Проверка writeVariablesFromDOM  -- записывает необходимые элементы для манипулирования в переменные класса', () => {
+      view.setStartingConditions(conditions);
+      view.createDOM();
+      view.writeVariablesFromDOM();
+      const ribbon = document.querySelector('.iss__color-bar');
+      assert.equal(view.ribbon, ribbon);
+    });
+  });
+
+describe('View, Проверка функций, отвечающих за вычисления шагов, перемещения бегунков, вычисления допустимости перемещения',
+  () => {
+    let view: any;
+    const conditions = {
+      elementId: '#iss',
+      sign: '₽',
+      lowerScaleBound: 0,
+      upperScaleBound: 1200,
+      lowerSliderValue: 200,
+      upperSliderValue: 1000,
+      sliderType: 'double',
+      step: 5,
+      tooltip: 'on',
+      valueStateField: 'on',
+    };
+
+    beforeEach(async () => {
+      const dom = await JSDOM.fromFile('./index.html', { runScripts: 'dangerously', pretendToBeVisual: true, resources: 'usable' });
+      interface Global extends NodeJS.Global {
+        window: Window;
+        document: Document;
+        navigator: {
+          userAgent: string;
+        };
+      }
+      (global as Global).window = dom.window;
+      (global as Global).document = window.document;
+      view = new ViewHorizontal();
+      view.setStartingConditions(conditions);
+      view.createDOM();
+    });
+
+    it('', () => {
+      assert.deepEqual(conditions, view.getStartingConditions());
     });
   });
