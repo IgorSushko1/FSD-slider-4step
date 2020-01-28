@@ -11,7 +11,7 @@
     "@types/node": "^12.12.6",
     "@types/node-sass": "^4.11.0",
     "awesome-typescript-loader": "^5.2.1",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.13.1",
     "sinon": "^7.5.0",
     "source-map-loader": "^0.2.4",
     "tsdom": "^0.6.9",
