@@ -1,4 +1,5 @@
-var path = require('path');
+/* eslint-disable */
+ar path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 var webpack = require('webpack');

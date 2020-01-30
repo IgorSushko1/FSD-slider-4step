@@ -5,7 +5,8 @@ import { it, describe, beforeEach } from 'mocha';
 // eslint-disable-next-line no-unused-vars
 // eslint-disable-next-line import/no-unresolved
 import { JSDOM } from 'jsdom';
-import ViewHorizontal from '../src/is_slider/viewRefactoring';
+// eslint-disable-next-line import/no-unresolved
+import { ViewHorizontal } from '../src/refactoring/ts/refactoringView';
 
 
 describe('View, проверка наличия функций, необходимых для работы слайдера',
@@ -37,36 +38,36 @@ describe('View, проверка наличия функций, необходи
       view = new ViewHorizontal();
     });
 
-    it('Функция, запускающая работу вью - его построение, отображение, навешивание событий', () => {
+    it('view.init -- запускает построение, отображение, навешивание событий', () => {
       assert.exists(view.init);
     });
 
-    it('Команда, принимающая отдающая стартовые данные, для проверки', () => {
+    it('getStartingConditions -- отдает стартовые данные, если они есть', () => {
       assert.isOk(view.getStartingConditions);
     });
 
-    it('Команда, записывающая каждую полученную единицу данных в соответствующую переменную view', () => {
+    it('setStartingConditions -- записывает данные в соответствующие переменные во view', () => {
       assert.isOk(view.setStartingConditions);
     });
 
-    it('-- создает DOM элементы в переменной', () => {
+    it('createDOM -- создает DOM элементы на странице браузера', () => {
       assert.isOk(view.createDOM);
     });
 
-    it('-- проверяет наличие на странице необходимого элемента для инициализации слайдера', () => {
+    it('checkParent -- проверяет наличие на странице браузера необходимого элемента для инициализации слайдера', () => {
       assert.isOk(view.checkParent);
     });
 
-    it('-- создает DOM с одним бегунком', () => {
+    it('createSingleDOM -- создает на странице браузера DOM для одинарного бегунка ', () => {
       assert.isOk(view.createSingleDOM);
     });
 
 
-    it('-- создает DOM с несколькими бегунками', () => {
+    it('createDoubleDOM -- создает на странице браузера DOM для двойного бегунка ', () => {
       assert.isOk(view.createDoubleDOM);
     });
 
-    it('writeDOM -- определяет какие переменные записать', () => {
+    it('writeDOM -- запускает создание переменных в коде, в которых хранятся ссылки на элементы DOM, находящиеся на странице браузера', () => {
       assert.isOk(view.writeDOM);
     });
 
@@ -78,51 +79,55 @@ describe('View, проверка наличия функций, необходи
       assert.isOk(view.writeDoubleDOMtoVariables);
     });
 
-    it('-- считает количество слайдеров', () => {
+    it('checkElementsInDOM -- считает количество бегунков, и проверяет, соответствует ли это условиям в коде', () => {
       assert.isOk(view.checkElementsInDOM);
     });
 
-    it('-- находит в DOM дереве элементы с нужным классом, и возвращает их в массиве', () => {
+    it('returnElementsFromDOM -- аргументом передается необходимый класс, возвращает массив DOM элементов', () => {
       assert.isOk(view.returnElementsFromDOM);
     });
 
-    it('Функция, навешивающая событие на бегунок при нажатии на него', () => {
+    it('createListenerOnSlider -- создает событие нажатия кнопки мыши над бегунком', () => {
       assert.isOk(view.createListenerOnSlider);
     });
 
-    it('-- проверяет что слайдер двойной', () => {
+    it('createEventsOnDoubleSlider -- вызывает функцию с созданием событий на два бегунка', () => {
       assert.isOk(view.createListenerOnSlider);
     });
 
-    it('Функция, навешивающая событие на бегунок при нажатии на него', () => {
+    it('createEventsOnSingleSlider -- вызывает функцию с созданием событий на один бегунок', () => {
+      assert.isOk(view.createListenerOnSlider);
+    });
+
+    it('eventOnSlider -- создает события, реагирующие на отпускание клавиши мыши и на передвижение мыши с зажатой клавишей мыши', () => {
       assert.isOk(view.eventOnSlider);
     });
 
-    it('Функция, навешивающая событие на бегунок при перемещении мыши с зажатой клавишей над бегунком', () => {
+    it('moveEventWithHoldMouse -- запускает расчеты позиции мыши и количества денег', () => {
       assert.isOk(view.moveEventWithHoldMouse);
     });
 
-    it('writeGeometryDOMtoVariables -- записывает положение слайдера на странице', () => {
+    it('writeGeometryDOMtoVariables -- записывает положение шкалы слайдера отностильно страницы браузера', () => {
       assert.isOk(view.writeGeometryDOMtoVariables);
     });
 
-    it('setDirection -- вызывает функции для создания переменных в горизонтальном или вертикальном виде', () => {
+    it('setDirection -- вызывает функции для записи положения шкалы слайдера в горизонтальном или вертикальном виде', () => {
       assert.isOk(view.setDirection);
     });
 
-    it('setHorizontalDirection -- задает главную ось по горизонатали', () => {
+    it('setHorizontalDirection -- записывает положение шкалы слайдера по горизонатали', () => {
       assert.isOk(view.setHorizontalDirection);
     });
 
-    it('setVerticalDirection -- задает главную ось по вертикали', () => {
+    it('setVerticalDirection -- записывает положение шкалы слайдера по вертикали', () => {
       assert.isOk(view.setVerticalDirection);
     });
 
-    it('writeGeometryOfSlider -- задает переменные бегунка', () => {
+    it('writeGeometryOfSlider -- записывает размеры бегунков по вертикали и горизонтали', () => {
       assert.isOk(view.writeGeometryOfSlider);
     });
 
-    it('writeGeometryOfRibbon -- задает переменные для цветной полоски', () => {
+    it('writeGeometryOfRibbon -- записывает переменные для цветной полоски', () => {
       assert.isOk(view.writeGeometryOfRibbon);
     });
 
@@ -302,7 +307,6 @@ describe('View, Проверка на правильность приёма па
       assert.isOk(divElement);
     });
 
-
     it('Проверка createDOM -- добавления в DOM новых элементов слайдера в зависимости от параметра sliderType', () => {
       view.setStartingConditions(conditions);
       view.createDOM();
@@ -330,5 +334,42 @@ describe('View, Проверка на правильность приёма па
       view.writeDOM();
       const ribbon = document.querySelector('.iss__color-bar');
       assert.equal(view.ribbon, ribbon);
+    });
+  });
+
+describe('View. Функции, отвечающие за вывод данных на экран, за перемещение слайдера',
+  () => {
+    let view: any;
+    const conditions = {
+      elementId: '#iss',
+      sign: '₽',
+      lowerScaleBound: 0,
+      upperScaleBound: 1000,
+      lowerSliderValue: 200,
+      upperSliderValue: 1000,
+      sliderType: 'double',
+      step: 5,
+      tooltip: 'on',
+      valueStateField: 'on',
+    };
+
+    beforeEach(async () => {
+      const dom = await JSDOM.fromFile('./index.html', { runScripts: 'dangerously', pretendToBeVisual: true, resources: 'usable' });
+      interface Global extends NodeJS.Global {
+        window: Window;
+        document: Document;
+        navigator: {
+          userAgent: string;
+        };
+      }
+      (global as Global).window = dom.window;
+      (global as Global).document = window.document;
+      view = new ViewHorizontal();
+      view.setStartingConditions(conditions);
+      view.init();
+    });
+
+    it('moveSlider -- перемещает слайдер на нужную позицию', () => {
+      assert.isOk(view.moveSlider);
     });
   });

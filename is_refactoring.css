@@ -1,0 +1,154 @@
+.flex {
+  display: flex;
+  margin-bottom: 100px;
+}
+
+#iss {
+  position: relative;
+  margin-top: 100px;
+  margin-left: 200px;
+}
+
+#iss,
+.iss-container {
+  width: 700px;
+  height: 100px;
+}
+
+.iss_staticField {
+  width: 100px;
+  text-align: center;
+  padding-top: 17px;
+  height: 40px;
+  border-radius: 5px;
+  top: -75px;
+  left: 200px;
+}
+
+.iss-container {
+  position: relative;
+  z-index: 1;
+}
+
+.iss__scale {
+  width: 400px;
+  height: 40px;
+  border: 1px solid #8ba4f9;
+  border-radius: 1px;
+}
+
+.iss__single,
+.iss__double_1_horizontal,
+.iss__double_2_horizontal {
+  background: linear-gradient(180deg, #bc9cff, #8ba4f9);
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: 0px;
+  margin-right: 15px;
+  border-radius: 50%;
+  cursor: move;
+}
+
+.iss__double_2_horizontal {
+  left: 40px;
+  background: linear-gradient(0deg, #66d2ea, #6fcf97);
+}
+
+.iss__color-bar {
+  position: absolute;
+  background: linear-gradient(
+    0deg,
+    rgba(61, 73, 117, 0.219),
+    rgba(144, 144, 144, 0.239)
+  );
+  height: 10px;
+  left: 0px;
+  top: 10.5px;
+  width: 10px;
+  z-index: -200;
+}
+
+.iss__double_fly-value-1,
+.iss__double_fly-value-2,
+.iss__single_fly-value {
+  position: absolute;
+  width: 50px;
+  height: 20px;
+  top: -30px;
+  left: 50px;
+  background-color: rgba(144, 144, 144, 0.239);
+  color: rgb(100, 100, 100);
+  text-align: center;
+  border-radius: 6px;
+}
+
+.iss-container .iss__double_fly-value-1::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: rgba(144, 144, 144, 0.239) transparent transparent transparent;
+}
+
+.iss-container .iss__double_fly-value-2::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: rgba(144, 144, 144, 0.239) transparent transparent transparent;
+}
+
+.iss-container .iss__single_fly-value::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: rgba(144, 144, 144, 0.239) transparent transparent transparent;
+}
+
+.iss-container .iss__double_fly-value-1 {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.iss-container .iss__double_fly-value-2 {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.iss-container .iss__single_fly-value {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.iss-container:hover .iss__double_fly-value-1 {
+  visibility: visible;
+  opacity: 1;
+}
+
+.iss-container:hover .iss__double_fly-value-2 {
+  visibility: visible;
+  opacity: 1;
+}
+
+.iss-container:hover .iss__single_fly-value {
+  visibility: visible;
+  opacity: 1;
+}
+
+.doc_panel {
+  margin-left: 60px;
+}

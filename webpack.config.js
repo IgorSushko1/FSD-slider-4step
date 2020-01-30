@@ -1,3 +1,4 @@
+/* eslint-disable */
 var path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -6,7 +7,9 @@ var webpack = require('webpack');
 module.exports = {
   mode: 'development',
   devtool: 'inline-source-map',
-  entry: './dist/index.js',
+  // entry: './dist/index.js',
+  entry: './src/refactoring/js/refactoringIndex.js',
+
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js'
@@ -39,9 +42,9 @@ module.exports = {
       filename: 'index.html'
     }),
     new MiniCssExtractPlugin({
-      filename: '[name].css',
-      chunkFilename: '[id].css',
-      ignoreOrder: false,
+    filename: '[name].css',
+    chunkFilename: '[id].css',
+    ignoreOrder: false,
     }),
     new webpack.ProvidePlugin({
       $: "jquery/dist/jquery.min.js",
