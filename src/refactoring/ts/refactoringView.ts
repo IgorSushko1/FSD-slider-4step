@@ -37,12 +37,12 @@ interface ViewHorizontal {
   scale: HTMLElement;
   indent: number;// смещение относительно вьюпорта
   mainAxisSize: number; // размер поля слайдера по главной оси
-  secondaryAxisSize: number; // размер поля слайдера по второстепенной оси
 
   sliderInDOM: [HTMLElement];
 
   staticFieldLower: HTMLElement;
   staticFieldUpper: HTMLElement;
+  staticFieldSingle: HTMLElement;
 
   flyFieldLower: HTMLElement;
   flyFieldUpper: HTMLElement;
@@ -139,17 +139,14 @@ class ViewHorizontal {
   }
 
   createDOM = () => {
-    if (this.checkParent) {
-      if (this.sliderType === 'double') {
-        this.createDoubleDOM();
-      }
-      if (this.sliderType === 'single') {
-        this.createSingleDOM();
-      }
+    if (this.sliderType === 'double') {
+      this.createDoubleDOM();
+    }
+    if (this.sliderType === 'single') {
+      this.createSingleDOM();
     }
   }
 
-  checkParent = () => !!this.elem
 
   createSingleDOM = () => {
     this.elem.innerHTML = '<div class="iss__value-field">'
@@ -158,7 +155,7 @@ class ViewHorizontal {
       + '<div class= "iss-container">'
       + '<div class= "iss__scale"></div>'
       + '<div class="iss__color-bar"></div>'
-      + '<div class="iss__single_fly-value iss__tooltip" data-slyder="single"></div>'
+      + '<div class="iss__single_fly-value iss__tooltip"></div>'
       + '<div class="iss__single iss__drag"></div>'
       + '</div>';
   }
@@ -172,9 +169,9 @@ class ViewHorizontal {
       + '<div class= "iss-container">'
       + '<div class= "iss__scale"></div>'
       + '<div class="iss__double_fly-value-1 iss__tooltip"></div>'
-      + '<div class="iss__double_1_horizontal iss__drag" data-slyder="lower"></div>'
+      + '<div class="iss__double_1_horizontal iss__drag"></div>'
       + '<div class="iss__double_fly-value-2 iss__tooltip"></div>'
-      + '<div class="iss__double_2_horizontal iss__drag" data-slyder="upper"></div>'
+      + '<div class="iss__double_2_horizontal iss__drag"></div>'
       + '<div class="iss__color-bar"></div>'
       + '</div>';
   }
@@ -192,17 +189,17 @@ class ViewHorizontal {
   }
 
   private checkElementsInDOM = () => {
-    const sliderInDOM = this.elem.querySelectorAll('.iss__drag');
+    const DOMElements = this.elem.querySelectorAll('.iss__drag');
 
-    if ((sliderInDOM.length > 0)) {
-      this.sliderInDOM = sliderInDOM;
+    if ((DOMElements.length > 0)) {
+      this.sliderInDOM = DOMElements;
     }
   }
 
   private writeSingleDOMtoVariables = () => {
     [this.scale] = this.returnElementsFromDOM('.iss__scale', 1);
     [this.singleSlider] = this.returnElementsFromDOM('.iss__drag', 1);
-    [this.staticFieldUpper] = this.returnElementsFromDOM('.iss_staticField', 1);
+    [this.staticFieldSingle] = this.returnElementsFromDOM('.iss_staticField', 1);
     [this.flyFieldSingle] = this.returnElementsFromDOM('.iss__tooltip', 1);
     [this.ribbon] = this.returnElementsFromDOM('.iss__color-bar', 1);
   }
@@ -217,27 +214,22 @@ class ViewHorizontal {
 
   private writeSingleSliderIndent = () => {
     const elem = this.returnElementsFromDOM('.iss__drag', 1);
-    const elemBounding = elem.getBoundingClientRect();
-    if (this.sliderType === 'horizontal') {
-      this.singleSliderPosition = elemBounding.left;
-    } if (this.sliderType === 'vertical') {
-      this.singleSliderPosition = elemBounding.top;
-    }
+    this.singleSliderPosition = this.returnIndent(elem[0]);
   }
 
   private writeDoubleSliderIndent = () => {
     const elems = this.returnElementsFromDOM('.iss__drag', 2);
-    const type = this.directionType;
-    const returnIndent = (arr: HTMLElement) => {
-      if (type === 'horizontal') {
-        return arr.offsetLeft;
-      } if (type === 'vertical') {
-        return arr.offsetTop;
-      }
-    };
-    this.lowerSliderPosition = returnIndent(elems[0]);
-    this.upperSliderPosition = returnIndent(elems[1]);
+    this.lowerSliderPosition = this.returnIndent(elems[0]);
+    this.upperSliderPosition = this.returnIndent(elems[1]);
   }
+
+  private returnIndent = (arr: HTMLElement) => {
+    if (this.directionType === 'horizontal') {
+      return arr.offsetLeft;
+    } if (this.directionType === 'vertical') {
+      return arr.offsetTop;
+    }
+  };
 
   private returnElementsFromDOM = (className: string, length: number) => {
     const DOMElements = this.elem.querySelectorAll(className);
@@ -253,27 +245,15 @@ class ViewHorizontal {
   }
 
   private setDirection = () => {
-    const setHorizontalDirection = () => {
-      this.clientRect = this.scale.getBoundingClientRect();
-      this.indent = this.clientRect.left;
-
-      this.mainAxisSize = this.scale.offsetWidth;
-      this.secondaryAxisSize = this.scale.offsetHeight;
-    };
-
-    const setVerticalDirection = () => {
-      this.clientRect = this.scale.getBoundingClientRect();
-      this.indent = this.clientRect.top;
-
-      this.mainAxisSize = this.elem.offsetHeight;
-      this.secondaryAxisSize = this.scale.offsetWidth;
-    };
+    this.clientRect = this.scale.getBoundingClientRect();
 
     if (this.directionType === 'horizontal') {
-      setHorizontalDirection();
+      this.indent = this.clientRect.left;
+      this.mainAxisSize = this.scale.offsetWidth;
     }
     if (this.directionType === 'vertical') {
-      setVerticalDirection();
+      this.indent = this.clientRect.top;
+      this.mainAxisSize = this.elem.offsetHeight;
     }
   }
 
@@ -294,7 +274,7 @@ class ViewHorizontal {
     const stepInPixel = widthVsMoney * this.step;
 
     if (stepInPixel < 1) {
-      this.pixelStep = stepInPixel;
+      this.pixelStep = 1;
       this.roundedPixelStep = 1;
     } else {
       this.pixelStep = stepInPixel;
@@ -304,19 +284,11 @@ class ViewHorizontal {
 
   createListenerOnSlider = () => {
     if (this.sliderInDOM.length === 1) {
-      this.createEventOnSingleSlider();
+      this.singleSlider.onmousedown = this.eventOnSlider;
     } else if (this.sliderInDOM.length === 2) {
-      this.createEventsOnDoubleSlider();
+      this.lowerSlider.onmousedown = this.eventOnSlider;
+      this.upperSlider.onmousedown = this.eventOnSlider;
     }
-  }
-
-  private createEventsOnDoubleSlider = () => {
-    this.lowerSlider.onmousedown = this.eventOnSlider;
-    this.upperSlider.onmousedown = this.eventOnSlider;
-  }
-
-  private createEventOnSingleSlider = () => {
-    this.singleSlider.onmousedown = this.eventOnSlider;
   }
 
   private eventOnSlider = (_e: Event) => {
@@ -338,21 +310,28 @@ class ViewHorizontal {
   private setRestrictionForDoubleSlider = (_e: Event) => {
     if (_e.target === this.lowerSlider) {
       this.targetSlider = this.lowerSlider;
-
+      this.lowerRestriction = 0;
       this.upperRestriction = this.upperSliderPosition;
 
-      this.lowerRestriction = 0;
 
-      this.upperCostRestriction = this.getCostForSlider(this.upperSliderPosition);
+
       this.lowerCostRestriction = this.lowerScale;
+      this.upperCostRestriction = this.getCostForSlider(this.upperRestriction);
+
     }
+
     if (_e.target === this.upperSlider) {
       this.targetSlider = this.upperSlider;
-      this.upperRestriction = this.mainAxisSize;
       this.lowerRestriction = this.lowerSliderPosition;
+      this.upperRestriction = this.mainAxisSize;
 
+
+      // console.log(`${this.lowerRestriction} lowerRestriction`);
+
+      this.lowerCostRestriction = this.getCostForSlider(this.lowerRestriction);
       this.upperCostRestriction = this.upperScale;
-      this.lowerCostRestriction = this.getCostForSlider(this.lowerSliderPosition);
+
+      // console.log(`${this.lowerCostRestriction} lowerCostRestriction`);
     }
   }
 
@@ -365,23 +344,35 @@ class ViewHorizontal {
     this.lowerCostRestriction = this.lowerScale;
   }
 
-  getCostForSlider = (sliderPostionInPixel: number) => Math.round((sliderPostionInPixel / this.pixelStep) * this.step)
+  getCostForSlider = (sliderPostionInPixel: number) => {
+    // console.log(`${sliderPostionInPixel} sliderPostionInPixel`);
 
+    if (sliderPostionInPixel <= 0) {
+      return this.lowerScale;
+    }
+    return ((Math.round(sliderPostionInPixel / this.pixelStep) * this.step) + this.lowerScale);
+  }
 
   moveEventWithHoldMouse = (_e: MouseEvent) => {
     const innerMousePosition = this.getMousePosition(_e);
 
     const nearestRoundedStep = this.calcNearestStep(innerMousePosition);
+    // console.log(`${nearestRoundedStep} nearestRoundedStep`);
+
 
     const finalPositionInPixel = this.calcFinalPosition(nearestRoundedStep);
 
-    const finalCost = this.calcFinalCost(finalPositionInPixel);
+    const finalCost = this.calcFinalCost(nearestRoundedStep);
 
     this.showMoneyOnScreen(finalCost);
 
-    this.setTargetSliderPosition(finalPositionInPixel);
+    this.moveSlider(finalPositionInPixel);
+
+    this.setOverlay();
 
     this.moveRibbon();
+
+    this.moveTooltip();
   }
 
   private getMousePosition = (_e: MouseEvent) => {
@@ -396,7 +387,7 @@ class ViewHorizontal {
 
   calcFinalPosition = (nearestRoundedStep: number) => {
     const positionInPixel = nearestRoundedStep * this.pixelStep;
-    if (this.isInBorder(positionInPixel)) {
+    if (this.isPixelsInBorder(positionInPixel)) {
       return positionInPixel;
     }
     if (positionInPixel <= this.lowerRestriction) {
@@ -405,29 +396,38 @@ class ViewHorizontal {
     if (positionInPixel >= this.upperRestriction) {
       return this.upperRestriction;
     }
-
   }
 
-  calcFinalCost = (finalPositionInPixel: number) => {
-    if (this.isInBorder(finalPositionInPixel)) {
-      return finalPositionInPixel * this.step;
+  calcFinalCost = (nearestRoundedStep: number) => {
+    const positionInMoney = (nearestRoundedStep * this.step) + this.lowerScale;
+    if (this.isMoneyInBorder(positionInMoney)) {
+      return positionInMoney;
     }
-    if (finalPositionInPixel < this.lowerRestriction) {
+    if (positionInMoney < this.lowerCostRestriction) {
       return this.lowerCostRestriction;
     }
-    if (finalPositionInPixel > this.upperRestriction) {
+    if (positionInMoney > this.upperCostRestriction) {
       return this.upperCostRestriction;
     }
   }
 
-  isInBorder = (position: number) => ((position >= this.lowerRestriction) && (position <= this.upperRestriction))
+  isPixelsInBorder = (position: number) => ((position >= this.lowerRestriction) && (position <= this.upperRestriction))
+
+  isMoneyInBorder = (position: number) => ((position >= this.lowerCostRestriction) && (position <= this.upperCostRestriction))
 
   showMoneyOnScreen = (finalCost: number) => {
+    const cost = `${finalCost}${this.sign}`;
     if (this.targetSlider === this.lowerSlider) {
-      this.staticFieldLower.textContent = String(finalCost);
+      this.staticFieldLower.textContent = `${cost}`;
+      this.flyFieldLower.textContent = `${cost}`;
     }
-    if ((this.targetSlider === this.upperSlider) || (this.targetSlider === this.singleSlider)) {
-      this.staticFieldUpper.textContent = String(finalCost);
+    if (this.targetSlider === this.upperSlider) {
+      this.staticFieldUpper.textContent = `${cost}`;
+      this.flyFieldUpper.textContent = `${cost}`;
+    }
+    if (this.targetSlider === this.singleSlider) {
+      this.staticFieldSingle.textContent = `${cost}`;
+      this.flyFieldSingle.textContent = `${cost}`;
     }
   }
 
@@ -435,20 +435,20 @@ class ViewHorizontal {
     const setHorizontalRibbonVariables = () => {
       if (this.sliderInDOM.length === 1) {
         this.ribbon.style.left = '0px';
-        this.ribbon.style.width = `${this.singleSlider.offsetLeft} px`;
+        this.ribbon.style.width = `${this.singleSlider.offsetLeft}px`;
       } else if (this.sliderInDOM.length === 2) {
         this.ribbon.style.left = this.lowerSlider.style.left;
-        this.ribbon.style.width = `${this.upperSlider.offsetLeft - this.lowerSlider.offsetLeft} px`;
+        this.ribbon.style.width = `${this.upperSlider.offsetLeft - this.lowerSlider.offsetLeft}px`;
       }
     };
 
     const setVerticalRibbonVariables = () => {
       if (this.sliderInDOM.length === 1) {
         this.ribbon.style.top = '0px';
-        this.ribbon.style.height = `${this.singleSlider.offsetTop} px`;
+        this.ribbon.style.height = `${this.singleSlider.offsetTop}px`;
       } else if (this.sliderInDOM.length === 2) {
         this.ribbon.style.top = this.lowerSlider.style.top;
-        this.ribbon.style.height = `${this.upperSlider.offsetTop - this.lowerSlider.offsetTop} px`;
+        this.ribbon.style.height = `${this.upperSlider.offsetTop - this.lowerSlider.offsetTop}px`;
       }
     };
 
@@ -460,29 +460,44 @@ class ViewHorizontal {
     }
   }
 
-  setTargetSliderPosition = (num: number) => {
+  moveSlider = (num: number) => {
     if (this.directionType === 'horizontal') {
       this.targetSlider.style.left = `${num}px`;
     } else if (this.directionType === 'vertical') {
       this.targetSlider.style.top = `${num}px`;
     }
-    this.writeDOM();
-    this.setOverlay();
+  }
+
+  moveTooltip = () => {
+    const move = (direction: string, offset: 'offsetLeft' | 'offsetTop') => {
+      if (this.sliderType === 'single') {
+        this.elem.querySelectorAll('.iss__tooltip')[0].style[direction] = `${this.singleSlider[offset]}px`;
+      }
+      if (this.sliderType === 'double') {
+        this.elem.querySelectorAll('.iss__tooltip')[0].style[direction] = `${this.lowerSlider[offset]}px`;
+        this.elem.querySelectorAll('.iss__tooltip')[1].style[direction] = `${this.upperSlider[offset]}px`;
+      }
+    };
+    if (this.directionType === 'horizontal') {
+      move('left', 'offsetLeft');
+    }
+    if (this.directionType === 'vertical') {
+      move('top', 'offsetTop');
+    }
   }
 
   setOverlay = () => {
-    if (this.sliderType === 'double') {
-      if (this.targetSlider === this.lowerSlider) {
-        this.targetSlider.style.zIndex = '100';
-        this.upperSlider.style.zIndex = '1';
-      } else if (this.targetSlider === this.upperSlider) {
-        this.targetSlider.style.zIndex = '100';
-        this.lowerSlider.style.zIndex = '1';
-      }
+    if (this.targetSlider === this.lowerSlider) {
+      this.targetSlider.style.zIndex = '100';
+      this.upperSlider.style.zIndex = '1';
+    } else if (this.targetSlider === this.upperSlider) {
+      this.targetSlider.style.zIndex = '100';
+      this.lowerSlider.style.zIndex = '1';
     }
   }
 
   cancelEvents = () => {
+    this.writeDOM();
     document.onmouseup = null;
     document.onmousemove = null;
   }

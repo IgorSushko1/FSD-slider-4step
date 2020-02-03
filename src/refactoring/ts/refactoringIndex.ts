@@ -15,7 +15,7 @@ view.setStartingConditions({
   upperSliderValue: 800,
   sliderType: 'double',
   directionType: 'horizontal',
-  step: 2,
+  step: 10,
   tooltip: 'on',
   valueStateField: 'on',
 });
