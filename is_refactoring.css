@@ -3,16 +3,22 @@
   margin-bottom: 100px;
 }
 
-#iss {
+#iss,
+#iss_2,
+#iss_3,
+#iss_4 {
   position: relative;
   margin-top: 100px;
   margin-left: 200px;
 }
 
 #iss,
+#iss_2,
+#iss_3,
+#iss_4,
 .iss-container {
   width: 700px;
-  height: 100px;
+  height: 700px;
 }
 
 .iss_staticField {
@@ -32,7 +38,7 @@
 
 .iss__scale {
   width: 400px;
-  height: 40px;
+  height: 400px;
   border: 1px solid #8ba4f9;
   border-radius: 1px;
 }

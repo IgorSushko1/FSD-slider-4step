@@ -129,14 +129,14 @@ class ViewHorizontal {
             this.writeGeometryOfSlider();
         };
         this.setDirection = () => {
-            this.clientRect = this.scale.getBoundingClientRect();
             if (this.directionType === 'horizontal') {
-                this.indent = this.clientRect.left;
                 this.mainAxisSize = this.scale.offsetWidth;
+                // console.log(`horizontal indent ${this.indent} -- this.mainAxisSize ${this.mainAxisSize}`);
             }
             if (this.directionType === 'vertical') {
-                this.indent = this.clientRect.top;
-                this.mainAxisSize = this.elem.offsetHeight;
+                // this.indent = this.clientRect.top;
+                this.mainAxisSize = this.scale.offsetHeight;
+                // console.log(`indent ${this.indent} -- this.mainAxisSize ${this.mainAxisSize}`);
             }
         };
         this.writeGeometryOfSlider = () => {
@@ -219,6 +219,7 @@ class ViewHorizontal {
         };
         this.moveEventWithHoldMouse = (_e) => {
             const innerMousePosition = this.getMousePosition(_e);
+            console.log(`${innerMousePosition} innerMousePosition`);
             const nearestRoundedStep = this.calcNearestStep(innerMousePosition);
             // console.log(`${nearestRoundedStep} nearestRoundedStep`);
             const finalPositionInPixel = this.calcFinalPosition(nearestRoundedStep);
@@ -230,10 +231,13 @@ class ViewHorizontal {
             this.moveTooltip();
         };
         this.getMousePosition = (_e) => {
+            this.clientRect = this.scale.getBoundingClientRect();
             if (this.directionType === 'horizontal') {
+                this.indent = this.clientRect.left;
                 return (_e.clientX - this.indent);
             }
             if (this.directionType === 'vertical') {
+                this.indent = this.clientRect.top;
                 return (_e.clientY - this.indent);
             }
         };
@@ -320,7 +324,7 @@ class ViewHorizontal {
                 if (this.sliderType === 'single') {
                     this.elem.querySelectorAll('.iss__tooltip')[0].style[direction] = `${this.singleSlider[offset]}px`;
                 }
-                if (this.elem.querySelectorAll('.iss__tooltip').length === 2) {
+                if (this.sliderType === 'double') {
                     this.elem.querySelectorAll('.iss__tooltip')[0].style[direction] = `${this.lowerSlider[offset]}px`;
                     this.elem.querySelectorAll('.iss__tooltip')[1].style[direction] = `${this.upperSlider[offset]}px`;
                 }

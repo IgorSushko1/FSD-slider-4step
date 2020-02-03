@@ -245,15 +245,17 @@ class ViewHorizontal {
   }
 
   private setDirection = () => {
-    this.clientRect = this.scale.getBoundingClientRect();
 
     if (this.directionType === 'horizontal') {
-      this.indent = this.clientRect.left;
+
       this.mainAxisSize = this.scale.offsetWidth;
+      // console.log(`horizontal indent ${this.indent} -- this.mainAxisSize ${this.mainAxisSize}`);
     }
     if (this.directionType === 'vertical') {
-      this.indent = this.clientRect.top;
-      this.mainAxisSize = this.elem.offsetHeight;
+      // this.indent = this.clientRect.top;
+      this.mainAxisSize = this.scale.offsetHeight;
+      // console.log(`indent ${this.indent} -- this.mainAxisSize ${this.mainAxisSize}`);
+
     }
   }
 
@@ -355,6 +357,8 @@ class ViewHorizontal {
 
   moveEventWithHoldMouse = (_e: MouseEvent) => {
     const innerMousePosition = this.getMousePosition(_e);
+    console.log(`${innerMousePosition} innerMousePosition`);
+
 
     const nearestRoundedStep = this.calcNearestStep(innerMousePosition);
     // console.log(`${nearestRoundedStep} nearestRoundedStep`);
@@ -376,9 +380,12 @@ class ViewHorizontal {
   }
 
   private getMousePosition = (_e: MouseEvent) => {
+    this.clientRect = this.scale.getBoundingClientRect();
     if (this.directionType === 'horizontal') {
+      this.indent = this.clientRect.left;
       return (_e.clientX - this.indent);
     } if (this.directionType === 'vertical') {
+      this.indent = this.clientRect.top;
       return (_e.clientY - this.indent);
     }
   }
