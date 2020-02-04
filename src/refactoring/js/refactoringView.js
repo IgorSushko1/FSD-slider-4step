@@ -109,12 +109,12 @@ class ViewHorizontal {
             this.lowerSliderPosition = this.returnIndent(elems[0]);
             this.upperSliderPosition = this.returnIndent(elems[1]);
         };
-        this.returnIndent = (arr) => {
+        this.returnIndent = (element) => {
             if (this.directionType === 'horizontal') {
-                return arr.offsetLeft;
+                return element.offsetLeft;
             }
             if (this.directionType === 'vertical') {
-                return arr.offsetTop;
+                return element.offsetTop;
             }
         };
         this.returnElementsFromDOM = (className, length) => {
@@ -131,12 +131,9 @@ class ViewHorizontal {
         this.setDirection = () => {
             if (this.directionType === 'horizontal') {
                 this.mainAxisSize = this.scale.offsetWidth;
-                // console.log(`horizontal indent ${this.indent} -- this.mainAxisSize ${this.mainAxisSize}`);
             }
             if (this.directionType === 'vertical') {
-                // this.indent = this.clientRect.top;
                 this.mainAxisSize = this.scale.offsetHeight;
-                // console.log(`indent ${this.indent} -- this.mainAxisSize ${this.mainAxisSize}`);
             }
         };
         this.writeGeometryOfSlider = () => {
@@ -224,11 +221,20 @@ class ViewHorizontal {
             }
         };
         this.setRestrictionForSingleSlider = () => {
-            this.targetSlider = this.singleSlider;
-            this.lowerRestriction = 0;
-            this.upperRestriction = this.mainAxisSize;
-            this.upperCostRestriction = this.upperScale;
-            this.lowerCostRestriction = this.lowerScale;
+            if (this.directionType === 'horizontal') {
+                this.targetSlider = this.singleSlider;
+                this.lowerRestriction = 0;
+                this.upperRestriction = this.mainAxisSize;
+                this.lowerCostRestriction = this.lowerScale;
+                this.upperCostRestriction = this.upperScale;
+            }
+            if (this.directionType === 'vertical') {
+                this.targetSlider = this.singleSlider;
+                this.lowerRestriction = 0;
+                this.upperRestriction = this.mainAxisSize;
+                this.lowerCostRestriction = this.upperScale;
+                this.upperCostRestriction = this.lowerScale;
+            }
         };
         this.getCostForSlider = (sliderPostionInPixel) => {
             if (this.directionType === 'horizontal') {
@@ -240,7 +246,6 @@ class ViewHorizontal {
             }
             if (this.directionType === 'vertical') {
                 if (sliderPostionInPixel <= 0) {
-                    // console.log(`${this.upperScale} this.upperScale`);
                     return this.upperScale;
                 }
                 return ((Math.round((this.mainAxisSize - sliderPostionInPixel) / this.pixelStep) * this.step) + this.lowerScale);
@@ -371,8 +376,8 @@ class ViewHorizontal {
             };
             const setVerticalRibbonVariables = () => {
                 if (this.sliderInDOM.length === 1) {
-                    this.ribbon.style.top = '0px';
-                    this.ribbon.style.height = `${this.singleSlider.offsetTop}px`;
+                    this.ribbon.style.top = `${this.singleSlider.offsetTop}px`;
+                    this.ribbon.style.height = `${this.mainAxisSize - this.singleSlider.offsetTop}px`;
                 }
                 else if (this.sliderInDOM.length === 2) {
                     this.ribbon.style.top = this.lowerSlider.style.top;
