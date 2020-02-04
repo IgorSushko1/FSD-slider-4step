@@ -136,6 +136,9 @@ class ViewHorizontal {
     this.writeDOM();
     this.writeGeometryDOMtoVariables();
     this.createListenerOnSlider();
+    this.movesSlidersToStartPositions();
+    this.writeMoneyToFields();
+    this.moveTooltip();
   }
 
   createDOM = () => {
@@ -285,6 +288,57 @@ class ViewHorizontal {
       this.lowerSlider.onmousedown = this.eventOnSlider;
       this.upperSlider.onmousedown = this.eventOnSlider;
     }
+  }
+
+  movesSlidersToStartPositions = () => {
+    if (this.sliderType === 'single') {
+      this.setSingleToStartPosition();
+      this.moveRibbon();
+    }
+    if (this.sliderType === 'double') {
+      this.setsDoubleToStartPostions();
+      this.moveRibbon();
+    }
+  }
+
+  setSingleToStartPosition = () => {
+    if (this.directionType === 'horizontal') {
+      this.singleSlider.style.left = `${this.calcMoneyToPosition(this.lowerSliderValue)}px`;
+    }
+    if (this.directionType === 'vertical') {
+      this.singleSlider.style.top = `${this.calcMoneyToPosition(this.lowerSliderValue)}px`;
+    }
+  }
+
+  setsDoubleToStartPostions = () => {
+    if (this.directionType === 'horizontal') {
+      this.lowerSlider.style.left = `${this.calcMoneyToPosition(this.lowerSliderValue)}px`;
+      this.upperSlider.style.left = `${this.calcMoneyToPosition(this.upperSliderValue)}px`;
+    }
+    if (this.directionType === 'vertical') {
+      this.lowerSlider.style.top = `${this.calcMoneyToPosition(this.lowerSliderValue)}px`;
+      this.upperSlider.style.top = `${this.calcMoneyToPosition(this.upperSliderValue)}px`;
+    }
+  }
+
+  writeMoneyToFields = () => {
+    if (this.sliderType === 'single') {
+      this.staticFieldSingle.innerText = `${this.lowerSliderValue}${this.sign}`
+
+      this.flyFieldSingle.innerText = `${this.lowerSliderValue}${this.sign}`
+    }
+    if (this.sliderType === 'double') {
+      this.staticFieldLower.innerText = `${this.lowerSliderValue}${this.sign}`
+      this.staticFieldUpper.innerText = `${this.upperSliderValue}${this.sign}`
+
+      this.flyFieldLower.innerText = `${this.lowerSliderValue}${this.sign}`
+      this.flyFieldUpper.innerText = `${this.upperSliderValue}${this.sign}`
+    }
+  }
+
+  calcMoneyToPosition(money: number) {
+    const position = (money / this.step) * this.pixelStep;
+    return position;
   }
 
   private eventOnSlider = (_e: Event) => {

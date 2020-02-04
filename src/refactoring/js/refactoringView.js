@@ -34,6 +34,9 @@ class ViewHorizontal {
             this.writeDOM();
             this.writeGeometryDOMtoVariables();
             this.createListenerOnSlider();
+            this.movesSlidersToStartPositions();
+            this.writeMoneyToFields();
+            this.moveTooltip();
         };
         this.createDOM = () => {
             if (this.sliderType === 'double') {
@@ -168,6 +171,46 @@ class ViewHorizontal {
                 this.upperSlider.onmousedown = this.eventOnSlider;
             }
         };
+        this.movesSlidersToStartPositions = () => {
+            if (this.sliderType === 'single') {
+                this.setSingleToStartPosition();
+                this.moveRibbon();
+            }
+            if (this.sliderType === 'double') {
+                this.setsDoubleToStartPostions();
+                this.moveRibbon();
+            }
+        };
+        this.setSingleToStartPosition = () => {
+            if (this.directionType === 'horizontal') {
+                this.singleSlider.style.left = `${this.calcMoneyToPosition(this.lowerSliderValue)}px`;
+            }
+            if (this.directionType === 'vertical') {
+                this.singleSlider.style.top = `${this.calcMoneyToPosition(this.lowerSliderValue)}px`;
+            }
+        };
+        this.setsDoubleToStartPostions = () => {
+            if (this.directionType === 'horizontal') {
+                this.lowerSlider.style.left = `${this.calcMoneyToPosition(this.lowerSliderValue)}px`;
+                this.upperSlider.style.left = `${this.calcMoneyToPosition(this.upperSliderValue)}px`;
+            }
+            if (this.directionType === 'vertical') {
+                this.lowerSlider.style.top = `${this.calcMoneyToPosition(this.lowerSliderValue)}px`;
+                this.upperSlider.style.top = `${this.calcMoneyToPosition(this.upperSliderValue)}px`;
+            }
+        };
+        this.writeMoneyToFields = () => {
+            if (this.sliderType === 'single') {
+                this.staticFieldSingle.innerText = `${this.lowerSliderValue}${this.sign}`;
+                this.flyFieldSingle.innerText = `${this.lowerSliderValue}${this.sign}`;
+            }
+            if (this.sliderType === 'double') {
+                this.staticFieldLower.innerText = `${this.lowerSliderValue}${this.sign}`;
+                this.staticFieldUpper.innerText = `${this.upperSliderValue}${this.sign}`;
+                this.flyFieldLower.innerText = `${this.lowerSliderValue}${this.sign}`;
+                this.flyFieldUpper.innerText = `${this.upperSliderValue}${this.sign}`;
+            }
+        };
         this.eventOnSlider = (_e) => {
             _e.preventDefault();
             this.setRestrictionOfSliderMovement(_e);
@@ -253,9 +296,7 @@ class ViewHorizontal {
         };
         this.moveEventWithHoldMouse = (_e) => {
             const innerMousePosition = this.getMousePosition(_e);
-            // console.log(`${innerMousePosition} innerMousePosition`);
             const nearestRoundedStep = this.calcNearestStep(innerMousePosition);
-            // console.log(`${_nearestRoundedStep} _nearestRoundedStep`);
             const finalPositionInPixel = this.calcFinalPosition(nearestRoundedStep);
             const finalCost = this.calcFinalCost(nearestRoundedStep);
             this.showMoneyOnScreen(finalCost);
@@ -280,7 +321,6 @@ class ViewHorizontal {
                 return Math.round(_positionInPixel / this.pixelStep);
             }
             if (this.directionType === 'vertical') {
-                // return Math.round(_positionInPixel / this.pixelStep);
                 return Math.round((this.mainAxisSize - _positionInPixel) / this.pixelStep);
             }
         };
@@ -438,6 +478,10 @@ class ViewHorizontal {
             upperSliderValue: this.upperSliderValue,
         };
         this.controller.getView(obj);
+    }
+    calcMoneyToPosition(money) {
+        const position = (money / this.step) * this.pixelStep;
+        return position;
     }
 }
 export { ViewHorizontal };
