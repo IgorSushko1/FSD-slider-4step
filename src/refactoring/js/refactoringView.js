@@ -32,8 +32,8 @@ class ViewHorizontal {
         this.init = () => {
             this.createDOM();
             this.writeDOM();
-            this.createListenerOnSlider();
             this.writeGeometryDOMtoVariables();
+            this.createListenerOnSlider();
         };
         this.createDOM = () => {
             if (this.sliderType === 'double') {
@@ -186,42 +186,71 @@ class ViewHorizontal {
             }
         };
         this.setRestrictionForDoubleSlider = (_e) => {
-            if (_e.target === this.lowerSlider) {
-                this.targetSlider = this.lowerSlider;
-                this.lowerRestriction = 0;
-                this.upperRestriction = this.upperSliderPosition;
-                this.lowerCostRestriction = this.lowerScale;
-                this.upperCostRestriction = this.getCostForSlider(this.upperRestriction);
+            if (this.directionType === 'horizontal') {
+                if (_e.target === this.lowerSlider) {
+                    this.targetSlider = this.lowerSlider;
+                    this.lowerRestriction = 0;
+                    this.upperRestriction = this.upperSliderPosition;
+                    this.lowerCostRestriction = this.lowerScale;
+                    this.upperCostRestriction = this.getCostForSlider(this.upperRestriction);
+                }
+                if (_e.target === this.upperSlider) {
+                    this.targetSlider = this.upperSlider;
+                    this.lowerRestriction = this.lowerSliderPosition;
+                    this.upperRestriction = this.mainAxisSize;
+                    this.lowerCostRestriction = this.getCostForSlider(this.lowerRestriction);
+                    this.upperCostRestriction = this.upperScale;
+                }
             }
-            if (_e.target === this.upperSlider) {
-                this.targetSlider = this.upperSlider;
-                this.lowerRestriction = this.lowerSliderPosition;
-                this.upperRestriction = this.mainAxisSize;
-                // console.log(`${this.lowerRestriction} lowerRestriction`);
-                this.lowerCostRestriction = this.getCostForSlider(this.lowerRestriction);
-                this.upperCostRestriction = this.upperScale;
-                // console.log(`${this.lowerCostRestriction} lowerCostRestriction`);
+            if (this.directionType === 'vertical') {
+                if (_e.target === this.lowerSlider) {
+                    this.targetSlider = this.lowerSlider;
+                    this.lowerRestriction = 0;
+                    this.upperRestriction = this.upperSliderPosition;
+                    this.lowerCostRestriction = this.getCostForSlider(this.lowerRestriction);
+                    this.upperCostRestriction = this.getCostForSlider(this.upperRestriction);
+                    console.log(`lowerCostRestriction === ${this.lowerCostRestriction}`);
+                    console.log(`upperCostRestriction === ${this.upperCostRestriction}`);
+                }
+                if (_e.target === this.upperSlider) {
+                    this.targetSlider = this.upperSlider;
+                    this.lowerRestriction = this.lowerSliderPosition;
+                    this.upperRestriction = this.mainAxisSize;
+                    this.lowerCostRestriction = this.getCostForSlider(this.lowerRestriction);
+                    this.upperCostRestriction = this.getCostForSlider(this.upperRestriction);
+                    console.log(`lowerCostRestriction === ${this.lowerCostRestriction}`);
+                    console.log(`upperCostRestriction === ${this.upperCostRestriction}`);
+                }
             }
         };
         this.setRestrictionForSingleSlider = () => {
             this.targetSlider = this.singleSlider;
-            this.upperRestriction = this.mainAxisSize;
             this.lowerRestriction = 0;
+            this.upperRestriction = this.mainAxisSize;
             this.upperCostRestriction = this.upperScale;
             this.lowerCostRestriction = this.lowerScale;
         };
         this.getCostForSlider = (sliderPostionInPixel) => {
-            // console.log(`${sliderPostionInPixel} sliderPostionInPixel`);
-            if (sliderPostionInPixel <= 0) {
-                return this.lowerScale;
+            if (this.directionType === 'horizontal') {
+                if (sliderPostionInPixel <= 0) {
+                    console.log(`${this.lowerScale} this.lowerScale`);
+                    return this.lowerScale;
+                }
+                return (Math.round(sliderPostionInPixel / this.pixelStep) * this.step);
             }
-            return ((Math.round(sliderPostionInPixel / this.pixelStep) * this.step) + this.lowerScale);
+            if (this.directionType === 'vertical') {
+                if (sliderPostionInPixel <= 0) {
+                    // console.log(`${this.upperScale} this.upperScale`);
+                    return this.upperScale;
+                }
+                return ((Math.round((this.mainAxisSize - sliderPostionInPixel) / this.pixelStep) * this.step) + this.lowerScale);
+            }
         };
         this.moveEventWithHoldMouse = (_e) => {
             const innerMousePosition = this.getMousePosition(_e);
-            console.log(`${innerMousePosition} innerMousePosition`);
+            // console.log(`${innerMousePosition} innerMousePosition`);
             const nearestRoundedStep = this.calcNearestStep(innerMousePosition);
-            // console.log(`${nearestRoundedStep} nearestRoundedStep`);
+            // console.log(`${_nearestRoundedStep} _nearestRoundedStep`);
             const finalPositionInPixel = this.calcFinalPosition(nearestRoundedStep);
             const finalCost = this.calcFinalCost(nearestRoundedStep);
             this.showMoneyOnScreen(finalCost);
@@ -241,33 +270,79 @@ class ViewHorizontal {
                 return (_e.clientY - this.indent);
             }
         };
-        this.calcNearestStep = (_positionInPixel) => Math.round(_positionInPixel / this.pixelStep);
-        this.calcFinalPosition = (nearestRoundedStep) => {
-            const positionInPixel = nearestRoundedStep * this.pixelStep;
-            if (this.isPixelsInBorder(positionInPixel)) {
-                return positionInPixel;
+        this.calcNearestStep = (_positionInPixel) => {
+            if (this.directionType === 'horizontal') {
+                return Math.round(_positionInPixel / this.pixelStep);
             }
-            if (positionInPixel <= this.lowerRestriction) {
-                return this.lowerRestriction;
-            }
-            if (positionInPixel >= this.upperRestriction) {
-                return this.upperRestriction;
+            if (this.directionType === 'vertical') {
+                // return Math.round(_positionInPixel / this.pixelStep);
+                return Math.round((this.mainAxisSize - _positionInPixel) / this.pixelStep);
             }
         };
-        this.calcFinalCost = (nearestRoundedStep) => {
-            const positionInMoney = (nearestRoundedStep * this.step) + this.lowerScale;
-            if (this.isMoneyInBorder(positionInMoney)) {
-                return positionInMoney;
+        this.calcFinalPosition = (_nearestRoundedStep) => {
+            const positionInPixel = _nearestRoundedStep * this.pixelStep;
+            if (this.directionType === 'horizontal') {
+                if (this.isPixelsInBorder(positionInPixel)) {
+                    return positionInPixel;
+                }
+                if (positionInPixel <= this.lowerRestriction) {
+                    return this.lowerRestriction;
+                }
+                if (positionInPixel >= this.upperRestriction) {
+                    return this.upperRestriction;
+                }
             }
-            if (positionInMoney < this.lowerCostRestriction) {
-                return this.lowerCostRestriction;
-            }
-            if (positionInMoney > this.upperCostRestriction) {
-                return this.upperCostRestriction;
+            if (this.directionType === 'vertical') {
+                if (this.isPixelsInBorder((this.mainAxisSize - positionInPixel))) {
+                    console.log(`${this.mainAxisSize - positionInPixel} === this.mainAxisSize - positionInPixel`);
+                    return (this.mainAxisSize - positionInPixel);
+                }
+                if ((this.mainAxisSize - positionInPixel) <= this.lowerRestriction) {
+                    // console.log(`${}`);
+                    console.log(`${this.lowerRestriction} === lower`);
+                    return this.lowerRestriction;
+                }
+                if ((this.mainAxisSize - positionInPixel) >= this.upperRestriction) {
+                    return this.upperRestriction;
+                }
             }
         };
-        this.isPixelsInBorder = (position) => ((position >= this.lowerRestriction) && (position <= this.upperRestriction));
-        this.isMoneyInBorder = (position) => ((position >= this.lowerCostRestriction) && (position <= this.upperCostRestriction));
+        this.calcFinalCost = (_nearestRoundedStep) => {
+            if (this.directionType === 'horizontal') {
+                const positionInMoney = _nearestRoundedStep * this.step;
+                if (this.isMoneyInBorder(positionInMoney)) {
+                    return positionInMoney;
+                }
+                if (positionInMoney < this.lowerCostRestriction) {
+                    return this.lowerCostRestriction;
+                }
+                if (positionInMoney > this.upperCostRestriction) {
+                    return this.upperCostRestriction;
+                }
+            }
+            if (this.directionType === 'vertical') {
+                const positionInMoney = (_nearestRoundedStep * this.step) + this.lowerScale;
+                console.log(`positionInMoney === ${positionInMoney}`);
+                if (this.isMoneyInBorder(positionInMoney)) {
+                    return positionInMoney;
+                }
+                if (positionInMoney > this.lowerCostRestriction) {
+                    return this.lowerCostRestriction;
+                }
+                if (positionInMoney < this.upperCostRestriction) {
+                    return this.upperCostRestriction;
+                }
+            }
+        };
+        this.isPixelsInBorder = (_position) => ((_position >= this.lowerRestriction) && (_position <= this.upperRestriction));
+        this.isMoneyInBorder = (_position) => {
+            if (this.directionType === 'horizontal') {
+                return ((_position >= this.lowerCostRestriction) && (_position <= this.upperCostRestriction));
+            }
+            if (this.directionType === 'vertical') {
+                return ((_position <= this.lowerCostRestriction) && (_position >= this.upperCostRestriction));
+            }
+        };
         this.showMoneyOnScreen = (finalCost) => {
             const cost = `${finalCost}${this.sign}`;
             if (this.targetSlider === this.lowerSlider) {
