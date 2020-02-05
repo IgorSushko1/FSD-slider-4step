@@ -7,7 +7,7 @@ import { it, describe, beforeEach } from 'mocha';
 import { JSDOM } from 'jsdom';
 // eslint-disable-next-line import/no-unresolved
 import { ViewHorizontal } from '../src/refactoring/ts/refactoringView';
-
+import { Model } from '../src/refactoring/ts/model';
 
 describe('View, проверка наличия функций, необходимых для работы слайдера',
   () => {
@@ -226,7 +226,6 @@ describe('View. Функции, отвечающие за расчёты',
     после того как есть расстояние считается количество шагов
     после того как есть количество шагов в пикселях делается округление и и умножается на шаг в деньгах
     это будет значение которое необходимо поместить в поля для вывода денежных значений`, () => {
-      assert.();
     });
 
     it('calcFinalCost(finalPositionInPixel: number) -- определяет, какое значение будет возвращено - максимальное, минимальное или вычисляемое между ними', () => {
@@ -342,4 +341,30 @@ describe('View, Проверка на правильность приёма па
       const ribbon = document.querySelector('.iss__color-bar');
       assert.equal(view.ribbon, ribbon);
     });
+  });
+
+describe('Model, Проверка на правильность приёма и передачи параметров',
+  () => {
+    const conditions = {
+      sign: '₽',
+      lowerScaleBound: 0,
+      upperScaleBound: 1200,
+      lowerSliderValue: 200,
+      upperSliderValue: 1000,
+    };
+    const model = new Model(conditions);
+
+    it('setModel -- получает изменения, произошедшие в переменных', () => {
+      const newValues = {
+        lowerSliderValue: 400,
+        upperSliderValue: 800
+      };
+      model.setModel(newValues);
+      const check = {
+        lowerSliderValue: model.lowerSliderValue,
+        upperSliderValue: model.upperSliderValue
+      };
+      assert.deepEqual(check, newValues);
+    });
+
   });

@@ -29,14 +29,9 @@ interface ViewHorizontal {
   tooltip: string;
   valueStateField: string;
 
-  parentElement: HTMLElement;
-  parentWidth: number;
-  parentPosition: ClientRect | DOMRect;
-  parentAxisPosition: number;
-
   scale: HTMLElement;
-  indent: number;// смещение относительно вьюпорта
-  mainAxisSize: number; // размер поля слайдера по главной оси
+  indent: number;
+  mainAxisSize: number;
 
   sliderInDOM: [HTMLElement];
 
@@ -61,23 +56,15 @@ interface ViewHorizontal {
   sliderHeight: number;
 
   ribbon: HTMLElement;
-  ribbonLowerPosition: number;
-  ribbonUpperPosition: number;
-
-  workingAttribute: string[];
 
   clientRect: ClientRect;
 
-  eventTargetSlider: EventTarget;
-
-  globalMousePosition: number
   innerMousePosition: number;
 
   pixelStep: number;
   roundedPixelStep: number;
 
   targetSlider: HTMLElement;
-  targetSliderPosition: any;
 
   lowerRestriction: number;
   upperRestriction: number;
@@ -130,7 +117,6 @@ class ViewHorizontal {
     valueStateField: this.valueStateField,
   });
 
-
   init = () => {
     this.createDOM();
     this.writeDOM();
@@ -149,7 +135,6 @@ class ViewHorizontal {
       this.createSingleDOM();
     }
   }
-
 
   createSingleDOM = () => {
     this.elem.innerHTML = '<div class="iss__value-field">'
@@ -181,11 +166,10 @@ class ViewHorizontal {
 
   writeDOM = () => {
     this.checkElementsInDOM();
-
-    if (this.sliderInDOM.length === 1) {
+    if (this.sliderType === 'single') {
       this.writeSingleDOMtoVariables();
       this.writeSingleSliderIndent();
-    } else if (this.sliderInDOM.length === 2) {
+    } else if (this.sliderType === 'double') {
       this.writeDoubleDOMtoVariables();
       this.writeDoubleSliderIndent();
     }
@@ -193,7 +177,6 @@ class ViewHorizontal {
 
   private checkElementsInDOM = () => {
     const DOMElements = this.elem.querySelectorAll('.iss__drag');
-
     if ((DOMElements.length > 0)) {
       this.sliderInDOM = DOMElements;
     }
@@ -257,10 +240,10 @@ class ViewHorizontal {
   }
 
   private writeGeometryOfSlider = () => {
-    if (this.sliderInDOM.length === 1) {
+    if (this.sliderType === 'single') {
       this.sliderWidth = this.singleSlider.offsetWidth;
       this.sliderHeight = this.singleSlider.offsetHeight;
-    } else if (this.sliderInDOM.length === 2) {
+    } else if (this.sliderType === 'double') {
       this.sliderWidth = this.lowerSlider.offsetWidth;
       this.sliderHeight = this.lowerSlider.offsetHeight;
     }
@@ -268,10 +251,7 @@ class ViewHorizontal {
   }
 
   calcPixelStep = () => {
-    const widthVsMoney = this.mainAxisSize / this.upperScale;
-
-    const stepInPixel = widthVsMoney * this.step;
-
+    const stepInPixel = (this.mainAxisSize / this.upperScale) * this.step;
     if (stepInPixel < 1) {
       this.pixelStep = 1;
       this.roundedPixelStep = 1;
@@ -282,9 +262,9 @@ class ViewHorizontal {
   }
 
   createListenerOnSlider = () => {
-    if (this.sliderInDOM.length === 1) {
+    if (this.sliderType === 'single') {
       this.singleSlider.onmousedown = this.eventOnSlider;
-    } else if (this.sliderInDOM.length === 2) {
+    } else if (this.sliderType === 'double') {
       this.lowerSlider.onmousedown = this.eventOnSlider;
       this.upperSlider.onmousedown = this.eventOnSlider;
     }
@@ -323,16 +303,15 @@ class ViewHorizontal {
 
   writeMoneyToFields = () => {
     if (this.sliderType === 'single') {
-      this.staticFieldSingle.innerText = `${this.lowerSliderValue}${this.sign}`
-
-      this.flyFieldSingle.innerText = `${this.lowerSliderValue}${this.sign}`
+      this.staticFieldSingle.innerText = `${this.lowerSliderValue}${this.sign}`;
+      this.flyFieldSingle.innerText = `${this.lowerSliderValue}${this.sign}`;
     }
     if (this.sliderType === 'double') {
-      this.staticFieldLower.innerText = `${this.lowerSliderValue}${this.sign}`
-      this.staticFieldUpper.innerText = `${this.upperSliderValue}${this.sign}`
+      this.staticFieldLower.innerText = `${this.lowerSliderValue}${this.sign}`;
+      this.staticFieldUpper.innerText = `${this.upperSliderValue}${this.sign}`;
 
-      this.flyFieldLower.innerText = `${this.lowerSliderValue}${this.sign}`
-      this.flyFieldUpper.innerText = `${this.upperSliderValue}${this.sign}`
+      this.flyFieldLower.innerText = `${this.lowerSliderValue}${this.sign}`;
+      this.flyFieldUpper.innerText = `${this.upperSliderValue}${this.sign}`;
     }
   }
 
@@ -366,7 +345,6 @@ class ViewHorizontal {
         this.lowerCostRestriction = this.lowerScale;
         this.upperCostRestriction = this.getCostForSlider(this.upperRestriction);
       }
-
       if (_e.target === this.upperSlider) {
         this.targetSlider = this.upperSlider;
         this.lowerRestriction = this.lowerSliderPosition;
@@ -382,8 +360,6 @@ class ViewHorizontal {
         this.upperRestriction = this.upperSliderPosition;
         this.lowerCostRestriction = this.getCostForSlider(this.lowerRestriction);
         this.upperCostRestriction = this.getCostForSlider(this.upperRestriction);
-        console.log(`lowerCostRestriction === ${this.lowerCostRestriction}`);
-        console.log(`upperCostRestriction === ${this.upperCostRestriction}`);
       }
       if (_e.target === this.upperSlider) {
         this.targetSlider = this.upperSlider;
@@ -391,8 +367,6 @@ class ViewHorizontal {
         this.upperRestriction = this.mainAxisSize;
         this.lowerCostRestriction = this.getCostForSlider(this.lowerRestriction);
         this.upperCostRestriction = this.getCostForSlider(this.upperRestriction);
-        console.log(`lowerCostRestriction === ${this.lowerCostRestriction}`);
-        console.log(`upperCostRestriction === ${this.upperCostRestriction}`);
       }
     }
   }
@@ -417,7 +391,6 @@ class ViewHorizontal {
   getCostForSlider = (sliderPostionInPixel: number) => {
     if (this.directionType === 'horizontal') {
       if (sliderPostionInPixel <= 0) {
-        console.log(`${this.lowerScale} this.lowerScale`);
         return this.lowerScale;
       }
       return (Math.round(sliderPostionInPixel / this.pixelStep) * this.step);
@@ -439,9 +412,11 @@ class ViewHorizontal {
 
     const finalCost = this.calcFinalCost(nearestRoundedStep);
 
+    this.moveSlider(finalPositionInPixel);
+
     this.showMoneyOnScreen(finalCost);
 
-    this.moveSlider(finalPositionInPixel);
+    this.writeMoneyToVariables(finalCost);
 
     this.setOverlay();
 
@@ -472,7 +447,6 @@ class ViewHorizontal {
 
   calcFinalPosition = (_nearestRoundedStep: number) => {
     const positionInPixel = _nearestRoundedStep * this.pixelStep;
-
     if (this.directionType === 'horizontal') {
       if (this.isPixelsInBorder(positionInPixel)) {
         return positionInPixel;
@@ -486,15 +460,9 @@ class ViewHorizontal {
     }
     if (this.directionType === 'vertical') {
       if (this.isPixelsInBorder((this.mainAxisSize - positionInPixel))) {
-        console.log(`${this.mainAxisSize - positionInPixel} === this.mainAxisSize - positionInPixel`);
-
         return (this.mainAxisSize - positionInPixel);
       }
       if ((this.mainAxisSize - positionInPixel) <= this.lowerRestriction) {
-        // console.log(`${}`);
-        console.log(`${this.lowerRestriction} === lower`);
-
-
         return this.lowerRestriction;
       }
       if ((this.mainAxisSize - positionInPixel) >= this.upperRestriction) {
@@ -518,7 +486,6 @@ class ViewHorizontal {
     }
     if (this.directionType === 'vertical') {
       const positionInMoney = (_nearestRoundedStep * this.step) + this.lowerScale;
-      console.log(`positionInMoney === ${positionInMoney}`);
       if (this.isMoneyInBorder(positionInMoney)) {
         return positionInMoney;
       }
@@ -542,22 +509,36 @@ class ViewHorizontal {
     }
   }
 
-
   showMoneyOnScreen = (finalCost: number) => {
     const cost = `${finalCost}${this.sign}`;
     if (this.targetSlider === this.lowerSlider) {
       this.staticFieldLower.textContent = `${cost}`;
       this.flyFieldLower.textContent = `${cost}`;
+
     }
     if (this.targetSlider === this.upperSlider) {
       this.staticFieldUpper.textContent = `${cost}`;
       this.flyFieldUpper.textContent = `${cost}`;
+
     }
     if (this.targetSlider === this.singleSlider) {
       this.staticFieldSingle.textContent = `${cost}`;
       this.flyFieldSingle.textContent = `${cost}`;
+
     }
   }
+
+  writeMoneyToVariables = (finalCost: number) => {
+    if (this.targetSlider === this.lowerSlider) {
+      this.lowerSliderValue = finalCost;
+    }
+    if (this.targetSlider === this.upperSlider) {
+      this.upperSliderValue = finalCost;
+    }
+    if (this.targetSlider === this.singleSlider) {
+      this.lowerSliderValue = finalCost;
+    }
+  };
 
   private moveRibbon = () => {
     const setHorizontalRibbonVariables = () => {
