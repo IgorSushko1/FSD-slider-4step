@@ -1,213 +1,293 @@
-interface unchangableValues {
-  [a: string]: Unchangable;
+interface Values {
+  [a: string]: ElementInterface;
 }
 
-interface Unchangable {
-  title: string;
-  description: string;
-  element_word: string;
-  value: any;
-  function_name: string;
+interface ElementInterface {
+  title?: string;
+  description?: string;
+  elementName?: string;
+  value?: any;
+  nameOfVariable?: string;
+  type?: string;
 }
-
-const unchangableValues: unchangableValues = {
-  sign: {
-    title: 'Sign',
-    description: 'Валюта',
-    element_word: 'sign',
-    value: ['₽', '$'],
-    function_name: '_sign',
-  },
-  type_view: {
-    title: 'Type',
-    description: 'Тип слайдера - одинарный или двойной',
-    element_word: 'slider_view',
-    value: ['double', 'single'],
-    function_name: '_slider_type',
-  },
-  slider_type: {
-    title: 'Type',
-    description: 'Тип слайдера - вертикальный или горизонтальный',
-    element_word: 'slider_type',
-    value: ['horizontal', 'vertical'],
-    function_name: '_type_view',
-  },
-  tooltip: {
-    title: 'Tooltip',
-    description: 'Всплывающая подсказка над ползунком',
-    element_word: 'tooltip',
-    value: ['on', 'off'],
-    function_name: 'tooltip',
-  },
-  value_field_state: {
-    //   title: 'value_field_state',
-    //   description: 'Поле вывода валюты',
-    //   element_word: 'value_field_state',
-    //   value: ['on', 'off'],
-    //   function_name: 'value_field_state',
-  },
-};
-
-interface changableValues {
-  [sign: string]: Changable;
-}
-
-interface Changable {
-  title: string;
-  description: string;
-  element_word: string;
-  type: string;
-  function_name: string;
-}
-
-const changableValues: changableValues = {
-  step: {
-    title: 'Step',
-    description: 'Шаг ползунка',
-    element_word: 'step',
-    type: 'number',
-    function_name: '_step',
-  },
-  min_start_slider: {
-    title: 'Min_slider',
-    description: 'Минимальное значение шкалы слайдера',
-    element_word: 'min_start_slider',
-    type: 'number',
-    function_name: '_min_value',
-  },
-  max_start_slider: {
-    title: 'Max_slider',
-    description: 'Максимальное значение шкалы слайдера',
-    element_word: 'max_start_slider',
-    type: 'number',
-    function_name: '_max_value',
-  },
-  min_slider_value: {
-    title: 'Min_slider',
-    description:
-      'Начальное значение шкалы слайдера - для первого или одиночного ползунка',
-    element_word: 'min_slider_value',
-    type: 'number',
-    function_name: '_min_slider_value',
-  },
-  max_slider_value: {
-    title: 'Max_slider',
-    description: 'Начальное значение шкалы слайдера - для второго ползунка',
-    element_word: 'max_slider_value',
-    type: 'number',
-    function_name: '_max_slider_value',
-  },
-};
 
 interface Param {
-  settings_id?: string;
-  _type_view?: string;
+  idForSettings?: string;
+  directionType?: string;
   elementId?: string;
-  _elem?: any;
-  _sign?: string;
-  _min_value?: number;
-  _max_value?: number;
-  _min_slider_value?: number;
-  _max_slider_value?: number;
-  _slider_type?: string;
-  _step?: number;
+  elem?: any;
+  sign?: string;
+  lowerScaleBound?: number;
+  upperScaleBound?: number;
+  lowerSliderValue?: number;
+  upperSliderValue?: number;
+  sliderType?: string;
+  step?: number;
   controller?: any;
   tooltip?: string;
-  value_field_state?: string;
+  // value_field_state?: string;
 }
 
-const settings: any = {
-  elementId: 'iss',
-  _sign: '₽',
-  _min_value: 0,
-  _max_value: 1000,
-  _min_slider_value: 200,
-  _max_slider_value: 800,
-  _slider_type: 'double',
-  _type_view: 'horizontal',
-  _step: 5,
-  settings_id: 'doc_panel',
-};
+interface ControlPanel {
+  controlPanel: HTMLElement,
+  selectOrOr: HTMLElement,
+  divNumeral: HTMLElement,
+}
 
-Object.keys(unchangableValues).forEach((elementOfMenu) => {
-  const controlPanel = document.getElementById(settings.settings_id);
-  const select = document.createElement('select');
-  select.id = unchangableValues[elementOfMenu].element_word;
-
-  const createAndAddTitle = (info: Unchangable, parentElement: HTMLElement) => {
-    const title: string = info.description;
-    const textNodeTitle = document.createTextNode(title);
-    const spanTitle = document.createElement('span');
-    spanTitle.appendChild(textNodeTitle);
-    const divTitle = document.createElement('div');
-    divTitle.appendChild(spanTitle);
-    parentElement.appendChild(divTitle);
+class ControlPanel {
+  orValues: Values = {
+    sign: {
+      title: 'Sign',
+      description: 'Валюта',
+      elementName: 'sign',
+      value: ['₽', '$'],
+      nameOfVariable: 'sign',
+    },
+    sliderType: {
+      title: 'Type',
+      description: 'Тип слайдера - одинарный или двойной',
+      elementName: 'sliderType',
+      value: ['double', 'single'],
+      nameOfVariable: 'sliderType',
+    },
+    directionType: {
+      title: 'Type',
+      description: 'Тип слайдера - вертикальный или горизонтальный',
+      elementName: 'directionType',
+      value: ['horizontal', 'vertical'],
+      nameOfVariable: 'directionType',
+    },
+    // tooltip: {
+    //   title: 'Tooltip',
+    //   description: 'Всплывающая подсказка над ползунком',
+    //   elementName: 'tooltip',
+    //   value: ['on', 'off'],
+    //   nameOfVariable: 'tooltip',
+    // },
+    // value_field_state: {
+    //   title: 'value_field_state',
+    //   description: 'Поле вывода валюты',
+    //   elementName: 'value_field_state',
+    //   value: ['on', 'off'],
+    //   nameOfVariable: 'value_field_state',
+    // },
   };
 
-  const addOptionsToSelectElement = (info: Unchangable, parentElement: HTMLElement) => {
-    Object.keys(info).forEach((switchableOption) => {
-      const option = info[switchableOption];
+  numeralValues: Values = {
+    step: {
+      title: 'Step',
+      description: 'Шаг ползунка',
+      elementName: 'step',
+      type: 'number',
+      nameOfVariable: '_step',
+    },
+    lowerScaleBound: {
+      title: 'Min_slider',
+      description: 'Минимальное значение шкалы слайдера',
+      elementName: 'lowerScaleBound',
+      type: 'number',
+      nameOfVariable: 'lowerScaleBound',
+    },
+    upperScaleBound: {
+      title: 'Max_slider',
+      description: 'Максимальное значение шкалы слайдера',
+      elementName: 'upperScaleBound',
+      type: 'number',
+      nameOfVariable: 'upperScaleBound',
+    },
+    lowerSliderValue: {
+      title: 'Min_slider',
+      description:
+        'Начальное значение шкалы слайдера - для первого или одиночного ползунка',
+      elementName: 'lowerSliderValue',
+      type: 'number',
+      nameOfVariable: 'lowerSliderValue',
+    },
+    upperSliderValue: {
+      title: 'Max_slider',
+      description: 'Начальное значение шкалы слайдера - для второго ползунка',
+      elementName: 'upperSliderValue',
+      type: 'number',
+      nameOfVariable: 'upperSliderValue',
+    },
+  };
 
-      const elementOption = document.createElement('option');
-      elementOption.value = option;
+  settings: Param = {
+    elementId: 'iss',
+    sign: '₽',
+    lowerScaleBound: 0,
+    upperScaleBound: 1000,
+    lowerSliderValue: 200,
+    upperSliderValue: 800,
+    sliderType: 'double',
+    directionType: 'horizontal',
+    step: 5,
+    idForSettings: 'doc_panel',
+  };
 
-      const textNode = document.createTextNode(option);
-      elementOption.appendChild(textNode);
+  getControlPanel = () => {
+    const controlPanel = document.getElementById(this.settings.idForSettings);
+    return controlPanel
+  }
 
-      parentElement.appendChild(elementOption);
+  setIdForSelect = (select: HTMLElement, obj: any) => {
+    select.id = obj.elementName;
+  }
+
+  createTitle = (obj: any) => {
+    const title: string = obj.description;
+
+    const div: HTMLElement = document.createElement('div');
+
+    const textNodeTitle: Text = document.createTextNode(title);
+
+    div.appendChild(textNodeTitle);
+
+    return div;
+  }
+
+  appendChild = (parent: HTMLElement, child: HTMLElement | Text) => {
+    parent.appendChild(child);
+  }
+
+  returnKeys = (obj: Values): string[] => {
+    const arr = Object.keys(obj);
+    return arr;
+  }
+
+  createChangableOptions = (arr: string[], parentElement: HTMLElement) => {
+    arr.forEach(changableValue => {
+      const option = document.createElement('option');
+      option.value = changableValue;
+      const text = document.createTextNode(changableValue);
+      this.appendChild(option, text);
+      this.appendChild(parentElement, option)
+    })
+  }
+
+  createInput = (selectOrDiv: HTMLElement, value: number) => {
+    const input = document.createElement('input');
+    input.type = 'number';
+    input.textContent = `${value}${this.settings.sign}`
+    this.appendChild(selectOrDiv, input);
+  }
+
+  createListenerOrOr = (eventElement: HTMLElement, key: string) => {
+    eventElement.onchange = () => {
+      this.settings[this.orValues[key].nameOfVariable] = (this as any).value;
+      this.slider_refresh();
+    }
+  }
+
+  createListenerNumeral = (eventElement: HTMLElement, key: string) => {
+    eventElement.oninput = () => {
+      this.settings[this.numeralValues[key].nameOfVariable] = input.value;
+      this.slider_refresh();
+    }
+  }
+
+  createOrOrPanel = () => {
+
+    const keys = this.returnKeys(this.orValues);
+    const controlPanel = this.getControlPanel();
+
+    keys.forEach(key => {
+      const currentObj = this.orValues[key];
+      this.selectOrOr = document.createElement('select');
+      this.setIdForSelect(this.selectOrOr, currentObj);
+
+      const createTitle = this.createTitle(currentObj);
+      this.appendChild(this.selectOrOr, createTitle);
+
+      this.createChangableOptions(currentObj['value'], this.selectOrOr);
+
+      this.appendChild(controlPanel, this.selectOrOr);
+    });
+    keys.forEach(key => {
+      const currentObj = this.orValues[key];
+      const eventElement: HTMLElement = controlPanel.querySelector(`#${currentObj.elementName}`)
+      this.createListenerOrOr(eventElement, key);
     });
   };
 
-  const descriptions = unchangableValues[elementOfMenu];
 
-  createAndAddTitle(descriptions, controlPanel);
+  createNumberPanel = () => {
+    const keys = this.returnKeys(this.numeralValues);
+    const controlPanel = this.getControlPanel();
 
-  addOptionsToSelectElement(descriptions.value, select);
+    keys.forEach(key => {
+      const currentObj = this.numeralValues[key];
+      this.divNumeral = document.createElement('div');
+      this.setIdForSelect(this.divNumeral, currentObj);
 
-  controlPanel.appendChild(select);
+      const createTitle = this.createTitle(currentObj);
+      this.appendChild(this.divNumeral, createTitle);
 
-  const elementThatUserChoose = controlPanel.querySelector(`#${descriptions.element_word}`) as HTMLElement;
+      const input = document.createElement('input');
+      input.type = 'number';
+      this.appendChild(this.divNumeral, input);
+      this.appendChild(controlPanel, this.divNumeral);
+    })
+    keys.forEach(key => {
+      const currentObj = this.numeralValues[key];
+      const eventElement: HTMLElement = controlPanel.querySelector(`#${currentObj.elementName}`);
 
-  elementThatUserChoose.onchange = () => {
-    settings[descriptions.function_name] = (this as any).value;
-    slider_refresh();
-  };
-});
+      this.createListenerNumeral(eventElement, key);
+    })
+  }
 
+  createPanel = (objectForConstaructionPanel: Values, type: string) => {
+    const keys = this.returnKeys(objectForConstaructionPanel);
+    const controlPanel = this.getControlPanel();
 
-for (const elementOfMenu in changableValues) {
-  const description = changableValues[elementOfMenu];
-  const textNodeTitle = document.createTextNode(description);
+    keys.forEach(key => {
+      const currentObj = objectForConstaructionPanel[key];
 
-  const div = document.createElement('div');
-  const span = document.createElement('span');
-  const input = document.createElement('input');
-  input.type = 'number';
+      let selectOrDiv: HTMLElement;
+      if (type === 'numeral') {
+        selectOrDiv = document.createElement('div');
 
-  span.appendChild(textNodeTitle);
-  div.appendChild(span);
-  div.appendChild(input);
+      }
+      if (type === 'select') {
+        selectOrDiv = document.createElement('select');
+      }
 
-  div.id = `iss__${changableValues[elementOfMenu].element_word}`;
+      this.setIdForSelect(selectOrDiv, currentObj);
 
-  document.getElementById(settings.settings_id).appendChild(div);
+      const createTitle = this.createTitle(currentObj);
+      this.appendChild(selectOrDiv, createTitle);
 
-  const parent = document.getElementById(settings.settings_id);
+      if (type === 'numeral') {
+        // const input = document.createElement('input');
+        // input.type = 'number';
+        // this.appendChild(selectOrDiv, input);
+        this.createInput(selectOrDiv, this.settings[currentObj.nameOfVariable])
+      }
+      if (type === 'select') {
+        this.createChangableOptions(currentObj['value'], selectOrDiv);
+      }
 
-  const elementThatUserChoose = parent.querySelector(
-    `#iss__${changableValues[elementOfMenu].element_word}`,
-  ) as HTMLElement;
+      this.appendChild(controlPanel, selectOrDiv);
+    })
+    keys.forEach(key => {
+      const currentObj = objectForConstaructionPanel[key];
+      const eventElement: HTMLElement = controlPanel.querySelector(`#${currentObj.elementName}`);
 
-  const f_name = changableValues[elementOfMenu].function_name;
-
-  elementThatUserChoose.oninput = function () {
-    settings[f_name] = input.value;
-  };
-
-  slider_refresh();
+      if (type === 'numeral') {
+        this.createListenerNumeral(eventElement, key);
+      }
+      if (type === 'select') {
+        this.createListenerOrOr(eventElement, key);
+      }
+    })
+  }
 }
+
 
 function change_string(n: string, x: string) {
   document.getElementById('settings').innerText = `${n}: ${x}`;
   slider_refresh();
 }
+}
+
+
