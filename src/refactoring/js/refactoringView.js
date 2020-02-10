@@ -74,11 +74,11 @@ class ViewHorizontal {
         };
         this.writeDOM = () => {
             this.checkElementsInDOM();
-            if (this.sliderInDOM.length === 1) {
+            if (this.sliderType === 'single') {
                 this.writeSingleDOMtoVariables();
                 this.writeSingleSliderIndent();
             }
-            else if (this.sliderInDOM.length === 2) {
+            else if (this.sliderType === 'double') {
                 this.writeDoubleDOMtoVariables();
                 this.writeDoubleSliderIndent();
             }
@@ -140,19 +140,18 @@ class ViewHorizontal {
             }
         };
         this.writeGeometryOfSlider = () => {
-            if (this.sliderInDOM.length === 1) {
+            if (this.sliderType === 'single') {
                 this.sliderWidth = this.singleSlider.offsetWidth;
                 this.sliderHeight = this.singleSlider.offsetHeight;
             }
-            else if (this.sliderInDOM.length === 2) {
+            else if (this.sliderType === 'double') {
                 this.sliderWidth = this.lowerSlider.offsetWidth;
                 this.sliderHeight = this.lowerSlider.offsetHeight;
             }
             this.calcPixelStep();
         };
         this.calcPixelStep = () => {
-            const widthVsMoney = this.mainAxisSize / this.upperScale;
-            const stepInPixel = widthVsMoney * this.step;
+            const stepInPixel = (this.mainAxisSize / this.upperScale) * this.step;
             if (stepInPixel < 1) {
                 this.pixelStep = 1;
                 this.roundedPixelStep = 1;
@@ -163,10 +162,10 @@ class ViewHorizontal {
             }
         };
         this.createListenerOnSlider = () => {
-            if (this.sliderInDOM.length === 1) {
+            if (this.sliderType === 'single') {
                 this.singleSlider.onmousedown = this.eventOnSlider;
             }
-            else if (this.sliderInDOM.length === 2) {
+            else if (this.sliderType === 'double') {
                 this.lowerSlider.onmousedown = this.eventOnSlider;
                 this.upperSlider.onmousedown = this.eventOnSlider;
             }
@@ -249,8 +248,6 @@ class ViewHorizontal {
                     this.upperRestriction = this.upperSliderPosition;
                     this.lowerCostRestriction = this.getCostForSlider(this.lowerRestriction);
                     this.upperCostRestriction = this.getCostForSlider(this.upperRestriction);
-                    console.log(`lowerCostRestriction === ${this.lowerCostRestriction}`);
-                    console.log(`upperCostRestriction === ${this.upperCostRestriction}`);
                 }
                 if (_e.target === this.upperSlider) {
                     this.targetSlider = this.upperSlider;
@@ -258,8 +255,6 @@ class ViewHorizontal {
                     this.upperRestriction = this.mainAxisSize;
                     this.lowerCostRestriction = this.getCostForSlider(this.lowerRestriction);
                     this.upperCostRestriction = this.getCostForSlider(this.upperRestriction);
-                    console.log(`lowerCostRestriction === ${this.lowerCostRestriction}`);
-                    console.log(`upperCostRestriction === ${this.upperCostRestriction}`);
                 }
             }
         };
@@ -282,7 +277,6 @@ class ViewHorizontal {
         this.getCostForSlider = (sliderPostionInPixel) => {
             if (this.directionType === 'horizontal') {
                 if (sliderPostionInPixel <= 0) {
-                    console.log(`${this.lowerScale} this.lowerScale`);
                     return this.lowerScale;
                 }
                 return (Math.round(sliderPostionInPixel / this.pixelStep) * this.step);
@@ -299,8 +293,9 @@ class ViewHorizontal {
             const nearestRoundedStep = this.calcNearestStep(innerMousePosition);
             const finalPositionInPixel = this.calcFinalPosition(nearestRoundedStep);
             const finalCost = this.calcFinalCost(nearestRoundedStep);
-            this.showMoneyOnScreen(finalCost);
             this.moveSlider(finalPositionInPixel);
+            this.showMoneyOnScreen(finalCost);
+            this.writeMoneyToVariables(finalCost);
             this.setOverlay();
             this.moveRibbon();
             this.moveTooltip();
@@ -339,12 +334,9 @@ class ViewHorizontal {
             }
             if (this.directionType === 'vertical') {
                 if (this.isPixelsInBorder((this.mainAxisSize - positionInPixel))) {
-                    console.log(`${this.mainAxisSize - positionInPixel} === this.mainAxisSize - positionInPixel`);
                     return (this.mainAxisSize - positionInPixel);
                 }
                 if ((this.mainAxisSize - positionInPixel) <= this.lowerRestriction) {
-                    // console.log(`${}`);
-                    console.log(`${this.lowerRestriction} === lower`);
                     return this.lowerRestriction;
                 }
                 if ((this.mainAxisSize - positionInPixel) >= this.upperRestriction) {
@@ -367,7 +359,6 @@ class ViewHorizontal {
             }
             if (this.directionType === 'vertical') {
                 const positionInMoney = (_nearestRoundedStep * this.step) + this.lowerScale;
-                console.log(`positionInMoney === ${positionInMoney}`);
                 if (this.isMoneyInBorder(positionInMoney)) {
                     return positionInMoney;
                 }
@@ -401,6 +392,17 @@ class ViewHorizontal {
             if (this.targetSlider === this.singleSlider) {
                 this.staticFieldSingle.textContent = `${cost}`;
                 this.flyFieldSingle.textContent = `${cost}`;
+            }
+        };
+        this.writeMoneyToVariables = (finalCost) => {
+            if (this.targetSlider === this.lowerSlider) {
+                this.lowerSliderValue = finalCost;
+            }
+            if (this.targetSlider === this.upperSlider) {
+                this.upperSliderValue = finalCost;
+            }
+            if (this.targetSlider === this.singleSlider) {
+                this.lowerSliderValue = finalCost;
             }
         };
         this.moveRibbon = () => {

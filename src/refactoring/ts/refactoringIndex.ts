@@ -3,8 +3,12 @@ import '../../../is_refactoring.css';
 
 // eslint-disable-next-line import/no-unresolved
 import { ViewHorizontal } from './refactoringView';
+import { ControlPanel } from './controlPanel'
 
 const view = new ViewHorizontal();
+
+const controlPanel = new ControlPanel();
+controlPanel.buildPanel();
 
 view.setStartingConditions({
   elementId: '#iss',
