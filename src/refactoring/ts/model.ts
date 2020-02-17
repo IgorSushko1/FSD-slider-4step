@@ -31,6 +31,14 @@ class Model {
     this.upperSliderValue = obj.upperSliderValue;
   }
 
+  setInitialModelOptions = (param: objFromController) => {
+    this.lowerScaleBound = param.lowerScaleBound;
+    this.upperScaleBound = param.upperScaleBound;
+    this.lowerSliderValue = param.lowerSliderValue;
+    this.upperSliderValue = param.upperSliderValue;
+    this.sign = param.sign;
+  }
+
   getModel() {
     return {
       lowerScaleBound: this.lowerScaleBound,

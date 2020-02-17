@@ -1,16 +1,29 @@
 
 import '../../../is_refactoring.css';
 
-// eslint-disable-next-line import/no-unresolved
-import { ViewHorizontal } from './refactoringView';
-import { ControlPanel } from './controlPanel'
+// import { View } from './refactoringView';
+// import { ControlPanel } from './ControlPanel';
+import { ISSlider } from './ISSlider';
 
-const view = new ViewHorizontal();
+// const view = new View();
 
-const controlPanel = new ControlPanel();
-controlPanel.buildPanel();
+// const controlPanel = new ControlPanel();
+// controlPanel.buildPanel();
 
-view.setStartingConditions({
+// view.setStartingConditions({
+//   elementId: '#iss',
+//   sign: '$',
+//   lowerScaleBound: 100,
+//   upperScaleBound: 1500,
+//   lowerSliderValue: 200,
+//   upperSliderValue: 800,
+//   sliderType: 'double',
+//   directionType: 'horizontal',
+//   step: 10,
+// });
+// view.init();
+const settingsForHorizontalDuble = {
+  idForControlPanel: 'doc_panel',
   elementId: '#iss',
   sign: '$',
   lowerScaleBound: 100,
@@ -20,60 +33,52 @@ view.setStartingConditions({
   sliderType: 'double',
   directionType: 'horizontal',
   step: 10,
-  tooltip: 'on',
-  valueStateField: 'on',
-});
-view.init();
+};
+ISSlider(settingsForHorizontalDuble);
 
-const viewSingleHorizontal = new ViewHorizontal();
+// const viewSingleHorizontal = new View();
 
-viewSingleHorizontal.setStartingConditions({
-  elementId: '#iss_2',
-  sign: '$',
-  lowerScaleBound: 100,
-  upperScaleBound: 1500,
-  lowerSliderValue: 200,
-  upperSliderValue: 800,
-  sliderType: 'single',
-  directionType: 'horizontal',
-  step: 10,
-  tooltip: 'on',
-  valueStateField: 'on',
-});
-viewSingleHorizontal.init();
+// viewSingleHorizontal.setStartingConditions({
+//   elementId: '#iss_2',
+//   sign: '$',
+//   lowerScaleBound: 100,
+//   upperScaleBound: 1500,
+//   lowerSliderValue: 200,
+//   upperSliderValue: 800,
+//   sliderType: 'single',
+//   directionType: 'horizontal',
+//   step: 10,
+// });
+// viewSingleHorizontal.init();
 
 
-const viewSingleVertical = new ViewHorizontal();
+// const viewSingleVertical = new View();
 
-viewSingleVertical.setStartingConditions({
-  elementId: '#iss_3',
-  sign: '$',
-  lowerScaleBound: 100,
-  upperScaleBound: 1500,
-  lowerSliderValue: 200,
-  upperSliderValue: 800,
-  sliderType: 'single',
-  directionType: 'vertical',
-  step: 10,
-  tooltip: 'on',
-  valueStateField: 'on',
-});
-viewSingleVertical.init();
+// viewSingleVertical.setStartingConditions({
+//   elementId: '#iss_3',
+//   sign: '$',
+//   lowerScaleBound: 100,
+//   upperScaleBound: 1500,
+//   lowerSliderValue: 200,
+//   upperSliderValue: 800,
+//   sliderType: 'single',
+//   directionType: 'vertical',
+//   step: 10,
+// });
+// viewSingleVertical.init();
 
 
-const viewDoubleVertical = new ViewHorizontal();
+// const viewDoubleVertical = new View();
 
-viewDoubleVertical.setStartingConditions({
-  elementId: '#iss_4',
-  sign: '$',
-  lowerScaleBound: 100,
-  upperScaleBound: 1500,
-  lowerSliderValue: 200,
-  upperSliderValue: 800,
-  sliderType: 'double',
-  directionType: 'vertical',
-  step: 10,
-  tooltip: 'on',
-  valueStateField: 'on',
-});
-viewDoubleVertical.init();
+// viewDoubleVertical.setStartingConditions({
+//   elementId: '#iss_4',
+//   sign: '$',
+//   lowerScaleBound: 100,
+//   upperScaleBound: 1500,
+//   lowerSliderValue: 200,
+//   upperSliderValue: 800,
+//   sliderType: 'double',
+//   directionType: 'vertical',
+//   step: 10,
+// });
+// viewDoubleVertical.init();

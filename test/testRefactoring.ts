@@ -6,7 +6,7 @@ import { it, describe, beforeEach } from 'mocha';
 // eslint-disable-next-line import/no-unresolved
 import { JSDOM } from 'jsdom';
 // eslint-disable-next-line import/no-unresolved
-import { ViewHorizontal } from '../src/refactoring/ts/refactoringView';
+import { View } from '../src/refactoring/ts/refactoringView';
 import { Model } from '../src/refactoring/ts/model';
 
 describe('View, проверка наличия функций, необходимых для работы слайдера',
@@ -36,7 +36,7 @@ describe('View, проверка наличия функций, необходи
       }
       (global as Global).window = dom.window;
       (global as Global).document = window.document;
-      view = new ViewHorizontal();
+      view = new View();
       view.setStartingConditions(conditions);
       view.init();
     });
@@ -57,10 +57,6 @@ describe('View, проверка наличия функций, необходи
 
     it('createDOM -- создает DOM элементы на странице браузера', () => {
       assert.isOk(view.createDOM);
-    });
-
-    it('checkParent -- проверяет наличие на странице браузера необходимого элемента для инициализации слайдера', () => {
-      assert.isOk(view.checkParent);
     });
 
     it('createSingleDOM -- создает на странице браузера DOM для одинарного бегунка ', () => {
@@ -159,7 +155,7 @@ describe('View. Функции, отвечающие за расчёты',
       }
       (global as Global).window = dom.window;
       (global as Global).document = window.document;
-      view = new ViewHorizontal();
+      view = new View();
       view.setStartingConditions(conditions);
       view.init();
     });
@@ -286,7 +282,7 @@ describe('View, Проверка на правильность приёма па
       }
       (global as Global).window = dom.window;
       (global as Global).document = window.document;
-      view = new ViewHorizontal();
+      view = new View();
       view.setStartingConditions(conditions);
       view.init();
     });

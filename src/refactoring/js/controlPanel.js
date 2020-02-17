@@ -70,14 +70,37 @@ class ControlPanel {
             sliderType: 'double',
             directionType: 'horizontal',
             step: 5,
-            idForSettings: 'doc_panel',
+            idForControlPanel: 'doc_panel',
+        };
+        this.bindController = (controller) => {
+            this.controller = controller;
+        };
+        this.setSettingsFromController = (setFromController) => {
+            this.settings = {
+                elementId: setFromController.elementId,
+                sign: setFromController.sign,
+                lowerScaleBound: setFromController.lowerScaleBound,
+                upperScaleBound: setFromController.upperScaleBound,
+                lowerSliderValue: setFromController.lowerSliderValue,
+                upperSliderValue: setFromController.upperSliderValue,
+                sliderType: setFromController.sliderType,
+                directionType: setFromController.directionType,
+                step: setFromController.step,
+                idForControlPanel: setFromController.idForControlPanel,
+            };
+        };
+        this.bindModel = (model) => {
+            this.model = model;
         };
         this.getControlPanel = () => {
-            const controlPanel = document.getElementById(this.settings.idForSettings);
+            const controlPanel = document.getElementById(this.settings.idForControlPanel);
             return controlPanel;
         };
         this.setIdForSelect = (select, obj) => {
             select.id = obj.elementName;
+        };
+        this.appendChild = (parent, child) => {
+            parent.appendChild(child);
         };
         this.createTitle = (obj) => {
             const title = obj.description;
@@ -86,12 +109,15 @@ class ControlPanel {
             div.appendChild(textNodeTitle);
             return div;
         };
-        this.appendChild = (parent, child) => {
-            parent.appendChild(child);
-        };
         this.returnKeys = (obj) => {
             const arr = Object.keys(obj);
             return arr;
+        };
+        this.createInput = (selectOrDiv, value) => {
+            const input = document.createElement('input');
+            input.type = 'number';
+            input.value = value;
+            this.appendChild(selectOrDiv, input);
         };
         this.createChangableOptions = (arr, parentElement) => {
             arr.forEach((changableValue) => {
@@ -102,29 +128,28 @@ class ControlPanel {
                 this.appendChild(parentElement, option);
             });
         };
-        this.createInput = (selectOrDiv, value) => {
-            const input = document.createElement('input');
-            input.type = 'number';
-            input.textContent = `${value}${this.settings.sign}`;
-            this.appendChild(selectOrDiv, input);
-        };
         this.createListenerOrOr = (elementForListener, keyOfSetting) => {
             const changeListener = () => {
+                // console.log('работает!');
+                // console.log(`elementForListener.value === ${elementForListener.value}`);
                 this.settings[keyOfSetting] = elementForListener.value;
                 this.sliderRefresh();
             };
-            elementForListener.addEventListener('change', changeListener());
+            elementForListener.addEventListener('change', changeListener);
         };
         this.createListenerNumeral = (elementForListener, keyOfSetting) => {
             const inputListener = () => {
-                this.settings[keyOfSetting] = Number(elementForListener.value);
+                console.log('работает!');
+                console.log(elementForListener.getElementsByTagName('input')[0].valueAsNumber);
+                this.settings[keyOfSetting] = Number(elementForListener.getElementsByTagName('input')[0].valueAsNumber);
+                console.log(keyOfSetting);
+                console.log(this.settings);
                 this.sliderRefresh();
             };
-            elementForListener.addEventListener('input', inputListener());
+            elementForListener.addEventListener('input', inputListener);
         };
-        this.createPanel = (objectForConstructionPanel, type) => {
+        this.createPanel = (objectForConstructionPanel, type, controlPanel) => {
             const keys = this.returnKeys(objectForConstructionPanel);
-            const controlPanel = this.getControlPanel();
             keys.forEach((key) => {
                 const currentObj = objectForConstructionPanel[key];
                 let selectOrDiv;
@@ -148,63 +173,42 @@ class ControlPanel {
             keys.forEach((key) => {
                 const currentObj = objectForConstructionPanel[key];
                 const keyOfSetting = currentObj.nameOfVariable;
+                console.log(`keyOfSetting === ${keyOfSetting}`);
                 if (type === 'numeral') {
                     const eventElement = controlPanel.querySelector(`#${currentObj.elementName}`);
                     this.createListenerNumeral(eventElement, keyOfSetting);
                 }
                 if (type === 'select') {
+                    console.log('123');
                     const eventElement = controlPanel.querySelector(`#${currentObj.elementName}`);
                     this.createListenerOrOr(eventElement, keyOfSetting);
                 }
             });
         };
-        this.buildPanel = () => {
-            this.createPanel(this.numeralValues, 'numeral');
-            this.createPanel(this.orValues, 'select');
+        this.sliderRefresh = () => {
+            const objForController = {
+                sliderType: this.settings.sliderType,
+                directionType: this.settings.directionType,
+                step: this.settings.step,
+            };
+            this.controller.setControllerFromControlPanel(objForController);
+            const objForModel = {
+                sign: this.settings.sign,
+                lowerScaleBound: this.settings.lowerScaleBound,
+                upperScaleBound: this.settings.upperScaleBound,
+                lowerSliderValue: this.settings.lowerSliderValue,
+                upperSliderValue: this.settings.upperSliderValue,
+            };
+            this.model.setInitialModelOptions(objForModel);
+            this.controller.createSlider();
         };
-        this.sliderRefresh = () => { };
+        this.buildPanel = () => {
+            const controlPanel = this.getControlPanel();
+            this.createPanel(this.orValues, 'select', controlPanel);
+            this.createPanel(this.numeralValues, 'numeral', controlPanel);
+            // console.log(this.settings);
+        };
     }
 }
-// createOrOrPanel = () => {
-//   const keys = this.returnKeys(this.orValues);
-//   const controlPanel = this.getControlPanel();
-//   keys.forEach(key => {
-//     const currentObj = this.orValues[key];
-//     this.selectOrOr = document.createElement('select');
-//     this.setIdForSelect(this.selectOrOr, currentObj);
-//     const createTitle = this.createTitle(currentObj);
-//     this.appendChild(this.selectOrOr, createTitle);
-//     this.createChangableOptions(currentObj['value'], this.selectOrOr);
-//     this.appendChild(controlPanel, this.selectOrOr);
-//   });
-//   keys.forEach(key => {
-//     const currentObj = this.orValues[key];
-//     const eventElement: HTMLElement = controlPanel.querySelector(`#${currentObj.elementName}`)
-//     this.createListenerOrOr(eventElement, key);
-//   });
-// };
-// createNumberPanel = () => {
-//   const keys = this.returnKeys(this.numeralValues);
-//   const controlPanel = this.getControlPanel();
-//   keys.forEach(key => {
-//     const currentObj = this.numeralValues[key];
-//     this.divNumeral = document.createElement('div');
-//     this.setIdForSelect(this.divNumeral, currentObj);
-//     const createTitle = this.createTitle(currentObj);
-//     this.appendChild(this.divNumeral, createTitle);
-//     const input = document.createElement('input');
-//     input.type = 'number';
-//     this.appendChild(this.divNumeral, input);
-//     this.appendChild(controlPanel, this.divNumeral);
-//   })
-//   keys.forEach(key => {
-//     const currentObj = this.numeralValues[key];
-//     const eventElement: HTMLElement = controlPanel.querySelector(`#${currentObj.elementName}`);
-//     this.createListenerNumeral(eventElement, key);
-//   })
-// }
-// function change_string(n: string, x: string) {
-//   document.getElementById('settings').innerText = `${n}: ${x}`;
-//   slider_refresh();
 export { ControlPanel };
-//# sourceMappingURL=controlPanel.js.map
+//# sourceMappingURL=ControlPanel.js.map

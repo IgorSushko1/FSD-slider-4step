@@ -1,33 +1,29 @@
-class ViewHorizontal {
+class View {
     constructor() {
         this.bindController = (controller) => {
             this.controller = controller;
         };
         this.setStartingConditions = (obj) => {
             this.elementId = obj.elementId || '#iss';
-            this.elem = document.querySelector(obj.elementId);
+            this.elem = document.getElementById('iss');
             this.sign = obj.sign || 'R';
-            this.lowerScale = Number(obj.lowerScaleBound) || 0;
-            this.upperScale = Number(obj.upperScaleBound) || 1000;
+            this.lowerScaleBound = Number(obj.lowerScaleBound) || 0;
+            this.upperScaleBound = Number(obj.upperScaleBound) || 1000;
             this.lowerSliderValue = Number(obj.lowerSliderValue) || 200;
             this.upperSliderValue = Number(obj.upperSliderValue) || 800;
             this.sliderType = obj.sliderType || 'single';
             this.directionType = obj.directionType || 'horizontal';
             this.step = obj.step || 2;
-            this.tooltip = obj.tooltip || 'on';
-            this.valueStateField = obj.valueStateField || 'on';
         };
         this.getStartingConditions = () => ({
             elementId: this.elementId,
             sign: this.sign,
-            lowerScaleBound: this.lowerScale,
-            upperScaleBound: this.upperScale,
+            lowerScaleBound: this.lowerScaleBound,
+            upperScaleBound: this.upperScaleBound,
             lowerSliderValue: this.lowerSliderValue,
             upperSliderValue: this.upperSliderValue,
             sliderType: this.sliderType,
             step: this.step,
-            tooltip: this.tooltip,
-            valueStateField: this.valueStateField,
         });
         this.init = () => {
             this.createDOM();
@@ -151,7 +147,7 @@ class ViewHorizontal {
             this.calcPixelStep();
         };
         this.calcPixelStep = () => {
-            const stepInPixel = (this.mainAxisSize / this.upperScale) * this.step;
+            const stepInPixel = (this.mainAxisSize / this.upperScaleBound) * this.step;
             if (stepInPixel < 1) {
                 this.pixelStep = 1;
                 this.roundedPixelStep = 1;
@@ -182,20 +178,22 @@ class ViewHorizontal {
         };
         this.setSingleToStartPosition = () => {
             if (this.directionType === 'horizontal') {
-                this.singleSlider.style.left = `${this.calcMoneyToPosition(this.lowerSliderValue)}px`;
+                this.singleSlider.style.left = `${this.calcMoneyToPosition(this.lowerSliderValue - this.lowerScaleBound)}px`;
             }
             if (this.directionType === 'vertical') {
-                this.singleSlider.style.top = `${this.calcMoneyToPosition(this.lowerSliderValue)}px`;
+                this.singleSlider.style.top = `${this.calcMoneyToPosition(this.upperScaleBound - this.lowerSliderValue)}px`;
             }
         };
         this.setsDoubleToStartPostions = () => {
-            if (this.directionType === 'horizontal') {
-                this.lowerSlider.style.left = `${this.calcMoneyToPosition(this.lowerSliderValue)}px`;
-                this.upperSlider.style.left = `${this.calcMoneyToPosition(this.upperSliderValue)}px`;
-            }
-            if (this.directionType === 'vertical') {
-                this.lowerSlider.style.top = `${this.calcMoneyToPosition(this.lowerSliderValue)}px`;
-                this.upperSlider.style.top = `${this.calcMoneyToPosition(this.upperSliderValue)}px`;
+            if (this.lowerScaleBound <= this.lowerSliderValue && this.upperScaleBound >= this.upperSliderValue) {
+                if (this.directionType === 'horizontal') {
+                    this.lowerSlider.style.left = `${this.calcMoneyToPosition(this.lowerSliderValue - this.lowerScaleBound)}px`;
+                    this.upperSlider.style.left = `${this.calcMoneyToPosition(this.upperScaleBound - this.upperSliderValue)}px`;
+                }
+                if (this.directionType === 'vertical') {
+                    this.lowerSlider.style.top = `${this.calcMoneyToPosition(this.lowerSliderValue - this.lowerScaleBound)}px`;
+                    this.upperSlider.style.top = `${this.calcMoneyToPosition(this.upperScaleBound - this.upperSliderValue)}px`;
+                }
             }
         };
         this.writeMoneyToFields = () => {
@@ -230,7 +228,7 @@ class ViewHorizontal {
                     this.targetSlider = this.lowerSlider;
                     this.lowerRestriction = 0;
                     this.upperRestriction = this.upperSliderPosition;
-                    this.lowerCostRestriction = this.lowerScale;
+                    this.lowerCostRestriction = this.lowerScaleBound;
                     this.upperCostRestriction = this.getCostForSlider(this.upperRestriction);
                 }
                 if (_e.target === this.upperSlider) {
@@ -238,7 +236,7 @@ class ViewHorizontal {
                     this.lowerRestriction = this.lowerSliderPosition;
                     this.upperRestriction = this.mainAxisSize;
                     this.lowerCostRestriction = this.getCostForSlider(this.lowerRestriction);
-                    this.upperCostRestriction = this.upperScale;
+                    this.upperCostRestriction = this.upperScaleBound;
                 }
             }
             if (this.directionType === 'vertical') {
@@ -263,29 +261,29 @@ class ViewHorizontal {
                 this.targetSlider = this.singleSlider;
                 this.lowerRestriction = 0;
                 this.upperRestriction = this.mainAxisSize;
-                this.lowerCostRestriction = this.lowerScale;
-                this.upperCostRestriction = this.upperScale;
+                this.lowerCostRestriction = this.lowerScaleBound;
+                this.upperCostRestriction = this.upperScaleBound;
             }
             if (this.directionType === 'vertical') {
                 this.targetSlider = this.singleSlider;
                 this.lowerRestriction = 0;
                 this.upperRestriction = this.mainAxisSize;
-                this.lowerCostRestriction = this.upperScale;
-                this.upperCostRestriction = this.lowerScale;
+                this.lowerCostRestriction = this.upperScaleBound;
+                this.upperCostRestriction = this.lowerScaleBound;
             }
         };
         this.getCostForSlider = (sliderPostionInPixel) => {
             if (this.directionType === 'horizontal') {
                 if (sliderPostionInPixel <= 0) {
-                    return this.lowerScale;
+                    return this.lowerScaleBound;
                 }
                 return (Math.round(sliderPostionInPixel / this.pixelStep) * this.step);
             }
             if (this.directionType === 'vertical') {
                 if (sliderPostionInPixel <= 0) {
-                    return this.upperScale;
+                    return this.upperScaleBound;
                 }
-                return ((Math.round((this.mainAxisSize - sliderPostionInPixel) / this.pixelStep) * this.step) + this.lowerScale);
+                return ((Math.round((this.mainAxisSize - sliderPostionInPixel) / this.pixelStep) * this.step) + this.lowerScaleBound);
             }
         };
         this.moveEventWithHoldMouse = (_e) => {
@@ -358,7 +356,7 @@ class ViewHorizontal {
                 }
             }
             if (this.directionType === 'vertical') {
-                const positionInMoney = (_nearestRoundedStep * this.step) + this.lowerScale;
+                const positionInMoney = (_nearestRoundedStep * this.step) + this.lowerScaleBound;
                 if (this.isMoneyInBorder(positionInMoney)) {
                     return positionInMoney;
                 }
@@ -486,5 +484,5 @@ class ViewHorizontal {
         return position;
     }
 }
-export { ViewHorizontal };
+export { View };
 //# sourceMappingURL=refactoringView.js.map
