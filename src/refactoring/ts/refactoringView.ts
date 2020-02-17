@@ -242,7 +242,7 @@ class View {
   }
 
   calcPixelStep = () => {
-    const stepInPixel = (this.mainAxisSize / this.upperScaleBound) * this.step;
+    const stepInPixel = (this.mainAxisSize / (this.upperScaleBound - this.lowerScaleBound)) * this.step;
     if (stepInPixel < 1) {
       this.pixelStep = 1;
       this.roundedPixelStep = 1;
@@ -386,7 +386,7 @@ class View {
       if (sliderPostionInPixel <= 0) {
         return this.lowerScaleBound;
       }
-      return (Math.round(sliderPostionInPixel / this.pixelStep) * this.step);
+      return (this.lowerScaleBound + (Math.round(sliderPostionInPixel / this.pixelStep) * this.step));
     }
     if (this.directionType === 'vertical') {
       if (sliderPostionInPixel <= 0) {
@@ -466,7 +466,10 @@ class View {
 
   calcFinalCost = (_nearestRoundedStep: number) => {
     if (this.directionType === 'horizontal') {
-      const positionInMoney = _nearestRoundedStep * this.step;
+      const positionInMoney = this.lowerScaleBound + (_nearestRoundedStep * this.step);
+      console.log(`positionInMoney === ${positionInMoney}`);
+      console.log(`this.isMoneyInBorder(positionInMoney) === ${this.isMoneyInBorder(positionInMoney)}`);
+
       if (this.isMoneyInBorder(positionInMoney)) {
         return positionInMoney;
       }
