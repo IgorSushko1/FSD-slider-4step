@@ -178,21 +178,21 @@ class View {
         };
         this.setSingleToStartPosition = () => {
             if (this.directionType === 'horizontal') {
-                this.singleSlider.style.left = `${this.calcMoneyToPosition(this.lowerSliderValue - this.lowerScaleBound)}px`;
+                this.singleSlider.style.left = `${this.calcMoneyToPosition(this.lowerSliderValue)}px`;
             }
             if (this.directionType === 'vertical') {
-                this.singleSlider.style.top = `${this.calcMoneyToPosition(this.upperScaleBound - this.lowerSliderValue)}px`;
+                this.singleSlider.style.top = `${this.calcMoneyToPosition(this.lowerSliderValue)}px`;
             }
         };
         this.setsDoubleToStartPostions = () => {
             if (this.lowerScaleBound <= this.lowerSliderValue && this.upperScaleBound >= this.upperSliderValue) {
                 if (this.directionType === 'horizontal') {
-                    this.lowerSlider.style.left = `${this.calcMoneyToPosition(this.lowerSliderValue - this.lowerScaleBound)}px`;
-                    this.upperSlider.style.left = `${this.calcMoneyToPosition(this.upperScaleBound - this.upperSliderValue)}px`;
+                    this.lowerSlider.style.left = `${this.calcMoneyToPosition(this.lowerSliderValue)}px`;
+                    this.upperSlider.style.left = `${this.calcMoneyToPosition(this.upperSliderValue)}px`;
                 }
                 if (this.directionType === 'vertical') {
-                    this.lowerSlider.style.top = `${this.calcMoneyToPosition(this.lowerSliderValue - this.lowerScaleBound)}px`;
-                    this.upperSlider.style.top = `${this.calcMoneyToPosition(this.upperScaleBound - this.upperSliderValue)}px`;
+                    this.lowerSlider.style.top = `${this.calcMoneyToPosition(this.upperSliderValue)}px`;
+                    this.upperSlider.style.top = `${this.calcMoneyToPosition(this.lowerSliderValue)}px`;
                 }
             }
         };
@@ -482,8 +482,14 @@ class View {
         this.controller.getView(obj);
     }
     calcMoneyToPosition(money) {
-        const position = (money / this.step) * this.pixelStep;
-        return position;
+        if (this.directionType === 'horizontal') {
+            const position = ((money - this.lowerScaleBound) / this.step) * this.pixelStep;
+            return position;
+        }
+        if (this.directionType === 'vertical') {
+            const position = this.mainAxisSize - (((money - this.lowerScaleBound) / this.step) * this.pixelStep);
+            return position;
+        }
     }
 }
 export { View };
