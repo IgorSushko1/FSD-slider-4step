@@ -10,6 +10,7 @@ interface ViewStartingConditions {
   directionType?: string;
   step?: number;
   controller?: any;
+  style?: string;
 }
 
 interface View {
@@ -24,6 +25,7 @@ interface View {
   directionType: string;
   step: number;
   controller: any;
+  style: string;
 
   scale: HTMLElement;
   indent: number;
@@ -83,8 +85,8 @@ class View {
   }
 
   setStartingConditions = (obj: ViewStartingConditions) => {
-    this.elementId = obj.elementId || '#iss';
-    this.elem = document.getElementById('iss');
+    this.elementId = `#${obj.elementId}` || '#iss';
+    this.elem = document.getElementById(obj.elementId);
 
     this.sign = obj.sign || 'R';
     this.lowerScaleBound = Number(obj.lowerScaleBound) || 0;
@@ -95,6 +97,8 @@ class View {
     this.sliderType = obj.sliderType || 'single';
     this.directionType = obj.directionType || 'horizontal';
     this.step = obj.step || 2;
+
+    this.style = obj.style || 'iss';
   }
 
   getStartingConditions = () => ({
@@ -128,31 +132,31 @@ class View {
   }
 
   createSingleDOM = () => {
-    this.elem.innerHTML = '<div class="iss__value-field">'
-      + '<span class="iss_staticField"></span>'
-      + '</div>'
-      + '<div class= "iss-container">'
-      + '<div class= "iss__scale"></div>'
-      + '<div class="iss__color-bar"></div>'
-      + '<div class="iss__single_fly-value iss__tooltip"></div>'
-      + '<div class="iss__single iss__drag"></div>'
-      + '</div>';
+    this.elem.innerHTML = `<div class="${this.style}__value-field">
+      <span class="${this.style}__staticField"></span>
+      </div>
+      <div class= "${this.style}__container">
+      <div class= "${this.style}__scale"></div>
+      <div class="${this.style}__color-bar"></div>
+      <div class="${this.style}__single_fly-value ${this.style}__tooltip"></div>
+      <div class="${this.style}__single ${this.style}__drag"></div>
+      </div>'`;
   }
 
   createDoubleDOM = () => {
-    this.elem.innerHTML = '<div class="iss__value-field">'
-      + '<span class="iss_staticField"></span>'
-      + '-'
-      + '<span class="iss_staticField"></span>'
-      + '</div>'
-      + '<div class= "iss-container">'
-      + '<div class= "iss__scale"></div>'
-      + '<div class="iss__double_fly-value-1 iss__tooltip"></div>'
-      + '<div class="iss__double_1_horizontal iss__drag"></div>'
-      + '<div class="iss__double_fly-value-2 iss__tooltip"></div>'
-      + '<div class="iss__double_2_horizontal iss__drag"></div>'
-      + '<div class="iss__color-bar"></div>'
-      + '</div>';
+    this.elem.innerHTML = `<div class="${this.style}__value-field">
+      <span class="${this.style}__staticField"></span>
+      -
+      <span class="${this.style}__staticField"></span>
+      </div>
+      <div class= "${this.style}__container">
+      <div class= "${this.style}__scale"></div>
+      <div class="${this.style}__double_fly-value-1 ${this.style}__tooltip"></div>
+      <div class="${this.style}__double_1_horizontal ${this.style}__drag"></div>
+      <div class="${this.style}__double_fly-value-2 ${this.style}__tooltip"></div>
+      <div class="${this.style}__double_2_horizontal ${this.style}__drag"></div>
+      <div class="${this.style}__color-bar"></div>
+      </div>`;
   }
 
   writeDOM = () => {
@@ -167,35 +171,35 @@ class View {
   }
 
   private checkElementsInDOM = () => {
-    const DOMElements = this.elem.querySelectorAll('.iss__drag');
+    const DOMElements = this.elem.querySelectorAll(`.${this.style}__drag`);
     if ((DOMElements.length > 0)) {
       this.sliderInDOM = DOMElements;
     }
   }
 
   private writeSingleDOMtoVariables = () => {
-    [this.scale] = this.returnElementsFromDOM('.iss__scale', 1);
-    [this.singleSlider] = this.returnElementsFromDOM('.iss__drag', 1);
-    [this.staticFieldSingle] = this.returnElementsFromDOM('.iss_staticField', 1);
-    [this.flyFieldSingle] = this.returnElementsFromDOM('.iss__tooltip', 1);
-    [this.ribbon] = this.returnElementsFromDOM('.iss__color-bar', 1);
+    [this.scale] = this.returnElementsFromDOM(`.${this.style}__scale`, 1);
+    [this.singleSlider] = this.returnElementsFromDOM(`.${this.style}__drag`, 1);
+    [this.staticFieldSingle] = this.returnElementsFromDOM(`.${this.style}__staticField`, 1);
+    [this.flyFieldSingle] = this.returnElementsFromDOM(`.${this.style}__tooltip`, 1);
+    [this.ribbon] = this.returnElementsFromDOM(`.${this.style}__color-bar`, 1);
   }
 
   private writeDoubleDOMtoVariables = () => {
-    [this.scale] = this.returnElementsFromDOM('.iss__scale', 1);
-    [this.lowerSlider, this.upperSlider] = this.returnElementsFromDOM('.iss__drag', 2);
-    [this.staticFieldLower, this.staticFieldUpper] = this.returnElementsFromDOM('.iss_staticField', 2);
-    [this.flyFieldLower, this.flyFieldUpper] = this.returnElementsFromDOM('.iss__tooltip', 2);
-    [this.ribbon] = this.returnElementsFromDOM('.iss__color-bar', 1);
+    [this.scale] = this.returnElementsFromDOM(`.${this.style}__scale`, 1);
+    [this.lowerSlider, this.upperSlider] = this.returnElementsFromDOM(`.${this.style}__drag`, 2);
+    [this.staticFieldLower, this.staticFieldUpper] = this.returnElementsFromDOM(`.${this.style}__staticField`, 2);
+    [this.flyFieldLower, this.flyFieldUpper] = this.returnElementsFromDOM(`.${this.style}__tooltip`, 2);
+    [this.ribbon] = this.returnElementsFromDOM(`.${this.style}__color-bar`, 1);
   }
 
   private writeSingleSliderIndent = () => {
-    const elem = this.returnElementsFromDOM('.iss__drag', 1);
+    const elem = this.returnElementsFromDOM(`.${this.style}__drag`, 1);
     this.singleSliderPosition = this.returnIndent(elem[0]);
   }
 
   private writeDoubleSliderIndent = () => {
-    const elems = this.returnElementsFromDOM('.iss__drag', 2);
+    const elems = this.returnElementsFromDOM(`.${this.style}__drag`, 2);
     this.lowerSliderPosition = this.returnIndent(elems[0]);
     this.upperSliderPosition = this.returnIndent(elems[1]);
   }
@@ -309,14 +313,14 @@ class View {
   }
 
   calcMoneyToPosition(money: number) {
+    let position: number;
     if (this.directionType === 'horizontal') {
-      const position = ((money - this.lowerScaleBound) / this.step) * this.pixelStep;
-      return position;
+      position = ((money - this.lowerScaleBound) / this.step) * this.pixelStep;
     }
     if (this.directionType === 'vertical') {
-      const position = this.mainAxisSize - (((money - this.lowerScaleBound) / this.step) * this.pixelStep);
-      return position;
+      position = this.mainAxisSize - (((money - this.lowerScaleBound) / this.step) * this.pixelStep);
     }
+    return position;
   }
 
   private eventOnSlider = (_e: Event) => {
@@ -428,10 +432,10 @@ class View {
     this.clientRect = this.scale.getBoundingClientRect();
     if (this.directionType === 'horizontal') {
       this.indent = this.clientRect.left;
-      return (_e.clientX - this.indent);
+      return (_e.clientX - this.indent - (this.sliderWidth / 2));
     } if (this.directionType === 'vertical') {
       this.indent = this.clientRect.top;
-      return (_e.clientY - this.indent);
+      return (_e.clientY - this.indent - (this.sliderHeight / 2));
     }
   }
 
@@ -473,8 +477,6 @@ class View {
   calcFinalCost = (_nearestRoundedStep: number) => {
     if (this.directionType === 'horizontal') {
       const positionInMoney = this.lowerScaleBound + (_nearestRoundedStep * this.step);
-      console.log(`positionInMoney === ${positionInMoney}`);
-      console.log(`this.isMoneyInBorder(positionInMoney) === ${this.isMoneyInBorder(positionInMoney)}`);
 
       if (this.isMoneyInBorder(positionInMoney)) {
         return positionInMoney;
@@ -543,19 +545,19 @@ class View {
     const setHorizontalRibbonVariables = () => {
       if (this.sliderInDOM.length === 1) {
         this.ribbon.style.left = '0px';
-        this.ribbon.style.width = `${this.singleSlider.offsetLeft}px`;
+        this.ribbon.style.width = `${this.singleSlider.offsetLeft + (this.sliderWidth / 2)}px`;
       } else if (this.sliderInDOM.length === 2) {
-        this.ribbon.style.left = this.lowerSlider.style.left;
+        this.ribbon.style.left = `${this.lowerSlider.offsetLeft + (this.sliderWidth / 2)}px`;
         this.ribbon.style.width = `${this.upperSlider.offsetLeft - this.lowerSlider.offsetLeft}px`;
       }
     };
 
     const setVerticalRibbonVariables = () => {
       if (this.sliderInDOM.length === 1) {
-        this.ribbon.style.top = `${this.singleSlider.offsetTop}px`;
+        this.ribbon.style.top = `${this.singleSlider.offsetTop + (this.sliderHeight / 2)}px`;
         this.ribbon.style.height = `${this.mainAxisSize - this.singleSlider.offsetTop}px`;
       } else if (this.sliderInDOM.length === 2) {
-        this.ribbon.style.top = this.lowerSlider.style.top;
+        this.ribbon.style.top = `${this.lowerSlider.offsetTop + (this.sliderHeight / 2)}px`;
         this.ribbon.style.height = `${this.upperSlider.offsetTop - this.lowerSlider.offsetTop}px`;
       }
     };
@@ -579,11 +581,11 @@ class View {
   moveTooltip = () => {
     const move = (direction: string, offset: 'offsetLeft' | 'offsetTop') => {
       if (this.sliderType === 'single') {
-        this.elem.querySelectorAll('.iss__tooltip')[0].style[direction] = `${this.singleSlider[offset]}px`;
+        this.elem.querySelectorAll(`.${this.style}__tooltip`)[0].style[direction] = `${this.singleSlider[offset]}px`;
       }
       if (this.sliderType === 'double') {
-        this.elem.querySelectorAll('.iss__tooltip')[0].style[direction] = `${this.lowerSlider[offset]}px`;
-        this.elem.querySelectorAll('.iss__tooltip')[1].style[direction] = `${this.upperSlider[offset]}px`;
+        this.elem.querySelectorAll(`.${this.style}__tooltip`)[0].style[direction] = `${this.lowerSlider[offset]}px`;
+        this.elem.querySelectorAll(`.${this.style}__tooltip`)[1].style[direction] = `${this.upperSlider[offset]}px`;
       }
     };
     if (this.directionType === 'horizontal') {

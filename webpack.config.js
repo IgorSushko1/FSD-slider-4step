@@ -8,7 +8,7 @@ module.exports = {
   mode: 'development',
   devtool: 'inline-source-map',
   // entry: './dist/index.js',
-  entry: './src/refactoring/js/refactoringIndex.js',
+  entry: './src/refactoring/ts/refactoringIndex.ts',
 
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -21,12 +21,29 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /\.css$/,
-        use: [{
-            loader: MiniCssExtractPlugin.loader
+        // test: /\.css$/,
+        // use: [{
+        //     loader: MiniCssExtractPlugin.loader
+        //   },
+        //   {
+        //     loader: "css-loader"
+        //   },
+        // ]
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          // {
+          //   loader: 'style-loader',
+          // },
+          {
+            loader: MiniCssExtractPlugin.loader,
           },
           {
-            loader: "css-loader"
+            loader: 'css-loader',
+          },
+          {
+            loader: 'sass-loader',
           },
         ]
       }
@@ -42,9 +59,9 @@ module.exports = {
       filename: 'index.html'
     }),
     new MiniCssExtractPlugin({
-    filename: '[name].css',
-    chunkFilename: '[id].css',
-    ignoreOrder: false,
+      filename: '[name].css',
+      chunkFilename: '[id].css',
+      ignoreOrder: false,
     }),
     new webpack.ProvidePlugin({
       $: "jquery/dist/jquery.min.js",

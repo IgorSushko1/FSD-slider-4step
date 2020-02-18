@@ -1,5 +1,6 @@
 
-import '../../../is_refactoring.css';
+// import '../../../is_refactoring.css';
+import '../../../styles.scss';
 
 // import { View } from './refactoringView';
 // import { ControlPanel } from './ControlPanel';
@@ -24,7 +25,7 @@ import { ISSlider } from './ISSlider';
 // view.init();
 const settingsForHorizontalDuble = {
   idForControlPanel: 'doc_panel',
-  elementId: '#iss',
+  elementId: 'iss',
   sign: '$',
   lowerScaleBound: 100,
   upperScaleBound: 1500,

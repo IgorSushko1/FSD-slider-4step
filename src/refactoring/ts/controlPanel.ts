@@ -59,6 +59,13 @@ class ControlPanel {
       value: ['horizontal', 'vertical'],
       nameOfVariable: 'directionType',
     },
+    styleType: {
+      title: 'Style',
+      description: 'Тип стиля - можно выбрать стиль CSS для горизонтального или вертикального вида',
+      elementName: 'style',
+      value: ['iss', 'iss__vertical'],
+      nameOfVariable: 'style',
+    },
   };
 
   numeralValues: Values = {
@@ -161,8 +168,6 @@ class ControlPanel {
     return div;
   }
 
-
-
   returnKeys = (obj: Values): string[] => {
     const arr = Object.keys(obj);
     return arr;
@@ -171,7 +176,7 @@ class ControlPanel {
   createInput = (selectOrDiv: HTMLElement, value: number) => {
     const input = document.createElement('input');
     input.type = 'number';
-    input.value = value;
+    input.value = String(value);
     this.appendChild(selectOrDiv, input);
   }
 
@@ -187,8 +192,6 @@ class ControlPanel {
 
   createListenerOrOr = (elementForListener: HTMLSelectElement, keyOfSetting: 'sign' | 'sliderType' | 'directionType') => {
     const changeListener = (): any => {
-      // console.log('работает!');
-      // console.log(`elementForListener.value === ${elementForListener.value}`);
       this.settings[keyOfSetting] = elementForListener.value;
       this.sliderRefresh();
     };
@@ -197,11 +200,7 @@ class ControlPanel {
 
   createListenerNumeral = (elementForListener: HTMLInputElement, keyOfSetting: 'step' | 'lowerScaleBound' | 'upperScaleBound' | 'lowerSliderValue' | 'upperSliderValue') => {
     const inputListener = (): any => {
-      console.log('работает!');
-      console.log(elementForListener.getElementsByTagName('input')[0].valueAsNumber);
       this.settings[keyOfSetting] = Number(elementForListener.getElementsByTagName('input')[0].valueAsNumber);
-      console.log(keyOfSetting);
-      console.log(this.settings);
       this.sliderRefresh();
     };
     elementForListener.addEventListener('input', inputListener);
@@ -238,8 +237,6 @@ class ControlPanel {
     keys.forEach((key) => {
       const currentObj = objectForConstructionPanel[key];
       const keyOfSetting: any = currentObj.nameOfVariable;
-      console.log(`keyOfSetting === ${keyOfSetting}`);
-
 
       if (type === 'numeral') {
         const eventElement = controlPanel.querySelector(`#${currentObj.elementName}`) as HTMLInputElement;
@@ -247,10 +244,7 @@ class ControlPanel {
         this.createListenerNumeral(eventElement, keyOfSetting);
       }
       if (type === 'select') {
-        console.log('123');
-
         const eventElement = controlPanel.querySelector(`#${currentObj.elementName}`) as HTMLSelectElement;
-
         this.createListenerOrOr(eventElement, keyOfSetting);
       }
     });
