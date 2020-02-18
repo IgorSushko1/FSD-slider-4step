@@ -13,6 +13,7 @@ interface Controller {
   sliderType?: string;
   directionType?: string;
   step?: number;
+  style?: string;
 
   model?: any;
   view?: any;
@@ -29,6 +30,7 @@ interface objFromControlPanel {
   sliderType: string;
   directionType: string;
   step: number;
+  style: string;
 }
 
 class Controller {
@@ -38,8 +40,8 @@ class Controller {
     this.directionType = settings.directionType || 'horizontal';
     this.step = settings.step || 2;
     this.idForControlPanel = settings.idForControlPanel || '';
+    this.style = settings.style || 'iss';
   }
-
 
   createSlider() {
     this.setController();
@@ -70,14 +72,11 @@ class Controller {
       sliderType: this.sliderType,
       directionType: this.directionType,
       step: this.step,
+      style: this.style,
     };
-    console.log('setAndRunView');
-    console.log(obj);
     this.view.setStartingConditions(obj);
     this.view.init();
   }
-
-
 
   bindModel(model: Model) {
     this.model = model;
@@ -126,6 +125,7 @@ class Controller {
     this.step = obj.step;
     this.sliderType = obj.sliderType;
     this.directionType = obj.directionType;
+    this.style = obj.style;
   }
 }
 

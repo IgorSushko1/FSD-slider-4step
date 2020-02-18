@@ -140,7 +140,8 @@ class View {
       <div class="${this.style}__color-bar"></div>
       <div class="${this.style}__single_fly-value ${this.style}__tooltip"></div>
       <div class="${this.style}__single ${this.style}__drag"></div>
-      </div>'`;
+      <div class="${this.style}__visible-scale"></div>
+      </div>`;
   }
 
   createDoubleDOM = () => {
@@ -156,6 +157,7 @@ class View {
       <div class="${this.style}__double_fly-value-2 ${this.style}__tooltip"></div>
       <div class="${this.style}__double_2_horizontal ${this.style}__drag"></div>
       <div class="${this.style}__color-bar"></div>
+      <div class="${this.style}__visible-scale"></div>
       </div>`;
   }
 
@@ -248,8 +250,9 @@ class View {
   calcPixelStep = () => {
     const stepInPixel = (this.mainAxisSize / (this.upperScaleBound - this.lowerScaleBound)) * this.step;
     if (stepInPixel < 1) {
-      this.pixelStep = 1;
-      this.roundedPixelStep = 1;
+      alert('Шаг в пикселях меньше 1px, расчеты не производятся. Шаг автоматически будет увеличиваться на 50, пока не будет соответствовать условиям');
+      this.step = this.step + 50;
+      this.calcPixelStep();
     } else {
       this.pixelStep = stepInPixel;
       this.roundedPixelStep = Math.round(stepInPixel);
@@ -555,7 +558,7 @@ class View {
     const setVerticalRibbonVariables = () => {
       if (this.sliderInDOM.length === 1) {
         this.ribbon.style.top = `${this.singleSlider.offsetTop + (this.sliderHeight / 2)}px`;
-        this.ribbon.style.height = `${this.mainAxisSize - this.singleSlider.offsetTop}px`;
+        this.ribbon.style.height = `${this.mainAxisSize - this.singleSlider.offsetTop + (this.sliderHeight / 2)}px`;
       } else if (this.sliderInDOM.length === 2) {
         this.ribbon.style.top = `${this.lowerSlider.offsetTop + (this.sliderHeight / 2)}px`;
         this.ribbon.style.height = `${this.upperSlider.offsetTop - this.lowerSlider.offsetTop}px`;
@@ -579,20 +582,20 @@ class View {
   }
 
   moveTooltip = () => {
-    const move = (direction: string, offset: 'offsetLeft' | 'offsetTop') => {
+    const move = (direction: string, offset: 'offsetLeft' | 'offsetTop', sliderSize: number) => {
       if (this.sliderType === 'single') {
-        this.elem.querySelectorAll(`.${this.style}__tooltip`)[0].style[direction] = `${this.singleSlider[offset]}px`;
+        this.elem.querySelectorAll(`.${this.style}__tooltip`)[0].style[direction] = `${this.singleSlider[offset] - sliderSize}px`;
       }
       if (this.sliderType === 'double') {
-        this.elem.querySelectorAll(`.${this.style}__tooltip`)[0].style[direction] = `${this.lowerSlider[offset]}px`;
-        this.elem.querySelectorAll(`.${this.style}__tooltip`)[1].style[direction] = `${this.upperSlider[offset]}px`;
+        this.elem.querySelectorAll(`.${this.style}__tooltip`)[0].style[direction] = `${this.lowerSlider[offset] - sliderSize}px`;
+        this.elem.querySelectorAll(`.${this.style}__tooltip`)[1].style[direction] = `${this.upperSlider[offset] - sliderSize}px`;
       }
     };
     if (this.directionType === 'horizontal') {
-      move('left', 'offsetLeft');
+      move('left', 'offsetLeft', (this.sliderWidth / 3));
     }
     if (this.directionType === 'vertical') {
-      move('top', 'offsetTop');
+      move('top', 'offsetTop', 0);
     }
   }
 

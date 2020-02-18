@@ -24,8 +24,7 @@ interface Param {
   sliderType?: string;
   step?: number;
   controller?: any;
-  tooltip?: string;
-  // value_field_state?: string;
+  style?: string
 }
 
 interface ControlPanel {
@@ -63,7 +62,7 @@ class ControlPanel {
       title: 'Style',
       description: 'Тип стиля - можно выбрать стиль CSS для горизонтального или вертикального вида',
       elementName: 'style',
-      value: ['iss', 'iss__vertical'],
+      value: ['issHorizontal', 'issVertical'],
       nameOfVariable: 'style',
     },
   };
@@ -108,7 +107,7 @@ class ControlPanel {
   };
 
   settings: Param = {
-    elementId: 'doc_panel',
+    elementId: 'iss',
     sign: '₽',
     lowerScaleBound: 0,
     upperScaleBound: 1000,
@@ -118,13 +117,14 @@ class ControlPanel {
     directionType: 'horizontal',
     step: 5,
     idForControlPanel: 'doc_panel',
+    style: 'iss',
   };
 
   bindController = (controller: any) => {
     this.controller = controller;
   }
 
-  setSettingsFromController = (setFromController: Param) => {
+  setSettings = (setFromController: Param) => {
     this.settings = {
       elementId: setFromController.elementId,
       sign: setFromController.sign,
@@ -136,6 +136,7 @@ class ControlPanel {
       directionType: setFromController.directionType,
       step: setFromController.step,
       idForControlPanel: setFromController.idForControlPanel,
+      style: setFromController.style,
     }
   }
 
@@ -255,6 +256,7 @@ class ControlPanel {
       sliderType: this.settings.sliderType,
       directionType: this.settings.directionType,
       step: this.settings.step,
+      style: this.settings.style,
     };
     this.controller.setControllerFromControlPanel(objForController);
 
@@ -274,7 +276,6 @@ class ControlPanel {
     const controlPanel = this.getControlPanel();
     this.createPanel(this.orValues, 'select', controlPanel);
     this.createPanel(this.numeralValues, 'numeral', controlPanel);
-    // console.log(this.settings);
   }
 }
 

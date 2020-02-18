@@ -7,7 +7,6 @@ var webpack = require('webpack');
 module.exports = {
   mode: 'development',
   devtool: 'inline-source-map',
-  // entry: './dist/index.js',
   entry: './src/refactoring/ts/refactoringIndex.ts',
 
   output: {
@@ -20,23 +19,10 @@ module.exports = {
         use: 'ts-loader',
         exclude: /node_modules/,
       },
-      {
-        // test: /\.css$/,
-        // use: [{
-        //     loader: MiniCssExtractPlugin.loader
-        //   },
-        //   {
-        //     loader: "css-loader"
-        //   },
-        // ]
-      },
+
       {
         test: /\.scss$/,
-        use: [
-          // {
-          //   loader: 'style-loader',
-          // },
-          {
+        use: [{
             loader: MiniCssExtractPlugin.loader,
           },
           {

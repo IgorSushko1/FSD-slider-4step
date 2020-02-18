@@ -1,5 +1,3 @@
-// const path = require('path');
-
 module.exports = {
   mode: 'development',
   entry: './src/is_slider/viewRefactoring.ts',
@@ -16,7 +14,5 @@ module.exports = {
   output: {
     filename: 'index.js',
     path: '/Projects/FSD-slider-4step/src/refactoring/',
-
-    // path: '/Projects/FSD-slider-4step/src/is_slider/js/',
   },
 };

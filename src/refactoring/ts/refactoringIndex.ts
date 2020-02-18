@@ -1,28 +1,7 @@
-
-// import '../../../is_refactoring.css';
 import '../../../styles.scss';
 
-// import { View } from './refactoringView';
-// import { ControlPanel } from './ControlPanel';
 import { ISSlider } from './ISSlider';
 
-// const view = new View();
-
-// const controlPanel = new ControlPanel();
-// controlPanel.buildPanel();
-
-// view.setStartingConditions({
-//   elementId: '#iss',
-//   sign: '$',
-//   lowerScaleBound: 100,
-//   upperScaleBound: 1500,
-//   lowerSliderValue: 200,
-//   upperSliderValue: 800,
-//   sliderType: 'double',
-//   directionType: 'horizontal',
-//   step: 10,
-// });
-// view.init();
 const settingsForHorizontalDuble = {
   idForControlPanel: 'doc_panel',
   elementId: 'iss',
@@ -34,52 +13,53 @@ const settingsForHorizontalDuble = {
   sliderType: 'double',
   directionType: 'horizontal',
   step: 10,
+  style: 'issHorizontal',
 };
 ISSlider(settingsForHorizontalDuble);
 
-// const viewSingleHorizontal = new View();
+const settingsForHorizontalSingle = {
+  idForControlPanel: 'doc_panel_2',
+  elementId: 'iss_2',
+  sign: '$',
+  lowerScaleBound: 100,
+  upperScaleBound: 1500,
+  lowerSliderValue: 200,
+  upperSliderValue: 800,
+  sliderType: 'single',
+  directionType: 'horizontal',
+  step: 10,
+  style: 'issHorizontal',
+};
+ISSlider(settingsForHorizontalSingle);
 
-// viewSingleHorizontal.setStartingConditions({
-//   elementId: '#iss_2',
-//   sign: '$',
-//   lowerScaleBound: 100,
-//   upperScaleBound: 1500,
-//   lowerSliderValue: 200,
-//   upperSliderValue: 800,
-//   sliderType: 'single',
-//   directionType: 'horizontal',
-//   step: 10,
-// });
-// viewSingleHorizontal.init();
+const settingsForVerticalDouble = {
+  idForControlPanel: 'doc_panel_3',
+  elementId: 'iss_3',
+  sign: '$',
+  lowerScaleBound: 100,
+  upperScaleBound: 1500,
+  lowerSliderValue: 200,
+  upperSliderValue: 800,
+  sliderType: 'double',
+  directionType: 'vertical',
+  step: 10,
+  style: 'issVertical',
+};
 
+ISSlider(settingsForVerticalDouble);
 
-// const viewSingleVertical = new View();
+const settingsForVerticalSingle = {
+  idForControlPanel: 'doc_panel_4',
+  elementId: 'iss_4',
+  sign: '$',
+  lowerScaleBound: 100,
+  upperScaleBound: 1500,
+  lowerSliderValue: 200,
+  upperSliderValue: 800,
+  sliderType: 'single',
+  directionType: 'vertical',
+  step: 10,
+  style: 'issVertical',
+};
 
-// viewSingleVertical.setStartingConditions({
-//   elementId: '#iss_3',
-//   sign: '$',
-//   lowerScaleBound: 100,
-//   upperScaleBound: 1500,
-//   lowerSliderValue: 200,
-//   upperSliderValue: 800,
-//   sliderType: 'single',
-//   directionType: 'vertical',
-//   step: 10,
-// });
-// viewSingleVertical.init();
-
-
-// const viewDoubleVertical = new View();
-
-// viewDoubleVertical.setStartingConditions({
-//   elementId: '#iss_4',
-//   sign: '$',
-//   lowerScaleBound: 100,
-//   upperScaleBound: 1500,
-//   lowerSliderValue: 200,
-//   upperSliderValue: 800,
-//   sliderType: 'double',
-//   directionType: 'vertical',
-//   step: 10,
-// });
-// viewDoubleVertical.init();
+ISSlider(settingsForVerticalSingle);

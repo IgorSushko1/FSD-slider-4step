@@ -16,7 +16,6 @@
   },
   "include": [],
   "files": [
-    // "./src/is_slider/index.ts"
     "./src/refactoring/ts/refactoringIndex.ts"
 
   ]

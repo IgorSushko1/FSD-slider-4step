@@ -1,5 +1,7 @@
 .flex {
-  display: flex;
+  display: grid;
+  grid-template-columns: 750px 500px;
+  justify-content: center;
   margin-bottom: 100px;
 }
 
@@ -8,20 +10,12 @@
 #iss_3,
 #iss_4 {
   position: relative;
-  margin-top: 100px;
-  margin-left: 200px;
+  display: block;
+  align-self: center;
+  justify-self: center;
 }
 
-#iss,
-#iss_2,
-#iss_3,
-#iss_4,
-.iss__container {
-  width: 700px;
-  height: 700px;
-}
-
-.iss {
+.issHorizontal {
   &__staticField {
     width: 100px;
     text-align: center;
@@ -33,6 +27,8 @@
   }
 
   &__container {
+    width: 450px;
+    height: 100px;
     position: relative;
     z-index: 1;
   }
@@ -42,6 +38,7 @@
     height: 400px;
     border: 1px solid #8ba4f9;
     border-radius: 1px;
+    visibility: hidden;
   }
 
   &__single,
@@ -51,7 +48,7 @@
     width: 30px;
     height: 30px;
     position: absolute;
-    top: 0px;
+    top: 1px;
     border-radius: 50%;
     cursor: move;
   }
@@ -82,7 +79,7 @@
     width: 50px;
     height: 20px;
     top: -30px;
-    left: 50px;
+    left: 40px;
     background-color: rgba(144, 144, 144, 0.239);
     color: rgb(100, 100, 100);
     text-align: center;
@@ -154,7 +151,165 @@
     visibility: visible;
     opacity: 1;
   }
+
+  &__visible-scale {
+    position: absolute;
+    top: 0px;
+    width: 429px;
+    height: 30px;
+    border: 1px solid #acacac;
+    border-radius: 16px;
+    z-index: -1;
+  }
 }
 .doc_panel {
   margin-left: 60px;
+}
+
+.issVertical {
+  &__staticField {
+    width: 100px;
+    text-align: center;
+    padding-top: 17px;
+    height: 40px;
+    border-radius: 5px;
+    top: -75px;
+    left: 200px;
+  }
+
+  &__container {
+    width: 100px;
+    height: 450px;
+    position: relative;
+    z-index: 1;
+  }
+
+  &__scale {
+    width: 50px;
+    height: 400px;
+    border: 1px solid #8ba4f9;
+    border-radius: 1px;
+    visibility: hidden;
+  }
+
+  &__single,
+  &__double_1_horizontal,
+  &__double_2_horizontal {
+    background: linear-gradient(180deg, #fdc610, #e0b422);
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 0px;
+    left: 1px;
+    border-radius: 10%;
+    cursor: move;
+  }
+
+  &__double_2_horizontal {
+    background: linear-gradient(0deg, #fdc610, #e0b422);
+  }
+
+  &__color-bar {
+    position: absolute;
+    background: linear-gradient(
+      0deg,
+      rgb(224, 224, 224),
+      rgba(185, 185, 185, 0.239)
+    );
+    height: 10px;
+    left: 6px;
+    top: 30px;
+    width: 10px;
+    z-index: -200;
+  }
+
+  &__double_fly-value-1,
+  &__double_fly-value-2,
+  &__single_fly-value {
+    position: absolute;
+    width: 50px;
+    height: 20px;
+    top: -30px;
+    left: 35px;
+    background-color: rgba(144, 144, 144, 0.239);
+    color: rgb(100, 100, 100);
+    text-align: center;
+    border-radius: 6px;
+  }
+
+  &__container &__double_fly-value-1::after {
+    content: '';
+    position: absolute;
+    top: 25%;
+    left: -9%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent rgba(144, 144, 144, 0.239) transparent transparent;
+  }
+
+  &__container &__double_fly-value-2::after {
+    content: '';
+    position: absolute;
+    top: 25%;
+    left: -9%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent rgba(144, 144, 144, 0.239) transparent transparent;
+  }
+
+  &__container &__single_fly-value::after {
+    content: '';
+    position: absolute;
+    top: 25%;
+    left: -9%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent rgba(144, 144, 144, 0.239) transparent transparent;
+  }
+
+  &__container &__double_fly-value-1 {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 1s;
+  }
+
+  &__container &__double_fly-value-2 {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 1s;
+  }
+
+  &__container &__single_fly-value {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 1s;
+  }
+
+  &__container:hover &__double_fly-value-1 {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  &__container:hover &__double_fly-value-2 {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  &__container:hover &__single_fly-value {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  &__visible-scale {
+    position: absolute;
+    top: -1px;
+    width: 20px;
+    height: 422px;
+    border: 1px solid #afafaf;
+    border-radius: 3px;
+    z-index: -1;
+  }
 }

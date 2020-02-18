@@ -1,12 +1,12 @@
-// eslint-disable-next-line no-unused-vars
+
 import { expect, assert } from 'chai';
-// eslint-disable-next-line no-unused-vars
+
 import { it, describe, beforeEach } from 'mocha';
-// eslint-disable-next-line no-unused-vars
-// eslint-disable-next-line import/no-unresolved
+
 import { JSDOM } from 'jsdom';
-// eslint-disable-next-line import/no-unresolved
+
 import { View } from '../src/refactoring/ts/refactoringView';
+
 import { Model } from '../src/refactoring/ts/model';
 
 describe('View, проверка наличия функций, необходимых для работы слайдера',
@@ -42,8 +42,6 @@ describe('View, проверка наличия функций, необходи
     });
 
     it('view.init -- запускает построение, отображение, навешивание событий', () => {
-      // view.createDOM();
-      // view.writeDOM();
       assert.isOk(view.init);
     });
 
@@ -228,9 +226,7 @@ describe('View. Функции, отвечающие за расчёты',
 
       assert.isOk(view.calcFinalCost);
     });
-    // it('', () => {
-    //   assert.isOk(view.);
-    // });
+
   });
 
 describe('View, Проверка на правильность приёма параметров классом, построение DOM, подсчет DOM, привязка DOM-элементов к переменным',
@@ -288,33 +284,27 @@ describe('View, Проверка на правильность приёма па
     });
 
     it('Проверка правильности передачи и приёма начальных данных для построения', () => {
-      // view.setStartingConditions(conditions);
       assert.deepEqual(conditions, view.getStartingConditions());
     });
 
     it('Проверка выбора DOM-элемента, нужного для инициализации плагина', () => {
-      // view.setStartingConditions(conditions);
       const parentElement = document.querySelector('#iss');
       assert.equal(parentElement, view.elem);
     });
 
     it('Проверка добавления в DOM новых элементов слайдера с одинарным бегунком', () => {
-      // view.setStartingConditions(conditions);
       view.createSingleDOM();
       const divElement = document.querySelector('.iss__single');
       assert.isOk(divElement);
     });
 
     it('Проверка добавления в DOM новых элементов слайдера с двойным бегунком', () => {
-      // view.setStartingConditions(conditions);
       view.createDoubleDOM();
       const divElement = document.querySelector('.iss__double_1_horizontal');
       assert.isOk(divElement);
     });
 
     it('Проверка createDOM -- добавления в DOM новых элементов слайдера в зависимости от параметра sliderType', () => {
-      // view.setStartingConditions(conditions);
-      // view.createDOM();
       const spanElement = document.querySelector('.iss_staticField');
       assert.isOk(spanElement);
     });
@@ -324,16 +314,11 @@ describe('View, Проверка на правильность приёма па
     });
 
     it('Проверка returnElementsFromDOM -- возвращает массив из элементов по указанному в атрибуте селектору элемента', () => {
-      // view.setStartingConditions(conditions);
-      // view.createDOM();
       const arrayDOMElements = view.returnElementsFromDOM('.iss__tooltip', 2);
       assert.equal(arrayDOMElements.length, 2);
     });
 
     it('Проверка writeDOM  -- записывает необходимые элементы для манипулирования в переменные класса', () => {
-      // view.setStartingConditions(conditions);
-      // view.createDOM();
-      // view.writeDOM();
       const ribbon = document.querySelector('.iss__color-bar');
       assert.equal(view.ribbon, ribbon);
     });

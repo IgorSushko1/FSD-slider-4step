@@ -14,6 +14,7 @@ interface Param {
   sliderType?: string;
   directionType?: string;
   step?: number;
+  style?: string;
 }
 
 function ISSlider(param: Param) {
@@ -29,6 +30,7 @@ function ISSlider(param: Param) {
     sliderType: param.sliderType || 'double',
     directionType: param.directionType || 'horizontal',
     step: param.step || 50,
+    style: param.style || 'iss',
   };
 
   // ПОСТРОЕНИЕ СЛАЙДЕРА ПРИ ПЕРВОМ ЗАПУСКЕ
@@ -44,6 +46,7 @@ function ISSlider(param: Param) {
   view.bindController(controller);
   controlPanel.bindController(controller);
   controlPanel.bindModel(model);
+  controlPanel.setSettings(settings);
 
   controller.createSlider();
 
