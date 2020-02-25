@@ -2,7 +2,7 @@
   "compilerOptions": {
     "strictPropertyInitialization": false,
     "strictNullChecks": false,
-    "outDir": "./src/refactoring/js",
+    "outDir": "./src/js",
     "sourceMap": true,
     "noImplicitAny": true,
     "target": "es6",
@@ -16,7 +16,6 @@
   },
   "include": [],
   "files": [
-    "./src/refactoring/ts/refactoringIndex.ts"
-
+    "./src/ts/index.ts"
   ]
 }

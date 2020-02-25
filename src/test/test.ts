@@ -5,15 +5,15 @@ import { it, describe, beforeEach } from 'mocha';
 
 import { JSDOM } from 'jsdom';
 
-import { View } from '../src/refactoring/ts/refactoringView';
+import { View } from '../ts/View';
 
-import { Model } from '../src/refactoring/ts/model';
+import { Model } from '../ts/model';
 
 describe('View, проверка наличия функций, необходимых для работы слайдера',
   () => {
     let view: any;
     const conditions = {
-      elementId: '#iss',
+      elementId: 'iss',
       sign: '₽',
       lowerScaleBound: 0,
       upperScaleBound: 1000,
@@ -26,7 +26,7 @@ describe('View, проверка наличия функций, необходи
     };
 
     beforeEach(async () => {
-      const dom = await JSDOM.fromFile('./index.html', { runScripts: 'dangerously', pretendToBeVisual: true, resources: 'usable' });
+      const dom = await JSDOM.fromFile('index.html', { runScripts: 'dangerously', pretendToBeVisual: true, resources: 'usable' });
       interface Global extends NodeJS.Global {
         window: Window;
         document: Document;
@@ -121,7 +121,6 @@ describe('View, проверка наличия функций, необходи
     it('Тест на то, что DOM не работает со style', () => {
       const tooltip: HTMLElement = document.querySelector('.iss__tooltip');
       tooltip.style.left = '100px';
-      console.log(tooltip.offsetLeft);
       assert.equal(tooltip.offsetLeft, 100);
     });
   });
@@ -130,7 +129,7 @@ describe('View. Функции, отвечающие за расчёты',
   () => {
     let view: any;
     const conditions = {
-      elementId: '#iss',
+      elementId: 'iss',
       sign: '₽',
       lowerScaleBound: 0,
       upperScaleBound: 1000,
@@ -143,7 +142,7 @@ describe('View. Функции, отвечающие за расчёты',
     };
 
     beforeEach(async () => {
-      const dom = await JSDOM.fromFile('./index.html', { runScripts: 'dangerously', pretendToBeVisual: true, resources: 'usable' });
+      const dom = await JSDOM.fromFile('index.html', { runScripts: 'dangerously', pretendToBeVisual: true, resources: 'usable' });
       interface Global extends NodeJS.Global {
         window: Window;
         document: Document;
@@ -161,14 +160,6 @@ describe('View. Функции, отвечающие за расчёты',
     it('getCostForSlider(sliderPostionInPixel: number) -- принимает позицию в пикселях, вычисляет количество шагов, округляет, умножает на шаг в деньгах', () => {
       view.pixelStep = 2.5;
       const cost = view.getCostForSlider(50);
-      assert.equal(cost, 100);
-    });
-
-    it('getCostForSlider(sliderPostionInPixel: number) -- принимает позицию в пикселях, вычисляет количество шагов, округляет, умножает на шаг в деньгах', () => {
-
-      view.lowerScale = 100;
-      view.pixelStep = 2.5;
-      const cost = view.getCostForSlider(0);
       assert.equal(cost, 100);
     });
 
@@ -206,7 +197,6 @@ describe('View. Функции, отвечающие за расчёты',
       view.targetSlider = view.lowerSlider;
       view.moveSlider(500);
       const leftMesure = view.targetSlider.offsetLeft;
-      console.log(view.targetSlider);
       assert.equal(leftMesure, 500);
     });
 
@@ -233,7 +223,7 @@ describe('View, Проверка на правильность приёма па
   () => {
     let view: any;
     const conditions = {
-      elementId: '#iss',
+      elementId: 'iss',
       sign: '₽',
       lowerScaleBound: 0,
       upperScaleBound: 1200,
@@ -241,34 +231,10 @@ describe('View, Проверка на правильность приёма па
       upperSliderValue: 1000,
       sliderType: 'double',
       step: 5,
-      tooltip: 'on',
-      valueStateField: 'on',
     };
 
-    const singleDOM = '<div id="iss_value-field">'
-      + '<span id="flyFieldSingle"></span>'
-      + '</div>'
-      + '<div id= "iss-container">'
-      + '<div id="iss__color-bar_horizontal"></div>'
-      + '<div id="iss__single_fly-value" class="iss_tooltip"></div>'
-      + '<div id="iss__single" class="iss_drag"></div>'
-      + '</div>';
-
-    const DoubleDOM = '<div id="iss_value-field">'
-      + '<span id="iss_staticFieldLowerBound-field"></span>'
-      + '-'
-      + '<span id="iss_staticFieldUpperBound-field"></span>'
-      + '</div>'
-      + '<div id= "iss-container">'
-      + '<div id="iss__double_fly-value-1"  class="iss_tooltip"></div>'
-      + '<div id="iss__double_1_horizontal" class="iss_drag"></div>'
-      + '<div id="iss__double_fly-value-2" class="iss_tooltip"></div>'
-      + '<div id="iss__double_2_horizontal" class="iss_drag"></div>'
-      + '<div id="iss__color-bar_horizontal"></div>'
-      + '</div>';
-
     beforeEach(async () => {
-      const dom = await JSDOM.fromFile('./index.html', { runScripts: 'dangerously', pretendToBeVisual: true, resources: 'usable' });
+      const dom = await JSDOM.fromFile('index.html', { runScripts: 'dangerously', pretendToBeVisual: true, resources: 'usable' });
       interface Global extends NodeJS.Global {
         window: Window;
         document: Document;
@@ -284,7 +250,16 @@ describe('View, Проверка на правильность приёма па
     });
 
     it('Проверка правильности передачи и приёма начальных данных для построения', () => {
-      assert.deepEqual(conditions, view.getStartingConditions());
+      assert.deepEqual({
+        elementId: '#iss',
+        sign: '₽',
+        lowerScaleBound: 0,
+        upperScaleBound: 1200,
+        lowerSliderValue: 200,
+        upperSliderValue: 1000,
+        sliderType: 'double',
+        step: 5,
+      }, view.getStartingConditions());
     });
 
     it('Проверка выбора DOM-элемента, нужного для инициализации плагина', () => {
@@ -305,7 +280,7 @@ describe('View, Проверка на правильность приёма па
     });
 
     it('Проверка createDOM -- добавления в DOM новых элементов слайдера в зависимости от параметра sliderType', () => {
-      const spanElement = document.querySelector('.iss_staticField');
+      const spanElement = document.querySelector('.iss__staticField');
       assert.isOk(spanElement);
     });
 
@@ -338,14 +313,13 @@ describe('Model, Проверка на правильность приёма и 
     it('setModel -- получает изменения, произошедшие в переменных', () => {
       const newValues = {
         lowerSliderValue: 400,
-        upperSliderValue: 800
+        upperSliderValue: 800,
       };
       model.setModel(newValues);
       const check = {
         lowerSliderValue: model.lowerSliderValue,
-        upperSliderValue: model.upperSliderValue
+        upperSliderValue: model.upperSliderValue,
       };
       assert.deepEqual(check, newValues);
     });
-
   });

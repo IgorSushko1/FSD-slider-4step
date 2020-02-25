@@ -137,7 +137,7 @@ class ControlPanel {
       step: setFromController.step,
       idForControlPanel: setFromController.idForControlPanel,
       style: setFromController.style,
-    }
+    };
   }
 
   bindModel = (model: any) => {

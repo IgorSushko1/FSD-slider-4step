@@ -10,6 +10,7 @@ interface objFromView {
   lowerSliderValue?: number;
   upperSliderValue?: number;
 }
+
 interface objFromController {
   lowerScaleBound: number;
   upperScaleBound: number;
@@ -17,6 +18,7 @@ interface objFromController {
   upperSliderValue: number;
   sign: string;
 }
+
 class Model {
   constructor(param: objFromController) {
     this.lowerScaleBound = param.lowerScaleBound || 0;

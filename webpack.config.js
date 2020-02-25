@@ -7,7 +7,7 @@ var webpack = require('webpack');
 module.exports = {
   mode: 'development',
   devtool: 'inline-source-map',
-  entry: './src/refactoring/ts/refactoringIndex.ts',
+  entry: './src/ts/index.ts',
 
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -41,7 +41,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title: 'My App',
-      template: './index.html',
+      template: './src/index.html',
       filename: 'index.html'
     }),
     new MiniCssExtractPlugin({

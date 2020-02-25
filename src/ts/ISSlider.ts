@@ -1,7 +1,7 @@
 import { Model } from './model';
 import { Controller } from './controller';
-import { View } from './refactoringView';
-import { ControlPanel } from './ControlPanel';
+import { View } from './View';
+import { ControlPanel } from './controlPanel';
 
 interface Param {
   idForControlPanel?: string;

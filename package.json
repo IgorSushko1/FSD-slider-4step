@@ -48,7 +48,7 @@
     "webpack-dev-server": "^3.10.3"
   },
   "scripts": {
-    "test": "mocha -r ts-node/register test/testRefactoring.ts",
+    "test": "mocha -r ts-node/register ./src/test/test.ts",
 
     "bundle": "webpack --config webpack.config.js",
 

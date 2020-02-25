@@ -1,7 +1,3 @@
-import { Model } from './model';
-import { View } from './refactoringView';
-import { ControlPanel } from './ControlPanel';
-
 interface Controller {
   idForControlPanel?: string;
   elementId?: string;
@@ -17,7 +13,6 @@ interface Controller {
 
   model?: any;
   view?: any;
-
   controlPanel?: any;
 }
 
@@ -78,7 +73,7 @@ class Controller {
     this.view.init();
   }
 
-  bindModel(model: Model) {
+  bindModel(model: any) {
     this.model = model;
   }
 
@@ -89,7 +84,7 @@ class Controller {
     });
   }
 
-  bindView(view: View) {
+  bindView(view: any) {
     this.view = view;
   }
 
@@ -117,7 +112,7 @@ class Controller {
     };
   }
 
-  bindControlPanel(cntrlPnl: ControlPanel) {
+  bindControlPanel(cntrlPnl: any) {
     this.controlPanel = cntrlPnl;
   }
 

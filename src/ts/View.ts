@@ -249,7 +249,7 @@ class View {
 
   calcPixelStep = () => {
     const stepInPixel = (this.mainAxisSize / (this.upperScaleBound - this.lowerScaleBound)) * this.step;
-    if (stepInPixel < 1) {
+    if (stepInPixel < 1 && stepInPixel !== 0) {
       alert('Шаг в пикселях меньше 1px, расчеты не производятся. Шаг автоматически будет увеличиваться на 50, пока не будет соответствовать условиям');
       this.step = this.step + 50;
       this.calcPixelStep();
