@@ -138,7 +138,7 @@ class View {
       <div class= "${this.style}__container">
       <div class= "${this.style}__scale"></div>
       <div class="${this.style}__color-bar"></div>
-      <div class="${this.style}__single_fly-value ${this.style}__tooltip"></div>
+      <div class="${this.style}__single-fly ${this.style}__tooltip"></div>
       <div class="${this.style}__single ${this.style}__drag"></div>
       <div class="${this.style}__visible-scale"></div>
       </div>`;
@@ -152,10 +152,10 @@ class View {
       </div>
       <div class= "${this.style}__container">
       <div class= "${this.style}__scale"></div>
-      <div class="${this.style}__double_fly-value-1 ${this.style}__tooltip"></div>
-      <div class="${this.style}__double_1_horizontal ${this.style}__drag"></div>
-      <div class="${this.style}__double_fly-value-2 ${this.style}__tooltip"></div>
-      <div class="${this.style}__double_2_horizontal ${this.style}__drag"></div>
+      <div class="${this.style}__double-fly-first ${this.style}__tooltip"></div>
+      <div class="${this.style}__double-first-slider ${this.style}__drag"></div>
+      <div class="${this.style}__double-fly-second ${this.style}__tooltip"></div>
+      <div class="${this.style}__double-second-slider ${this.style}__drag"></div>
       <div class="${this.style}__color-bar"></div>
       <div class="${this.style}__visible-scale"></div>
       </div>`;
@@ -206,14 +206,6 @@ class View {
     this.upperSliderPosition = this.returnIndent(elems[1]);
   }
 
-  private returnIndent = (element: HTMLElement) => {
-    if (this.directionType === 'horizontal') {
-      return element.offsetLeft;
-    } if (this.directionType === 'vertical') {
-      return element.offsetTop;
-    }
-  };
-
   private returnElementsFromDOM = (className: string, length: number) => {
     const DOMElements = this.elem.querySelectorAll(className);
     if ((DOMElements.length === length)) {
@@ -221,6 +213,15 @@ class View {
     }
     return false;
   }
+
+
+  private returnIndent = (element: HTMLElement) => {
+    if (this.directionType === 'horizontal') {
+      return element.offsetLeft;
+    } if (this.directionType === 'vertical') {
+      return element.offsetTop;
+    }
+  };
 
   writeGeometryDOMtoVariables = () => {
     this.setDirection();
@@ -307,11 +308,22 @@ class View {
       this.flyFieldSingle.innerText = `${this.lowerSliderValue}${this.sign}`;
     }
     if (this.sliderType === 'double') {
-      this.staticFieldLower.innerText = `${this.lowerSliderValue}${this.sign}`;
-      this.staticFieldUpper.innerText = `${this.upperSliderValue}${this.sign}`;
+      if (this.directionType === 'horizontal') {
+        this.staticFieldLower.innerText = `${this.lowerSliderValue}${this.sign}`;
+        this.staticFieldUpper.innerText = `${this.upperSliderValue}${this.sign}`;
 
-      this.flyFieldLower.innerText = `${this.lowerSliderValue}${this.sign}`;
-      this.flyFieldUpper.innerText = `${this.upperSliderValue}${this.sign}`;
+        this.flyFieldLower.innerText = `${this.lowerSliderValue}${this.sign}`;
+        this.flyFieldUpper.innerText = `${this.upperSliderValue}${this.sign}`;
+      }
+
+      if (this.directionType === 'vertical') {
+        this.staticFieldLower.innerText = `${this.lowerSliderValue}${this.sign}`;
+        this.staticFieldUpper.innerText = `${this.upperSliderValue}${this.sign}`;
+
+        this.flyFieldLower.innerText = `${this.upperSliderValue}${this.sign}`;
+        this.flyFieldUpper.innerText = `${this.lowerSliderValue}${this.sign}`;
+      }
+
     }
   }
 
@@ -518,17 +530,33 @@ class View {
 
   showMoneyOnScreen = (finalCost: number) => {
     const cost = `${finalCost}${this.sign}`;
-    if (this.targetSlider === this.lowerSlider) {
-      this.staticFieldLower.textContent = `${cost}`;
-      this.flyFieldLower.textContent = `${cost}`;
+    if (this.directionType === 'horizontal') {
+      if (this.targetSlider === this.lowerSlider) {
+        this.staticFieldLower.textContent = `${cost}`;
+        this.flyFieldLower.textContent = `${cost}`;
+      }
+      if (this.targetSlider === this.upperSlider) {
+        this.staticFieldUpper.textContent = `${cost}`;
+        this.flyFieldUpper.textContent = `${cost}`;
+      }
+      if (this.targetSlider === this.singleSlider) {
+        this.staticFieldSingle.textContent = `${cost}`;
+        this.flyFieldSingle.textContent = `${cost}`;
+      }
     }
-    if (this.targetSlider === this.upperSlider) {
-      this.staticFieldUpper.textContent = `${cost}`;
-      this.flyFieldUpper.textContent = `${cost}`;
-    }
-    if (this.targetSlider === this.singleSlider) {
-      this.staticFieldSingle.textContent = `${cost}`;
-      this.flyFieldSingle.textContent = `${cost}`;
+    if (this.directionType === 'vertical') {
+      if (this.targetSlider === this.lowerSlider) {
+        this.staticFieldUpper.textContent = `${cost}`;
+        this.flyFieldLower.textContent = `${cost}`;
+      }
+      if (this.targetSlider === this.upperSlider) {
+        this.staticFieldLower.textContent = `${cost}`;
+        this.flyFieldUpper.textContent = `${cost}`;
+      }
+      if (this.targetSlider === this.singleSlider) {
+        this.staticFieldSingle.textContent = `${cost}`;
+        this.flyFieldSingle.textContent = `${cost}`;
+      }
     }
   }
 
