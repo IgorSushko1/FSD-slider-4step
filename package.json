@@ -49,9 +49,7 @@
   },
   "scripts": {
     "test": "mocha -r ts-node/register ./src/test/test.ts",
-
     "bundle": "webpack --config webpack.config.js",
-
     "liveDev": "webpack-dev-server --watch --open --config webpack.config.js  --mode development --hot --colors --progress"
   },
   "keywords": [
